@@ -3,8 +3,6 @@ package com.cbproject.caubook;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,8 +16,8 @@ public class AgreeActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.agree);
 		
-		agreeYes = (Button)findViewById(R.id.agreeYes);
-		agreeNo = (Button)findViewById(R.id.agreeNo);
+		agreeYes = (Button)findViewById(R.id.btn_agree_yes);
+		agreeNo = (Button)findViewById(R.id.btn_agree_no);
 		
 		agreeYes.setOnClickListener(new OnClickListener() {
 			

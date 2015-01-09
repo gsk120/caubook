@@ -1,99 +1,117 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/caubackground"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="14"
     tools:context="com.cbproject.caubook.MainActivity" >
 
-    <EditText
-        android:id="@+id/agreeContent1"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
-        android:layout_below="@+id/cauImage"
-        android:layout_centerHorizontal="true"
-        android:background="#ffffff"
-        android:ems="10"
-        android:lines="5"
-        android:textSize="15dp"
-        android:text="제 1 조 (목적) 이 약관은 CAU Book (회사 또는 CAU Book)이 제공하는 CAU Book 및 CAU Book 관련 제반 서비스의 이용과 관련하여 회사와 회원과의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다. 제 2 조 (정의) " >
-    </EditText>
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/cauImage"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="14dp"
-        android:layout_marginRight="19dp"
-        android:text="이용약관 동의(필수)" />
-
-    <CheckBox
-        android:id="@+id/agreeCheck1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/agreeContent1"
-        android:layout_centerHorizontal="true"
-        android:text="동의" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/agreeCheck1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
-        android:text="개인정보 수집 및 이용에 대한 안내(필수)" />
-
-    <EditText
-        android:id="@+id/agreeContent2"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
-        android:layout_alignLeft="@+id/agreeContent1"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="16dp"
-        android:background="#ffffff"
-        android:ems="10"
-        android:lines="5"
-        android:textSize="15dp"
-        android:text="제 1 조 (목적) 이 약관은 CAU Book (회사 또는 CAU Book)이 제공하는 CAU Book 및 CAU Book 관련 제반 서비스의 이용과 관련하여 회사와 회원과의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다. 제 2 조 (정의) " />
-
-    <CheckBox
-        android:id="@+id/agreeCheck2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/agreeContent2"
-        android:layout_centerHorizontal="true"
-        android:text="동의" />
-
-    <ImageView
-        android:id="@+id/cauImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/textView1"
-        android:src="@drawable/caubook" />
-
-    <Button
-        android:id="@+id/agreeYes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/agreeCheck2"
-        android:layout_marginLeft="100dp"
-        android:text="동의" />
-
-    <Button
-        android:id="@+id/agreeNo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/agreeYes"
-        android:layout_alignBottom="@+id/agreeYes"
-        android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@+id/agreeYes"
-        android:text="비동의" />
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="2">
     
-</RelativeLayout>
+        <TextView
+        	android:id="@+id/text_usage_title"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentBottom="true"
+        	android:layout_centerHorizontal="true"
+        	android:text="@string/text_usage_agree" />
+        
+    </RelativeLayout>
+    	
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="3">
+        
+        <TextView
+	        android:id="@+id/text_agree_usage_content"
+    	    android:layout_width="250dp"
+        	android:layout_height="wrap_content"
+        	android:background="#ffffff"
+        	android:ems="10"
+        	android:textSize="15sp"
+        	android:layout_gravity="center_horizontal"
+        	android:text="@string/text_usage_agree_content" >
+    	</TextView>
+    	
+    </ScrollView>
+    
+    <CheckBox
+        android:id="@+id/check_usage_agree"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/text_agree" />
+
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="2">
+    
+    	<TextView
+	        android:id="@+id/text_person_info_title"
+    	    android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentBottom="true"
+        	android:layout_centerHorizontal="true"
+        	android:text="@string/text_person_info_agree" />
+        
+    </RelativeLayout>    
+
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="3">
+        
+        <TextView
+	        android:id="@+id/text_agree_person_content"
+    	    android:layout_width="250dp"
+        	android:layout_height="wrap_content"
+        	android:background="#ffffff"
+        	android:ems="10"
+        	android:textSize="15sp"
+        	android:layout_gravity="center_horizontal"
+        	android:text="@string/text_person_info_agree_content" >
+    	</TextView>
+    	
+    </ScrollView>
+    
+    <CheckBox
+        android:id="@+id/check_person_agree"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/text_agree" />
+
+    <RelativeLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="2"
+        android:layout_gravity="center_horizontal">
+        
+		<Button
+        	android:id="@+id/btn_agree_yes"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_centerVertical="true"
+        	android:text="@string/text_agree" />
+
+    	<Button
+	        android:id="@+id/btn_agree_no"
+    	    android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBottom="@+id/btn_agree_yes"
+        	android:layout_toRightOf="@+id/btn_agree_yes"
+        	android:layout_toEndOf="@+id/btn_agree_yes"
+        	android:text="@string/text_disagree" />
+    	        
+    </RelativeLayout>
+    
+    
+</LinearLayout>

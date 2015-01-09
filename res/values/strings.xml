@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">CBproject</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">caubook</string>
+    <string name="user_id_hint">ID를 입력하세요.</string>
+    <string name="action_settings">setting</string>
+    <string name="user_password_hint">비밀번호를 입력하세요.</string>
+    <string name="btn_login_text">Login</string>
+    <string name="check_auto_login_text">AUTO</string>
+    <string name="text_usage_agree">이용약관 동의(필수)</string>
+    <string name="text_personinfo_agree">개인정보 수집 및 이용에 대한 안내(필수)</string>
+    <string name="text_person_info_agree">개인정보 수집 및 이용에 대한 안내(필수)</string>
+    <string name="text_agree">동의</string>
+    <string name="text_disagree">비동의</string>
+    <string name="text_usage_agree_content">제 1 조 (목적) 이 약관은 CAU Book (회사 또는 CAU Book)이 제공하는 CAU Book 및 CAU Book 관련 제반 서비스의 이용과 관련하여 회사와 회원과의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다. 제 2 조 (정의) </string>
+    <string name="text_person_info_agree_content">제 1 조 (목적) 이 약관은 CAU Book (회사 또는 CAU Book)이 제공하는 CAU Book 및 CAU Book 관련 제반 서비스의 이용과 관련하여 회사와 회원과의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다. 제 2 조 (정의) </string>
 
 </resources>
