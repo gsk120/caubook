@@ -14,5 +14,10 @@
     <string name="text_disagree">비동의</string>
     <string name="text_usage_agree_content">제 1 조 (목적) 이 약관은 CAU Book (회사 또는 CAU Book)이 제공하는 CAU Book 및 CAU Book 관련 제반 서비스의 이용과 관련하여 회사와 회원과의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다. 제 2 조 (정의) </string>
     <string name="text_person_info_agree_content">제 1 조 (목적) 이 약관은 CAU Book (회사 또는 CAU Book)이 제공하는 CAU Book 및 CAU Book 관련 제반 서비스의 이용과 관련하여 회사와 회원과의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다. 제 2 조 (정의) </string>
+    <string name="btn_book_register">등록</string>
+    <string name="btn_book_rgiseter_pass">건너뛰기</string>
+    <string name="text_book_register_titile">장터에 등록할 교재 선택</string>
+    <string name="text_book_register_list_title">들었던 과목들</string>
+    <string name="text_book_register_exist">교재유무</string>
 
 </resources>
