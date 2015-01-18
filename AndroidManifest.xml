@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="14"
         android:targetSdkVersion="18" />
 
     <application
@@ -26,7 +26,14 @@
             android:name=".AgreeActivity">
         </activity>
         <activity
-            android:name=".BookRegisterActivity">
+            android:name=".BookRegisterSelectActivity">
+        </activity>
+        <activity
+            android:name=".BookRegisterGoActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustPan">
+        </activity>
+        <activity
+            android:name=".BookRegisterListActivity">
         </activity>
     </application>
 
