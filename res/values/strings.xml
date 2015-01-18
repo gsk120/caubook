@@ -19,5 +19,21 @@
     <string name="text_book_register_titile">장터에 등록할 교재 선택</string>
     <string name="text_book_register_list_title">들었던 과목들</string>
     <string name="text_book_register_exist">교재유무</string>
-
+	<string name="text_book_register_go">등록하기</string>
+	<string name="text_book_register_go_subject_name">과목명</string>
+	<string name="text_book_register_go_professor_name">교수명</string>
+	<string name="text_book_register_go_book_name">책이름</string>
+	<string name="text_book_register_go_book_price">가 격</string>
+	<string name="text_book_register_go_etc">기타</string>
+	<string name="text_book_register_go_photo">사진첨부</string>
+	<string name="text_book_register_go_subject_search">검색</string>
+	<string name="text_book_register_go_professor_search">검색</string>
+	<string name="text_book_register_go_book_name_search">검색</string>
+	<string name="btn_book_register_go">등록</string>
+	<string name="btn_book_register_go_return">돌아가기</string>
+	<string name="btn_book_register_list_buy">구매</string>
+	<string name="btn_book_register_list_sell">판매</string>
+	
+	 <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
 </resources>
