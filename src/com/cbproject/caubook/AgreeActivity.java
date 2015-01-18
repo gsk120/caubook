@@ -14,7 +14,7 @@ public class AgreeActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.agree);
+		setContentView(R.layout.agreement_layut);
 		
 		agreeYes = (Button)findViewById(R.id.btn_agree_yes);
 		agreeNo = (Button)findViewById(R.id.btn_agree_no);
