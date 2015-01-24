@@ -21,7 +21,7 @@ public class ChattingActivity extends ActionBarActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.activity_chatting);
+	    setContentView(R.layout.a_chatting);
 	    
 	    listChatting = (ListView)findViewById(R.id.list_chatting_log);
 	    
