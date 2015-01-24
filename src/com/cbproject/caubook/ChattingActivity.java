@@ -48,8 +48,8 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 			MessageData sendData = new MessageData(inputMessage.getEditableText().toString(), calendar.getTime());
 			sendData.setMessageType(MessageTypeEnum.SendMsg);
 			listChattingAdapter.addItem(sendData);
-			// NOTE 리스트뷰 리셋 하는부분
-			listChatting.setAdapter(listChattingAdapter);
+			listChattingAdapter.notifyDataSetChanged();
+			inputMessage.setText(null);
 			break;
 		}
 	}

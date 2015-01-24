@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:transcriptMode="alwaysScroll"
-        android:layout_weight="11"/>
+        android:layout_weight="11"
+        android:dividerHeight="0px"
+        android:divider="#ffffff"/>
             
     <LinearLayout 
         android:layout_width="match_parent"
