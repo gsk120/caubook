@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="12"
+    android:background="@drawable/caubackground">
+    
+    <ListView 
+        android:id="@+id/list_chatting_log"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:transcriptMode="alwaysScroll"
+        android:layout_weight="11"/>
+            
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:weightSum="8"
+        android:orientation="horizontal">
+            
+        <EditText 
+            android:id="@+id/edit_chatting_input"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="6.5"/>
+            
+        <Button 
+            android:id="@+id/btn_chatting_send"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:text="전송"/>
+            <!-- TODO (giseok.lee)
+            	 string.xml 충돌방지를 위해 임시로 하드코딩 -->
+    </LinearLayout>
+        
+</LinearLayout>

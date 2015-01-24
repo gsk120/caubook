@@ -13,14 +13,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class BookRegisterSelectActivity extends ActionBarActivity {
-	
-	Button btn_book_register;
 	
 	private ListView listCourse;
 	private CourseListAdapter listCourseAdapter;
@@ -30,9 +26,10 @@ public class BookRegisterSelectActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.book_register_select);
 	
-		btn_book_register = (Button)findViewById(R.id.btn_book_register);
-		btn_book_register.setOnClickListener(new OnClickListener() {
-			
+		Button btnBookRegister = (Button)findViewById(R.id.btn_book_register);
+		Button btnRegisterPass = (Button)findViewById(R.id.btn_book_register_pass);
+		
+		btnBookRegister.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), BookRegisterGoActivity.class);
@@ -40,6 +37,15 @@ public class BookRegisterSelectActivity extends ActionBarActivity {
 			}
 		});
 		
+		btnRegisterPass.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		// 임시로 리스트뷰 아무렇게 세팅해 둠.
 		listCourse = (ListView)findViewById(R.id.list_book_register);
 		listCourseAdapter = new CourseListAdapter(this);
 		listCourseAdapter.addItem(new CourseListItem("선형대수학", "선형대수학 5판", false));
@@ -78,16 +84,16 @@ public class BookRegisterSelectActivity extends ActionBarActivity {
 	
 	// 리스트뷰 한개의 뷰를 관리하는 클래스
 	private class CourseListViewHolder {
-		private TextView textCourseTitle;
-		private TextView textBookName;
+		private TextView tvCourseTitle;
+		private TextView tvBookName;
 		private CheckBox chkBookExist;
 		
-		public TextView getTextCourseTitle() { return textCourseTitle; }
-		public TextView getTextCourseBook() { return textBookName; }
+		public TextView getTextCourseTitle() { return tvCourseTitle; }
+		public TextView getTextCourseBook() { return tvBookName; }
 		public CheckBox getChkCourse() { return chkBookExist; }
 		
-		public void setTextCourseTitle(TextView titleView) { this.textCourseTitle = titleView; }
-		public void setTextBookName(TextView bookName) { this.textBookName = bookName; }
+		public void setTextCourseTitle(TextView titleView) { this.tvCourseTitle = titleView; }
+		public void setTextBookName(TextView bookName) { this.tvBookName = bookName; }
 		public void setChkBookExist(CheckBox check) { this.chkBookExist = check; }
 	}
 	
@@ -102,11 +108,7 @@ public class BookRegisterSelectActivity extends ActionBarActivity {
 			this.courseListData = new ArrayList<CourseListItem>();
 			this.context = _context;
 		}
-		
-		public ArrayList<CourseListItem> getAlbumList() {
-			return this.courseListData;
-		}
-		
+				
 		@Override
 		public int getCount() {
 			return courseListData.size();

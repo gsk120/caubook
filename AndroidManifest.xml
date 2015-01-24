@@ -35,6 +35,7 @@
         <activity
             android:name=".BookRegisterListActivity">
         </activity>
+        <activity android:name="ChattingActivity"></activity>
     </application>
 
 </manifest>

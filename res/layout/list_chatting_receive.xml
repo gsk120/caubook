@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:id="@+id/layout_chatting_messagebg" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/test">
+        
+        <!-- 일단 ems로 텍스트 뷰 사이즈 결정. 나중에 좀더 해상도에 자유로운 방법으로 구현 필요 -->
+    	<TextView 
+	        android:id="@+id/text_chatting_msg"
+    	    android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:maxEms="12" />    
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/layout_chatting_messagebg"
+        android:layout_toEndOf="@+id/layout_chatting_messagebg"
+        android:layout_alignBottom="@+id/layout_chatting_messagebg"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp">
+    	<!-- TODO 받은 시간 배경 추가해야함 -->
+        
+        <TextView 
+            android:id="@+id/text_chatting_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"/>
+        
+    </LinearLayout>
+
+</RelativeLayout>
