@@ -23,7 +23,7 @@ public class AgreementActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), PosessRegisterActivity.class);
+				Intent intent = new Intent(getApplicationContext(), MyBookRegisterActivity.class);
 				startActivity(intent);
 				
 			}

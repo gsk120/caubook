@@ -23,19 +23,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AgreementActivity">
+            android:name="com.cbproject.caubook.AgreementActivity">
         </activity>
         <activity
-            android:name=".PosessRegisterActivity">
+            android:name="com.cbproject.caubook.AddSellingActivity">
         </activity>
         <activity
-            android:name=".AddSellingActivity"
+            android:name="com.cbproject.caubook.MyBookRegisterActivity"
             android:windowSoftInputMode="stateUnchanged|adjustPan">
         </activity>
         <activity
-            android:name=".TradeTabActivity">
+            android:name="com.cbproject.caubook.TradeTabActivity">
         </activity>
-        <activity android:name="ChattingActivity"></activity>
+        <activity android:name="com.cbproject.caubook.ChattingActivity"></activity>
     </application>
 
 </manifest>
