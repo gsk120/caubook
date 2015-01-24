@@ -7,14 +7,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class AgreeActivity extends ActionBarActivity {
+public class AgreementActivity extends ActionBarActivity {
 	
 	Button agreeYes,agreeNo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.agreement_layut);
+		setContentView(R.layout.a_agreement);
 		
 		agreeYes = (Button)findViewById(R.id.btn_agree_yes);
 		agreeNo = (Button)findViewById(R.id.btn_agree_no);
@@ -23,7 +23,7 @@ public class AgreeActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), BookRegisterSelectActivity.class);
+				Intent intent = new Intent(getApplicationContext(), PosessRegisterActivity.class);
 				startActivity(intent);
 				
 			}

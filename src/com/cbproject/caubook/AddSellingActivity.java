@@ -7,22 +7,22 @@ import android.widget.Button;
 import android.content.Intent;
 import android.os.Bundle;
 
-public class BookRegisterGoActivity extends ActionBarActivity {
+public class AddSellingActivity extends ActionBarActivity {
 	
-	Button btn_book_register_go;
+	Button btnBookRegisterGo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.book_register_go);
+		setContentView(R.layout.a_add_selling);
 	
-		btn_book_register_go = (Button)findViewById(R.id.btn_book_register_go);
+		btnBookRegisterGo = (Button)findViewById(R.id.btn_book_register_go);
 		
-		btn_book_register_go.setOnClickListener(new OnClickListener() {
+		btnBookRegisterGo.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), BookRegisterListActivity.class);
+				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
 				startActivity(intent);
 			}
 		});
