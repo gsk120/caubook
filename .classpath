@@ -5,6 +5,10 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Android/android-sdk-windows/extras/android/support/v13/android-support-v13.jar"/>
+=======
+	<classpathentry kind="lib" path="C:/androidSDK/sdk/platforms/android-18/android.jar"/>
+>>>>>>> 7807cd53d7e1f2d9841347b9618ccfad1a1c725b
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
