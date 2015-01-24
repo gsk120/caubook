@@ -80,7 +80,7 @@
             android:layout_alignBottom="@+id/btn_book_register"
             android:layout_toRightOf="@+id/btn_book_register"
             android:layout_toEndOf="@+id/btn_book_register"
-            android:text="@string/btn_book_rgiseter_pass"/>
+            android:text="@string/btn_book_register_pass"/>
         
     </RelativeLayout>
     

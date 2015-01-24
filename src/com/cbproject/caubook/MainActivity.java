@@ -16,7 +16,7 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.a_main);
 		
 		login = (Button)findViewById(R.id.btn_login);
 		
@@ -24,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), AgreeActivity.class);
+				Intent intent = new Intent(getApplicationContext(), AgreementActivity.class);
 				startActivity(intent);
 				
 			}

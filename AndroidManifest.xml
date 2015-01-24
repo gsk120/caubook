@@ -23,17 +23,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AgreeActivity">
+            android:name=".AgreementActivity">
         </activity>
         <activity
-            android:name=".BookRegisterSelectActivity">
+            android:name=".PosessRegisterActivity">
         </activity>
         <activity
-            android:name=".BookRegisterGoActivity"
+            android:name=".AddSellingActivity"
             android:windowSoftInputMode="stateUnchanged|adjustPan">
         </activity>
         <activity
-            android:name=".BookRegisterListActivity">
+            android:name=".TradeTabActivity">
         </activity>
         <activity android:name="ChattingActivity"></activity>
     </application>

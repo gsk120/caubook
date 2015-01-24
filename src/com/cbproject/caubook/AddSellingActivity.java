@@ -16,23 +16,40 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class BookRegisterSelectActivity extends ActionBarActivity {
+public class AddSellingActivity extends ActionBarActivity {
 	
+<<<<<<< HEAD:src/com/cbproject/caubook/BookRegisterSelectActivity.java
+=======
+	Button btnBookRegisterGo;
+	
+>>>>>>> fe6a65b4aa67593ef74bfc33c0df77ad603ddde2:src/com/cbproject/caubook/AddSellingActivity.java
 	private ListView listCourse;
 	private CourseListAdapter listCourseAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.book_register_select);
+		setContentView(R.layout.a_add_selling);
 	
+<<<<<<< HEAD:src/com/cbproject/caubook/BookRegisterSelectActivity.java
 		Button btnBookRegister = (Button)findViewById(R.id.btn_book_register);
 		Button btnRegisterPass = (Button)findViewById(R.id.btn_book_register_pass);
 		
 		btnBookRegister.setOnClickListener(new OnClickListener() {
+=======
+<<<<<<< HEAD:src/com/cbproject/caubook/AddSellingActivity.java
+		btnBookRegisterGo = (Button)findViewById(R.id.btn_book_register_go);
+		
+		btnBookRegisterGo.setOnClickListener(new OnClickListener() {
+=======
+		btn_book_register = (Button)findViewById(R.id.btn_book_register);
+		btn_book_register.setOnClickListener(new OnClickListener() {
+>>>>>>> 7807cd53d7e1f2d9841347b9618ccfad1a1c725b:src/com/cbproject/caubook/BookRegisterSelectActivity.java
+			
+>>>>>>> fe6a65b4aa67593ef74bfc33c0df77ad603ddde2:src/com/cbproject/caubook/AddSellingActivity.java
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), BookRegisterGoActivity.class);
+				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
 				startActivity(intent);
 			}
 		});
