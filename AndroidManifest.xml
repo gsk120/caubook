@@ -26,11 +26,11 @@
             android:name="com.cbproject.caubook.AgreementActivity">
         </activity>
         <activity
-            android:name="com.cbproject.caubook.AddSellingActivity">
+            android:name="com.cbproject.caubook.AddSellingActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustPan" >
         </activity>
         <activity
-            android:name="com.cbproject.caubook.MyBookRegisterActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustPan">
+            android:name="com.cbproject.caubook.MyBookRegisterActivity" >
         </activity>
         <activity
             android:name="com.cbproject.caubook.TradeTabActivity">

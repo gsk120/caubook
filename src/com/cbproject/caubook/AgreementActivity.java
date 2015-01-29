@@ -9,27 +9,26 @@ import android.widget.Button;
 
 public class AgreementActivity extends ActionBarActivity {
 	
-	Button agreeYes,agreeNo;
+	Button btnAgreeYes,btnAgreeNo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.a_agreement);
 		
-		agreeYes = (Button)findViewById(R.id.btn_agree_yes);
-		agreeNo = (Button)findViewById(R.id.btn_agree_no);
+		btnAgreeYes = (Button)findViewById(R.id.btn_agree_yes);
+		btnAgreeNo = (Button)findViewById(R.id.btn_agree_no);
 		
-		agreeYes.setOnClickListener(new OnClickListener() {
+		btnAgreeYes.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), MyBookRegisterActivity.class);
 				startActivity(intent);
-				
 			}
 		});
 		
-		agreeNo.setOnClickListener(new OnClickListener() {
+		btnAgreeNo.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

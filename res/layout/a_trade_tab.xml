@@ -7,7 +7,7 @@
 
     <TabHost
         android:id="@+id/tabhost"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@drawable/caubackground"
         android:orientation="vertical" >
@@ -27,88 +27,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
-                <GridLayout
-                    android:id="@+id/gridlayout_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:columnCount="2"
-                    android:orientation="horizontal"
-                    android:rowCount="4" >
-
-                    <TextView android:text=" R 1, C 1 " />
-
-                    <TextView android:text=" R 1, C 2 " />
-
-                    <TextView
-                        android:layout_gravity="fill_horizontal"
-                        android:layout_row="1"
-                        android:text=" R 1, C 3 " />
-
-                    <TextView
-                        android:layout_row="0"
-                        android:text=" R 1, C 4 " />
-
-                    <TextView android:text=" R 2, C 1 " />
-
-                    <TextView android:text=" R 2, C 2 " />
-
-                    <TextView
-                        android:layout_row="1"
-                        android:text=" R 2, C 4 " />
-
-                    <TextView android:text=" R 3, C 1 " />
-
-                    <TextView android:text=" R 3, C 2 " />
-
-                    <TextView
-                        android:layout_gravity="fill_horizontal"
-                        android:text=" R 3, C 3 modify " />
-
-                    <TextView android:text=" R 3, C 4 " />
-
-                    <TextView android:text=" R 4, C 1 " />
-
-                    <TextView android:text=" R 4, C 2 " />
-
-                    <TextView
-                        android:layout_gravity="fill_horizontal"
-                        android:text=" R 4, C 3 " />
-
-                    <TextView android:text=" R 4, C 4 " />
-                </GridLayout>
-
-                <GridLayout
-                    android:id="@+id/gridlayout_main2"
+                <GridView
+                    android:id="@+id/gridview_buy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:columnCount="2" >
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:numColumns="auto_fit"
+                    android:stretchMode="columnWidth" >
+                </GridView>
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="3" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="4" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="5" />
-                </GridLayout>
+                <GridView
+                    android:id="@+id/gridview_sell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:horizontalSpacing="30dp"
+                    android:verticalSpacing="30dp"	
+                    android:gravity="center"
+                    android:numColumns="2"
+                    android:stretchMode="columnWidth" >
+                </GridView>
+                
             </FrameLayout>
         </LinearLayout>
     </TabHost>
