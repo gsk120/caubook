@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.cbproject.caubook.AgreementActivity;
 import com.cbproject.caubook.R;
 import com.cbproject.caubook.controller.LoginHandler;
 

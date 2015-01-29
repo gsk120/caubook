@@ -1,7 +1,12 @@
-package com.cbproject.caubook;
+package com.cbproject.caubook.activities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import com.cbproject.caubook.R;
+import com.cbproject.caubook.SelectedCourseListItem;
+import com.cbproject.caubook.R.id;
+import com.cbproject.caubook.R.layout;
 
 import android.content.Context;
 import android.content.Intent;

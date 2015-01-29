@@ -1,6 +1,13 @@
-package com.cbproject.caubook;
+package com.cbproject.caubook.activities;
 
 import java.util.ArrayList;
+
+import com.cbproject.caubook.R;
+import com.cbproject.caubook.SelectedCourseListItem;
+import com.cbproject.caubook.R.drawable;
+import com.cbproject.caubook.R.id;
+import com.cbproject.caubook.R.layout;
+import com.cbproject.caubook.R.string;
 
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;

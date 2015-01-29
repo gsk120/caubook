@@ -1,6 +1,11 @@
-package com.cbproject.caubook;
+package com.cbproject.caubook.activities;
 
 import java.util.ArrayList;
+
+import com.cbproject.caubook.R;
+import com.cbproject.caubook.SelectedCourseListItem;
+import com.cbproject.caubook.R.id;
+import com.cbproject.caubook.R.layout;
 
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;

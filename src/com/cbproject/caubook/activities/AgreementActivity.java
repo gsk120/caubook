@@ -1,4 +1,8 @@
-package com.cbproject.caubook;
+package com.cbproject.caubook.activities;
+
+import com.cbproject.caubook.R;
+import com.cbproject.caubook.R.id;
+import com.cbproject.caubook.R.layout;
 
 import android.content.Intent;
 import android.os.Bundle;

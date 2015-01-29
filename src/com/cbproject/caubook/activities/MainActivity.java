@@ -1,4 +1,4 @@
-package com.cbproject.caubook;
+package com.cbproject.caubook.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +8,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.cbproject.caubook.activities.LoginActivity;
+import com.cbproject.caubook.R;
+import com.cbproject.caubook.R.id;
+import com.cbproject.caubook.R.layout;
+import com.cbproject.caubook.R.menu;
 import com.cbproject.caubook.controller.LoginHandler;
 
 public class MainActivity extends ActionBarActivity {

@@ -1,9 +1,14 @@
-package com.cbproject.caubook;
+package com.cbproject.caubook.activities;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import com.cbproject.caubook.MessageTypeEnum;
+import com.cbproject.caubook.R;
+import com.cbproject.caubook.R.id;
+import com.cbproject.caubook.R.layout;
 
 import android.content.Context;
 import android.os.Bundle;

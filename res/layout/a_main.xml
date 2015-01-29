@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/caubackground"
-    tools:context="com.cbproject.caubook.MainActivity" >
+    tools:context="com.cbproject.caubook.activities.MainActivity" >
     
     <ProgressBar
 		android:id="@+id/progress_loading"

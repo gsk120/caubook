@@ -5,7 +5,7 @@
     android:background="@drawable/caubackground"
     android:orientation="vertical"
     android:weightSum="16"
-    tools:context="com.cbproject.caubook.MainActivity" >
+    tools:context="com.cbproject.caubook.activities.MainActivity" >
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.cbproject.caubook.activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,19 +23,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.cbproject.caubook.AgreementActivity">
+            android:name="com.cbproject.caubook.activities.AgreementActivity">
         </activity>
         <activity
-            android:name="com.cbproject.caubook.AddSellingActivity"
+            android:name="com.cbproject.caubook.activities.AddSellingActivity"
             android:windowSoftInputMode="stateUnchanged|adjustPan" >
         </activity>
         <activity
-            android:name="com.cbproject.caubook.MyBookRegisterActivity" >
+            android:name="com.cbproject.caubook.activities.MyBookRegisterActivity" >
         </activity>
         <activity
-            android:name="com.cbproject.caubook.TradeTabActivity">
+            android:name="com.cbproject.caubook.activities.TradeTabActivity">
         </activity>
-        <activity android:name="com.cbproject.caubook.ChattingActivity"></activity>
+        <activity android:name="com.cbproject.caubook.activities.ChattingActivity"></activity>
         <activity android:name=".activities.LoginActivity"></activity>
     </application>
 
