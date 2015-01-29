@@ -35,7 +35,8 @@
         <activity
             android:name="com.cbproject.caubook.activities.TradeTabActivity">
         </activity>
-        <activity android:name="com.cbproject.caubook.activities.ChattingActivity"></activity>
+        <activity android:name="com.cbproject.caubook.activities.ChattingActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustPan"></activity>
         <activity android:name=".activities.LoginActivity"></activity>
     </application>
 
