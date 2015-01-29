@@ -17,6 +17,9 @@ public class AgreementActivity extends ActionBarActivity implements OnClickListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.a_agreement);
 
+		agreeYes = (Button)findViewById(R.id.btn_agree_yes);
+		agreeNo = (Button)findViewById(R.id.btn_agree_no);
+		
 		agreeYes.setOnClickListener(this);
 		agreeNo.setOnClickListener(this);
 	}
