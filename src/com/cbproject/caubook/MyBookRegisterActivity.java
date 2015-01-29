@@ -1,11 +1,13 @@
 package com.cbproject.caubook;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +23,8 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 	
 	private ListView listCourse;
 	private CourseListAdapter listCourseAdapter;
+	private SelectedCourseListItem selectedCourseListItem;
+	private ArrayList<SelectedCourseListItem> selectedCourseListData;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +34,6 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		Button btnBookRegister = (Button)findViewById(R.id.btn_book_register);
 		Button btnRegisterPass = (Button)findViewById(R.id.btn_book_register_pass);
 		
-		btnBookRegister.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
-				startActivity(intent);
-			}
-		});
-		
-		btnRegisterPass.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
-				startActivity(intent);
-			}
-		});
 		
 		// 임시로 리스트뷰 아무렇게 세팅해 둠.
 		listCourse = (ListView)findViewById(R.id.list_book_register);
@@ -64,8 +53,38 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		
 		
 		listCourse.setAdapter(listCourseAdapter);
+		
+		btnBookRegister.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				selectedCourseListData = new ArrayList<SelectedCourseListItem>();
+				
+				for(int i = 0 ; i < listCourseAdapter.getCount() ; i++){
+					if(listCourseAdapter.getCourseListData().get(i).getBookPossess()){//체크된 과목 있으면
+						selectedCourseListItem = new SelectedCourseListItem(); //판매객체 만들어서 과목명 추가
+						
+						selectedCourseListItem.setStrCourseTitle(
+								listCourseAdapter.getCourseListData().get(i).getStrCourseTitle());
+						
+						selectedCourseListData.add(selectedCourseListItem);//미완성 판매 리스트에 추가
+					}
+				}
+				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
+				intent.putExtra("selectedCourseListData", selectedCourseListData);
+				startActivity(intent);
+			}
+		});
+		
+		btnRegisterPass.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
-
+	
 	// 리스트뷰 한개에 들어갈 내용을 갖는 클래스
 	private class CourseListItem {
 		private String strCourseTitle;
@@ -80,7 +99,8 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		
 		public String getStrCourseTitle() { return strCourseTitle; }
 		public String getStrBookName() { return strBookName; }
-		public boolean isBookPossess() { return bBookPossess; }
+		public boolean getBookPossess() { return bBookPossess; }
+		public void setBookPossess(boolean bBookPossess) { this.bBookPossess = bBookPossess;}
 	}
 	
 	// 리스트뷰 한개의 뷰를 관리하는 클래스
@@ -106,6 +126,7 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		
 		public CourseListAdapter(Context _context){
 			super();
+			
 			this.courseListData = new ArrayList<CourseListItem>();
 			this.context = _context;
 		}
@@ -136,21 +157,42 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 				holder.setTextCourseTitle((TextView)convertView.findViewById(R.id.text_bookregister_coursetitle));
 				holder.setTextBookName((TextView)convertView.findViewById(R.id.text_bookregister_coursebook));
 				holder.setChkBookExist((CheckBox)convertView.findViewById(R.id.chk_bookregister_course));
+				
+				//스크롤 할때 체크가 뒤섞이는 문제 방지
+				holder.getChkCourse().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+					
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						int position = (Integer)buttonView.getTag();
+						courseListData.get(position).setBookPossess(buttonView.isChecked());
+					}
+				});
+				
 				convertView.setTag(holder);
+				convertView.setTag(R.id.text_bookregister_coursetitle, holder.getTextCourseTitle());
+				convertView.setTag(R.id.text_bookregister_coursebook, holder.getTextCourseBook());
+				convertView.setTag(R.id.chk_bookregister_course,holder.getChkCourse());
 				
 			}else{
 				holder = (CourseListViewHolder) convertView.getTag();
 			}
 			
+			holder.getChkCourse().setTag(position);
+			
 			CourseListItem data = courseListData.get(position);
 			holder.getTextCourseTitle().setText(data.getStrCourseTitle());
 			holder.getTextCourseBook().setText(data.getStrBookName());
+			holder.getChkCourse().setChecked(data.getBookPossess());
 			
 			return convertView;
 		}
 		
 		public void addItem(CourseListItem addItem){
 			courseListData.add(addItem);
+		}
+		
+		public ArrayList<CourseListItem> getCourseListData(){
+			return courseListData;
 		}
 	}
 	
