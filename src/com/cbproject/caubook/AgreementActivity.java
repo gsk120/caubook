@@ -1,15 +1,16 @@
 package com.cbproject.caubook;
 
-import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class AgreementActivity extends ActionBarActivity {
+public class AgreementActivity extends ActionBarActivity implements OnClickListener{
 	
-	Button agreeYes,agreeNo;
+	private Button agreeYes;
+	private Button agreeNo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,23 +20,21 @@ public class AgreementActivity extends ActionBarActivity {
 		agreeYes = (Button)findViewById(R.id.btn_agree_yes);
 		agreeNo = (Button)findViewById(R.id.btn_agree_no);
 		
-		agreeYes.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), MyBookRegisterActivity.class);
-				startActivity(intent);
-				
-			}
-		});
-		
-		agreeNo.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+		agreeYes.setOnClickListener(this);
+		agreeNo.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()) {
+		case R.id.btn_agree_yes:
+			Intent intent = new Intent(getApplicationContext(), MyBookRegisterActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.btn_agree_no:
+			break;
+		}
+		finish();
 	}
 
 }

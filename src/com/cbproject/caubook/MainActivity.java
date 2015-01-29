@@ -1,36 +1,62 @@
 package com.cbproject.caubook;
 
-import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+
+import com.cbproject.caubook.activities.LoginActivity;
+import com.cbproject.caubook.controller.LoginHandler;
 
 public class MainActivity extends ActionBarActivity {
-
-	Button login;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.a_main);
 		
-		login = (Button)findViewById(R.id.btn_login);
+		// 스플래시 화면이 보이도록 1초의 딜레이 추가
+		Handler hd = new Handler();
+        hd.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+            	// 딜레이 종료 후 로그인 시도
+            	CheckIdentification();
+            }
+        }, 1000);		
+	}
+	
+	// 자동 로그인 혹은 로그인 시도 함수
+	private void CheckIdentification() {
+		SharedPreferences pref = getSharedPreferences("savedInfo", MODE_PRIVATE);
 		
-		login.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
+		// 자동 로그인 여부 확인
+		if(pref.getBoolean("auto_login", false)) {
+			String strId = pref.getString("id", "");
+			String strPw = pref.getString("pw", "");
+			LoginHandler hLogin = new LoginHandler(getApplicationContext(), strId, strPw);
+			if(hLogin.doLogin()) {
+				//자동 로그인 성공
 				Intent intent = new Intent(getApplicationContext(), AgreementActivity.class);
 				startActivity(intent);
-				
+				finish();
+			} else {
+				//자동 로그인 실패
+				Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+				startActivity(intent);
+				finish();
 			}
-		});
+		}
+		else {
+			Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+			startActivity(intent);
+			finish();
+		}
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

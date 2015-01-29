@@ -36,4 +36,6 @@
 	
 	 <string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
+    <string name="login_error_id_empty">아이디를 입력하세요.</string>
+    <string name="login_error_pw_empty">비밀번호를 입력하세요.</string>
 </resources>

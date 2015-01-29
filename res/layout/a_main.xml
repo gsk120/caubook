@@ -1,86 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/caubackground"
-    android:weightSum="10"
     tools:context="com.cbproject.caubook.MainActivity" >
     
-    <RelativeLayout 
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="5">
+    <ProgressBar
+		android:id="@+id/progress_loading"
+    	style="?android:attr/progressBarStyleLarge"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_centerHorizontal="true"
+    	android:layout_centerVertical="true" />
         
-        <ImageView
-        	android:id="@+id/image_caubook_logo"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_centerHorizontal="true"
-        	android:layout_centerVertical="true"
-        	android:src="@drawable/caubook" />
-        
-    </RelativeLayout>
-    
-    <RelativeLayout 
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1">
-    
-        <EditText
-        	android:id="@+id/edit_user_id"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_centerHorizontal="true"
-        	android:layout_centerVertical="true"
-        	android:ems="10"
-        	android:textColor="#ffffff"
-        	android:hint="@string/user_id_hint"/>
-        
-    </RelativeLayout>
-    
-    <RelativeLayout 
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1">
-    
-        <EditText
-        	android:id="@+id/edit_user_password"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:inputType="textPassword"
-        	android:layout_centerHorizontal="true"
-        	android:layout_centerVertical="true"
-        	android:ems="10"
-        	android:textColor="#ffffff"
-        	android:hint="@string/user_password_hint" />
-        
-    </RelativeLayout>
-    
-    <RelativeLayout 
-        android:layout_width="wrap_content"
-        android:layout_height="0px"
-        android:layout_weight="3"
-        android:layout_gravity="center_horizontal">
-        
-        <Button
-        	android:id="@+id/btn_login"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_centerVertical="true"
-        	android:textColor="#ffffff"
-        	android:text="@string/btn_login_text" />
-
-    	<CheckBox
-	        android:id="@+id/check_auto_login"
-    	    android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_alignBottom="@+id/btn_login"
-        	android:layout_toRightOf="@+id/btn_login"
-        	android:layout_toEndOf="@+id/btn_login"
-        	android:textColor="#ffffff"
-        	android:text="@string/check_auto_login_text" />
-    	
-    </RelativeLayout>
-    
-</LinearLayout>
+</RelativeLayout>
