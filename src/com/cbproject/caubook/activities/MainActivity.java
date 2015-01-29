@@ -9,9 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.cbproject.caubook.R;
-import com.cbproject.caubook.R.id;
-import com.cbproject.caubook.R.layout;
-import com.cbproject.caubook.R.menu;
 import com.cbproject.caubook.controller.LoginHandler;
 
 public class MainActivity extends ActionBarActivity {

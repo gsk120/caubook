@@ -7,8 +7,6 @@ import java.util.Date;
 
 import com.cbproject.caubook.MessageTypeEnum;
 import com.cbproject.caubook.R;
-import com.cbproject.caubook.R.id;
-import com.cbproject.caubook.R.layout;
 
 import android.content.Context;
 import android.os.Bundle;

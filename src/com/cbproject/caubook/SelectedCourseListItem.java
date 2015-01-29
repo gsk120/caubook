@@ -5,6 +5,7 @@ import java.io.Serializable;
 import android.widget.ImageView;
 
 public class SelectedCourseListItem implements Serializable{
+	private static final long serialVersionUID = 1L;	// Serializable ID
 	private String strCourseTitle;		//과목명
 	private String strProfessorName;	//교수명
 	private String strBookName;			//책이름

@@ -4,27 +4,18 @@ import java.util.ArrayList;
 
 import com.cbproject.caubook.R;
 import com.cbproject.caubook.SelectedCourseListItem;
-import com.cbproject.caubook.R.drawable;
-import com.cbproject.caubook.R.id;
-import com.cbproject.caubook.R.layout;
-import com.cbproject.caubook.R.string;
 
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
