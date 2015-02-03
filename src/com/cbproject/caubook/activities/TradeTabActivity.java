@@ -28,6 +28,7 @@ import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,9 +45,11 @@ public class TradeTabActivity extends ActionBarActivity {
 	private ListView listOption;
 	private DrawerLayout drawerLayoutOptionDrawer;
 	private ActionBarDrawerToggle actionBarDrawerToggle;
-	private GridView gridViewSelectedBookList;
+	private GridView gridViewSellBookList,gridViewBuyBookList;
 	private ArrayList<SelectedCourseListItem> selectedCourseListData;
+	private static ArrayList<SelectedCourseListItem> buyCourseListData;//액티비티 전환 시 한번만 초기화
 	private SelectedCourseListAdapter selectedCourseListAdapter;
+	private BuyCourseListAdapter buyCourseListAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,12 +101,13 @@ public class TradeTabActivity extends ActionBarActivity {
 		selectedCourseListData = (ArrayList<SelectedCourseListItem>)
 									getIntent().getSerializableExtra("selectedCourseListData");
 
-		gridViewSelectedBookList = (GridView)findViewById(R.id.gridview_sell);
+		gridViewSellBookList = (GridView)findViewById(R.id.gridview_sell);
 		
 		selectedCourseListAdapter = new SelectedCourseListAdapter(this,selectedCourseListData);	
-		gridViewSelectedBookList.setAdapter(selectedCourseListAdapter);
+		gridViewSellBookList.setAdapter(selectedCourseListAdapter);
 		
-		gridViewSelectedBookList.setOnItemClickListener(new OnItemClickListener() {
+		//판매탭 : 미완성 판매 목록 리스트 중에서 최종 판매 등록할 과목 선택
+		gridViewSellBookList.setOnItemClickListener(new OnItemClickListener() {
 			
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {			
@@ -112,6 +116,31 @@ public class TradeTabActivity extends ActionBarActivity {
 				intent.putExtra("position", position);
 				startActivity(intent);
 				finish();
+			}
+		});
+		
+		//구매탭 : 최종 구매 등록한 과목 리스트 보여주기
+		gridViewBuyBookList = (GridView)findViewById(R.id.gridview_buy);
+		buyCourseListData = new ArrayList<SelectedCourseListItem>();
+		// 이형철 엄청안오네
+		for(int i= 0 ; i < selectedCourseListData.size() ; i++){
+			SelectedCourseListItem item = selectedCourseListData.get(i);
+			
+			if(item.isbBookSell()){
+				buyCourseListData.add(item);
+			}
+		}
+		
+		buyCourseListAdapter = new BuyCourseListAdapter(this, buyCourseListData);
+		gridViewBuyBookList.setAdapter(buyCourseListAdapter);
+		
+		gridViewBuyBookList.setOnItemClickListener(new OnItemClickListener() {
+			
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Toast.makeText(getApplicationContext(), "구매테스트", Toast.LENGTH_SHORT).show();
+				
 			}
 		});
 	}//onCreate
@@ -130,6 +159,60 @@ public class TradeTabActivity extends ActionBarActivity {
 		public void setImgSelectedBook(ImageView imgSelectedBook) { this.imgSelectedBook = imgSelectedBook; }
 	}
 	
+	private class BuyCourseListAdapter extends BaseAdapter{
+		
+		private ArrayList<SelectedCourseListItem> buyCourseListData;
+		private Context context;
+		
+		private BuyCourseListAdapter(Context _context, ArrayList<SelectedCourseListItem> _buyCourseListData) {
+			super();
+			context = _context;
+			buyCourseListData = _buyCourseListData;
+		}
+		
+		@Override
+		public int getCount() {
+			return buyCourseListData.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return buyCourseListData.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			SelectedCourseListViewHolder holder;
+			if(convertView == null){
+				holder = new SelectedCourseListViewHolder();
+				
+				LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				convertView = inflater.inflate(R.layout.list_selected_course_list_item, null);
+				holder.setTvSelectedBookTitle((TextView)convertView.findViewById(R.id.text_selected_book_title));
+				holder.setTvSelectedBookPrice((TextView)convertView.findViewById(R.id.text_selected_book_price));
+				holder.setImgSelectedBook((ImageView)convertView.findViewById(R.id.img_selected_book));
+				
+				convertView.setTag(holder);
+				
+			}else{
+				holder = (SelectedCourseListViewHolder) convertView.getTag();
+			}
+							
+			SelectedCourseListItem data = buyCourseListData.get(position);
+			
+			holder.getTvSelectedBookTitle().setText(data.getStrCourseTitle());
+			holder.getTvSelectedBookPrice().setText("45000원");
+			holder.getImgSelectedBook().setImageResource(R.drawable.caubook);
+
+			return convertView;
+		}
+	}
+
 	private class SelectedCourseListAdapter extends BaseAdapter{
 		
 		private ArrayList<SelectedCourseListItem> selectedCourseListData;
@@ -139,7 +222,6 @@ public class TradeTabActivity extends ActionBarActivity {
 			super();
 			context = _context;
 			selectedCourseListData = _selectedCourseListData;
-			//Log.d("getCount()", selectedCourseListData.size() + "");
 		}
 		
 		@Override
@@ -182,11 +264,10 @@ public class TradeTabActivity extends ActionBarActivity {
 				holder = (SelectedCourseListViewHolder) convertView.getTag();
 			}
 						
-			
 			SelectedCourseListItem data = selectedCourseListData.get(position);
 			holder.getTvSelectedBookTitle().setText(data.getStrCourseTitle());
 			holder.getTvSelectedBookPrice().setText("45000원");
-			holder.getImgSelectedBook().setImageResource(R.drawable.caubook);
+			holder.getImgSelectedBook().setImageResource(R.drawable.no_image);
 			
 			//최종 등록 할 경우 활성화 시키기
 			if(isActivate(position)){

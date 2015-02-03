@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,7 +23,7 @@ public class AddSellingActivity extends ActionBarActivity {
 	EditText editTextBookAddSellingCourseName;
 	ArrayList<SelectedCourseListItem> selectedCourseListData;
 	int selectedPosition;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,6 +41,8 @@ public class AddSellingActivity extends ActionBarActivity {
 				intent.putExtra("selectedCourseListData", selectedCourseListData);
 				startActivity(intent);
 				finish();
+				
+				Toast.makeText(getApplicationContext(), "구매 탭에 등록되었습니다.", Toast.LENGTH_SHORT).show();
 			}
 		});
 		
@@ -50,5 +53,5 @@ public class AddSellingActivity extends ActionBarActivity {
 		editTextBookAddSellingCourseName.setText(selectedCourseListData.get(selectedPosition).getStrCourseTitle());
 		
 		
-	}
+	}//onCreate
 }
