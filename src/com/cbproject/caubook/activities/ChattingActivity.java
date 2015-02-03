@@ -41,14 +41,21 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	    btnSend.setOnClickListener(this);
 	    
 	    inputMessage = (EditText)findViewById(R.id.edit_chatting_input);
+	    
+	    String userID = getIntent().getStringExtra("userID");
+	    setTitle(userID);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()) {
 		case R.id.btn_chatting_send:
+			String strMessage = inputMessage.getEditableText().toString();
+			if(strMessage.equals("")) {
+				break;
+			}
 			Calendar calendar = Calendar.getInstance();
-			MessageData sendData = new MessageData(inputMessage.getEditableText().toString(), calendar.getTime());
+			MessageData sendData = new MessageData(strMessage, calendar.getTime());
 			sendData.setMessageType(MessageTypeEnum.SendMsg);
 			listChattingAdapter.addItem(sendData);
 			listChattingAdapter.notifyDataSetChanged();
