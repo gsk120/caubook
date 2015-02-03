@@ -191,6 +191,24 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:text="@string/text_book_add_selling_photo" />
+
+        <Button
+            android:id="@+id/btn_book_add_selling_picture"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/btn_book_add_selling_photo" />
+
+        <EditText
+            android:id="@+id/text_book_add_selling_photopath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_book_add_selling_picture"
+            android:ems="10"
+            android:isScrollContainer="true" />
         
     </RelativeLayout>
     

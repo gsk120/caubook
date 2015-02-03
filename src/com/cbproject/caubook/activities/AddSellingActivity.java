@@ -50,6 +50,5 @@ public class AddSellingActivity extends ActionBarActivity {
 		//picture ³Ö±â
 		
 		
-		
 	}
 }
