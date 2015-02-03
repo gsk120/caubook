@@ -74,6 +74,7 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
 				intent.putExtra("selectedCourseListData", selectedCourseListData);
 				startActivity(intent);
+				finish();
 			}
 		});
 		
