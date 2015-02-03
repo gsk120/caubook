@@ -47,6 +47,9 @@ public class AddSellingActivity extends ActionBarActivity {
 		
 		editTextBookAddSellingCourseName.setText(selectedCourseListData.get(selectedPosition).getStrCourseTitle());
 		
+		//picture ³Ö±â
+		
+		
 		
 	}
 }
