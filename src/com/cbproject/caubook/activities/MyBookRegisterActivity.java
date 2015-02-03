@@ -83,7 +83,7 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				// TODO 건너뛰기 버튼에 채팅창연결해둠. 나중에는 지우고 판매 정보에서 1:1 대화버튼으로 옮겨야함.
 				Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
-				intent.putExtra("userID", "gsk120");
+				intent.putExtra("userID", "hemanruru");
 				startActivity(intent);
 			}
 		});
