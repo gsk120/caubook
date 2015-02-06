@@ -32,9 +32,11 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	private MessageListAdpater listChattingAdapter;
 	private Button btnSend;
 	private EditText inputMessage;
-	
-	int i=0; //테스트용ㄴ
 
+	// 대화 테이블 합성키를 위해
+	private int oppositeID;
+	private int chattingOrder;
+	
 	// 채팅 목록 sqlite에 저장하기 위해 DB관련 멤버변수 선언
 	private UserTable userTable;
 	private ConversationTable conversationTable;
@@ -60,18 +62,26 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	    userTable = new UserTable(this);
 	    conversationTable = new ConversationTable(this);
 	    
-	    if(!userTable.isExist(userID)) {
-	    	// 나와 대화 상대로 상대 아이디가 있으면 새로 추가
+	    // 대화 테이블의 합성키를 위해 대화 상대의 userTable 기본키 및 순서 컬럼 
+	    oppositeID = userTable.isExist(userID);
+	    chattingOrder = 0;
+	    if(oppositeID == -1) {
+	    	// 나와 대화 상대로 상대 아이디가 없으면 새로 추가
 	    	UserData user = new UserData(0, userID);
 		    userTable.insertQuery(user);
 	    } else {
-	    	// 나와 대화ㄴ한적이 있으면 채팅 리스트 불러오기
-	    	ArrayList<ConversationData> conversationList = conversationTable.selectAllQuery();
+	    	// 나와 대화한적이 있으면 채팅 리스트 불러오기
+	    	// TODO selectAllQuery함수를 userID에 해당하는 것만 받아오는 기능으로 변경
+	    	ArrayList<ConversationData> conversationList = conversationTable.selectAllQuery(oppositeID);
+	    	Log.i("ddd", Integer.toString(conversationList.size()));
 	    	for(int i=0; i<conversationList.size(); i++) {
-	    		Log.i("dd", "ddddddddddd");
-	    		MessageData data = new MessageData(conversationList.get(i).getContent(), conversationList.get(i).getTime());
+	    		MessageData data = new MessageData(conversationList.get(i).getContent(), conversationList.get(i).getTime(), conversationList.get(i).getMessageType());
 	    		listChattingAdapter.addItem(data);
 	    		listChattingAdapter.notifyDataSetChanged();
+	    		// 임시로 순서 받아오는 코드
+	    		if(chattingOrder < conversationList.get(i).getOrder()) {
+	    			chattingOrder = conversationList.get(i).getOrder();
+	    		}
 	    	}
 	    }
 	}
@@ -90,7 +100,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 			listChattingAdapter.addItem(sendData);
 			listChattingAdapter.notifyDataSetChanged();
 			inputMessage.setText(null);
-			ConversationData data = new ConversationData(0, i++, sendData.getMessageContent(), sendData.getMessageTime(), sendData.getMessageType());
+			ConversationData data = new ConversationData(oppositeID, ++chattingOrder, sendData.getMessageContent(), sendData.getMessageTime(), sendData.getMessageType());
 			conversationTable.insertQuery(data);
 			break;
 		}
@@ -106,6 +116,12 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 			this.msgContent = _content;
 			this.msgTime = _time;
 			this.msgType = MessageTypeEnum.None;
+		}
+		
+		public MessageData(String _content, Date _time, MessageTypeEnum _type) {
+			this.msgContent = _content;
+			this.msgTime = _time;
+			this.msgType = _type;
 		}
 		
 		public String getMessageContent() { return this.msgContent; }

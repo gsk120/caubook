@@ -39,15 +39,15 @@ public class UserTable extends DBManager {
 	}
 	
 	// portal id가 있는지 없는지 확인하는 함수
-	public boolean isExist(String portal) {
+	public int isExist(String portal) {
 		dbReader = dbOpenner.getReadableDatabase();
 		Cursor cursor = dbReader.query(tableName, null, null, null, null, null, null);
 		while(cursor.moveToNext()) {
 			if(cursor.getString(cursor.getColumnIndex("portalID")).equals(portal)) {
-				return true;
+				return cursor.getInt(cursor.getColumnIndex("userID"));
 			}
 		}
-		return false;
+		return -1;
 	}
 	
 	// insert 쿼리 함수

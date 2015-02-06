@@ -69,23 +69,26 @@ public class ConversationTable extends DBManager{
 		return null;
 	}
 	
-	public ArrayList<ConversationData> selectAllQuery() {
+	// 해당하는 userID의 모든 대화 내용을 뽑는 함수
+	public ArrayList<ConversationData> selectAllQuery(int userID) {
 		dbReader = dbOpenner.getReadableDatabase();
 		ArrayList<ConversationData> resultList = new ArrayList<ConversationTable.ConversationData>();
 		Cursor cursor = dbReader.query(tableName, null, null, null, null, null, null);
 		while(cursor.moveToNext()) {
 			int keyID = cursor.getInt(cursor.getColumnIndex("userID"));
-			int keyOrder = cursor.getInt(cursor.getColumnIndex("orderNum")); 
-			String strContent = cursor.getString(cursor.getColumnIndex("content"));
-			String strTime = cursor.getString(cursor.getColumnIndex("time"));
-			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String strType = cursor.getString(cursor.getColumnIndex("msgType"));
-			try {
-				// 리스트에 추가
-				resultList.add(new ConversationData(keyID, keyOrder, strContent, sdFormat.parse(strTime), MessageTypeEnum.valueOf(strType)));
-			} catch (ParseException e) {
-				Log.e("ParseError", "Conversation data parse error");
-				e.printStackTrace();
+			if(keyID == userID) {
+				int keyOrder = cursor.getInt(cursor.getColumnIndex("orderNum")); 
+				String strContent = cursor.getString(cursor.getColumnIndex("content"));
+				String strTime = cursor.getString(cursor.getColumnIndex("time"));
+				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String strType = cursor.getString(cursor.getColumnIndex("msgType"));
+				try {
+					// 리스트에 추가
+					resultList.add(new ConversationData(keyID, keyOrder, strContent, sdFormat.parse(strTime), MessageTypeEnum.valueOf(strType)));
+				} catch (ParseException e) {
+					Log.e("ParseError", "Conversation data parse error");
+					e.printStackTrace();
+				}
 			}
 		}
 		return resultList;
