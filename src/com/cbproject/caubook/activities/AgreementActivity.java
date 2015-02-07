@@ -2,6 +2,8 @@ package com.cbproject.caubook.activities;
 
 import com.cbproject.caubook.R;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -51,12 +53,27 @@ public class AgreementActivity extends ActionBarActivity implements OnClickListe
 			// 다음 액티비티로 전환
 			Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 			startActivity(intent);
+			finish();
 			break;
 			
 		case R.id.btn_agree_no:
-			// 동의하지 않는 경우 어플리케이션 종료
+			// 동의하지 않기 누른 경우 다이얼로그 창 뜨면서 종료여부 묻기
+			new AlertDialog.Builder(this)
+			.setTitle(R.string.disagree_dialog)
+			.setMessage("동의하지 않는 경우\nUniBook을 사용할 수 없습니다.")
+			.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+				}
+			})
+			.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					
+				}
+			}).show();
 			break;
 		}
-		finish();
 	}
 }
