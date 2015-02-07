@@ -4,46 +4,61 @@ import java.util.ArrayList;
 
 import com.cbproject.caubook.R;
 import com.cbproject.caubook.SelectedCourseListItem;
+import com.cbproject.caubook.controller.AlertDialogHandler;
 
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.support.v7.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.widget.TabHost.TabSpec;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 
-public class TradeTabActivity extends ActionBarActivity {
+public class TradeTabActivity extends ActionBarActivity implements OnQueryTextListener{
 	
-	private String[] strOptionItems = {"이형철","이현빈","이기석","이기석","이기석","이기석","이기석","조지민"};
+	private String[] strOptionItems = {"로그 아웃","등록 초기화","등록 추가","환경 설정","도움말","종료","공지사항"};
 	private ListView listOption;
 	private DrawerLayout drawerLayoutOptionDrawer;
 	private ActionBarDrawerToggle actionBarDrawerToggle;
-	private GridView gridViewSelectedBookList;
-	private ArrayList<SelectedCourseListItem> selectedCourseListData;
+	private GridView gridViewSellBookList,gridViewBuyBookList;
+	private ArrayList<SelectedCourseListItem> selectedCourseListData = new ArrayList<SelectedCourseListItem>();
+	private static ArrayList<SelectedCourseListItem> buyCourseListData;//액티비티 전환 시 한번만 초기화
 	private SelectedCourseListAdapter selectedCourseListAdapter;
+	private BuyCourseListAdapter buyCourseListAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.a_trade_tab);
-		
+	
 		drawerLayoutOptionDrawer = (DrawerLayout)findViewById(R.id.drawerlayout_main_drawer);
 		
 		actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayoutOptionDrawer, 
@@ -88,13 +103,14 @@ public class TradeTabActivity extends ActionBarActivity {
 		
 		selectedCourseListData = (ArrayList<SelectedCourseListItem>)
 									getIntent().getSerializableExtra("selectedCourseListData");
-
-		gridViewSelectedBookList = (GridView)findViewById(R.id.gridview_sell);
+	
+		gridViewSellBookList = (GridView)findViewById(R.id.gridview_sell);
 		
 		selectedCourseListAdapter = new SelectedCourseListAdapter(this,selectedCourseListData);	
-		gridViewSelectedBookList.setAdapter(selectedCourseListAdapter);
-		
-		gridViewSelectedBookList.setOnItemClickListener(new OnItemClickListener() {
+		gridViewSellBookList.setAdapter(selectedCourseListAdapter);
+			
+		//판매탭 : 미완성 판매 목록 리스트 중에서 최종 판매 등록할 과목 선택
+		gridViewSellBookList.setOnItemClickListener(new OnItemClickListener() {
 			
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {			
@@ -103,6 +119,31 @@ public class TradeTabActivity extends ActionBarActivity {
 				intent.putExtra("position", position);
 				startActivity(intent);
 				finish();
+			}
+		});
+		
+		//구매탭 : 최종 구매 등록한 과목 리스트 보여주기
+		gridViewBuyBookList = (GridView)findViewById(R.id.gridview_buy);
+		buyCourseListData = new ArrayList<SelectedCourseListItem>();
+		
+		for(int i= 0 ; i < selectedCourseListData.size() ; i++){
+			SelectedCourseListItem item = selectedCourseListData.get(i);
+			
+			if(item.isbBookSell()){
+				buyCourseListData.add(item);
+			}
+		}
+		
+		buyCourseListAdapter = new BuyCourseListAdapter(this, buyCourseListData);
+		gridViewBuyBookList.setAdapter(buyCourseListAdapter);
+		
+		gridViewBuyBookList.setOnItemClickListener(new OnItemClickListener() {
+			
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Toast.makeText(getApplicationContext(), "구매테스트", Toast.LENGTH_SHORT).show();
+				
 			}
 		});
 	}//onCreate
@@ -121,6 +162,60 @@ public class TradeTabActivity extends ActionBarActivity {
 		public void setImgSelectedBook(ImageView imgSelectedBook) { this.imgSelectedBook = imgSelectedBook; }
 	}
 	
+	private class BuyCourseListAdapter extends BaseAdapter{
+		
+		private ArrayList<SelectedCourseListItem> buyCourseListData;
+		private Context context;
+		
+		private BuyCourseListAdapter(Context _context, ArrayList<SelectedCourseListItem> _buyCourseListData) {
+			super();
+			context = _context;
+			buyCourseListData = _buyCourseListData;
+		}
+		
+		@Override
+		public int getCount() {
+			return buyCourseListData.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return buyCourseListData.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			SelectedCourseListViewHolder holder;
+			if(convertView == null){
+				holder = new SelectedCourseListViewHolder();
+				
+				LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				convertView = inflater.inflate(R.layout.list_selected_course_list_item, null);
+				holder.setTvSelectedBookTitle((TextView)convertView.findViewById(R.id.text_selected_book_title));
+				holder.setTvSelectedBookPrice((TextView)convertView.findViewById(R.id.text_selected_book_price));
+				holder.setImgSelectedBook((ImageView)convertView.findViewById(R.id.img_selected_book));
+				
+				convertView.setTag(holder);
+				
+			}else{
+				holder = (SelectedCourseListViewHolder) convertView.getTag();
+			}
+							
+			SelectedCourseListItem data = buyCourseListData.get(position);
+			
+			holder.getTvSelectedBookTitle().setText(data.getStrCourseTitle());
+			holder.getTvSelectedBookPrice().setText("45000원");
+			holder.getImgSelectedBook().setImageResource(R.drawable.caubook);
+
+			return convertView;
+		}
+	}
+
 	private class SelectedCourseListAdapter extends BaseAdapter{
 		
 		private ArrayList<SelectedCourseListItem> selectedCourseListData;
@@ -130,7 +225,6 @@ public class TradeTabActivity extends ActionBarActivity {
 			super();
 			context = _context;
 			selectedCourseListData = _selectedCourseListData;
-			//Log.d("getCount()", selectedCourseListData.size() + "");
 		}
 		
 		@Override
@@ -173,11 +267,10 @@ public class TradeTabActivity extends ActionBarActivity {
 				holder = (SelectedCourseListViewHolder) convertView.getTag();
 			}
 						
-			
 			SelectedCourseListItem data = selectedCourseListData.get(position);
 			holder.getTvSelectedBookTitle().setText(data.getStrCourseTitle());
 			holder.getTvSelectedBookPrice().setText("45000원");
-			holder.getImgSelectedBook().setImageResource(R.drawable.caubook);
+			holder.getImgSelectedBook().setImageResource(R.drawable.no_image);
 			
 			//최종 등록 할 경우 활성화 시키기
 			if(isActivate(position)){
@@ -199,9 +292,24 @@ public class TradeTabActivity extends ActionBarActivity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
 			switch(position){
             case 0:
-            	Toast.makeText(getApplicationContext(), "drawer test", Toast.LENGTH_SHORT).show();
-            	break;
+            	AlertDialogHandler hAlertDialogLogout = new AlertDialogHandler(TradeTabActivity.this);
+            	AlertDialog alertLogout = hAlertDialogLogout.AlertDialogLogout();
+            	alertLogout.show();
+            	break;          	
             case 1:
+            	AlertDialogHandler hAlertDialogInit = new AlertDialogHandler(TradeTabActivity.this);
+            	AlertDialog alertInit = hAlertDialogInit.AlertDialogMyBookRegisterInit();
+            	alertInit.show();
+            	break;
+            case 2:
+            	AlertDialogHandler hAlertDialogModify = new AlertDialogHandler(TradeTabActivity.this);
+            	AlertDialog alertModify = hAlertDialogModify.AlertDialogMyBookRegisterModify(selectedCourseListData);
+            	alertModify.show();
+            	break;
+            case 5:
+            	AlertDialogHandler hAlertDialogExit = new AlertDialogHandler(TradeTabActivity.this);
+            	AlertDialog alertExit = hAlertDialogExit.AlertDialogExit();
+            	alertExit.show();
             	break;
 			}
 			drawerLayoutOptionDrawer.closeDrawer(listOption);
@@ -221,10 +329,43 @@ public class TradeTabActivity extends ActionBarActivity {
 	}
 	
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.book_search, menu);
+		
+		SearchView searchView = (SearchView) menu.findItem(R.id.item_book_search).getActionView();
+		searchView.setQueryHint("책 이름을 입력하세요");
+		searchView.setOnQueryTextListener(this);
+		
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(actionBarDrawerToggle.onOptionsItemSelected(item)){
 			return true;
 		}
+		
 		return super.onOptionsItemSelected(item);
 	}
+
+	@Override
+	public boolean onQueryTextSubmit(String query) {//query로 선형대수학 입력하면
+		Toast.makeText(this, "Searching test",Toast.LENGTH_SHORT).show();
+		//DB : select * from 테이블 where 책이름=query; 
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		Log.d("onQueryTextSubmit", "onQueryTextSubmit");
+		
+		return false;
+	}
+	
+	@Override
+	public void onBackPressed() {
+		//super.onBackPressed();
+	}
+	
 }

@@ -7,7 +7,6 @@ import java.util.Date;
 
 import com.cbproject.caubook.MessageTypeEnum;
 import com.cbproject.caubook.R;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

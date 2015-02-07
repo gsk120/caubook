@@ -1,6 +1,7 @@
 package com.cbproject.caubook.activities;
 
 import com.cbproject.caubook.R;
+import com.cbproject.caubook.controller.BackPressCloseHandler;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,21 +12,29 @@ import android.widget.Button;
 
 public class AgreementActivity extends ActionBarActivity implements OnClickListener{
 	
-	private Button agreeYes;
-	private Button agreeNo;
+	private Button btnAgreeYes;
+	private Button btnAgreeNo;
+	private BackPressCloseHandler backPressCloseHandler;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.a_agreement);
 
-		agreeYes = (Button)findViewById(R.id.btn_agree_yes);
-		agreeNo = (Button)findViewById(R.id.btn_agree_no);
+		backPressCloseHandler = new BackPressCloseHandler(this);
 		
-		agreeYes.setOnClickListener(this);
-		agreeNo.setOnClickListener(this);
+		btnAgreeYes = (Button)findViewById(R.id.btn_agree_yes);
+		btnAgreeNo = (Button)findViewById(R.id.btn_agree_no);
+		
+		btnAgreeYes.setOnClickListener(this);
+		btnAgreeNo.setOnClickListener(this);
 	}
 
+	@Override
+	public void onBackPressed() {
+		backPressCloseHandler.onBackPressed();
+	}
+	
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()) {

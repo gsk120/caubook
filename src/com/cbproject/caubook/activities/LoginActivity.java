@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.cbproject.caubook.R;
+import com.cbproject.caubook.controller.BackPressCloseHandler;
 import com.cbproject.caubook.controller.LoginHandler;
 
 public class LoginActivity extends ActionBarActivity {
@@ -20,11 +21,14 @@ public class LoginActivity extends ActionBarActivity {
 	private EditText inputPW;
 	private CheckBox autoLogin;
 	private SharedPreferences pref;
+	private BackPressCloseHandler backPressCloseHandler;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.a_login);
+		
+		backPressCloseHandler = new BackPressCloseHandler(this);
 		
 		pref = getSharedPreferences("savedInfo", MODE_PRIVATE);
 		
@@ -63,5 +67,10 @@ public class LoginActivity extends ActionBarActivity {
 				}
 			}
 		});
+	}
+	
+	@Override
+	public void onBackPressed() {
+		backPressCloseHandler.onBackPressed();
 	}
 }
