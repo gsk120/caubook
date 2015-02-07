@@ -1,41 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="12"
     android:background="@drawable/caubackground">
     
-    <ListView 
+    <!-- * 채팅 레이아웃이 깨지지 않도록 weight 속성 제거 (키보드가 올라오면 보이는 부분이 줄어들어 비율이 깨짐)
+    	 * RelativeLayout으로 변경
+    	 * ListView height를 match_parent로 변경하여 꽉게 변경 
+    	 * ListView에 layout_above 속성 추가하여 완전히 꽉차는것 방지 -->
+	<ListView 
         android:id="@+id/list_chatting_log"
         android:layout_width="match_parent"
-        android:layout_height="0px"
+        android:layout_height="match_parent"
         android:transcriptMode="alwaysScroll"
-        android:layout_weight="11"
+        android:layout_above="@+id/input_layout"
         android:dividerHeight="0px"
         android:divider="#ffffff"/>
+	 
+	<LinearLayout 
+	    android:id="@+id/input_layout"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+       	android:weightSum="8"
+       	android:orientation="horizontal">
             
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:weightSum="8"
-        android:orientation="horizontal">
-            
-        <EditText 
-            android:id="@+id/edit_chatting_input"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="6.5"/>
-            
-        <Button 
+	    <EditText 
+           	android:id="@+id/edit_chatting_input"
+           	android:layout_width="0px"
+           	android:layout_height="wrap_content"
+           	android:layout_weight="6.5"
+           	android:hint=""
+           	android:maxLines="4"
+           	android:scrollHorizontally="true"/>
+	            
+    	<Button 
             android:id="@+id/btn_chatting_send"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:text="전송"/>
-            <!-- TODO (giseok.lee)
-            	 string.xml 충돌방지를 위해 임시로 하드코딩 -->
-    </LinearLayout>
+	        android:layout_width="0px"
+    	    android:layout_height="wrap_content"
+           	android:layout_weight="1.5"
+           	android:text="@string/btn_send_msg"/>
+           	<!-- TODO (giseok.lee)
+           	 	string.xml 충돌방지를 위해 임시로 하드코딩 -->
         
-</LinearLayout>
+	</LinearLayout>
+	
+</RelativeLayout>
