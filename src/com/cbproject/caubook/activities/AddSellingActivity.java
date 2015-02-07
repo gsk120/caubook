@@ -49,21 +49,12 @@ public class AddSellingActivity extends ActionBarActivity implements
 	
 		btnSelectedBookAddSelling = (Button)findViewById(R.id.btn_book_add_selling);
 		btnBookAddSellingReturn = (Button)findViewById(R.id.btn_book_add_selling_return);
+		btnSelectBookPicture = (Button)findViewById(R.id.btn_book_add_selling_picture);
+		
 		editTextBookAddSellingCourseName = (EditText)findViewById(R.id.edit_text_book_add_selling_course_search);
 		
-		btnSelectedBookAddSelling.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				selectedCourseListData.get(selectedPosition).setbBookSell(true);	//최종등록 true로 변경
-				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
-				intent.putExtra("selectedCourseListData", selectedCourseListData);
-				startActivity(intent);
-				finish();
-				
-				Toast.makeText(getApplicationContext(), "구매 탭에 등록되었습니다.", Toast.LENGTH_SHORT).show();
-			}
-		});
+		btnSelectedBookAddSelling.setOnClickListener(this);
+		btnSelectBookPicture.setOnClickListener(this);
 		
 		btnBookAddSellingReturn.setOnClickListener(new OnClickListener() {
 			
@@ -96,11 +87,12 @@ public class AddSellingActivity extends ActionBarActivity implements
 		switch (v.getId()) {
 
 		case R.id.btn_book_add_selling:
-			intent = new Intent();
-			selectedCourseListData.get(selectedPosition).setbBookSell(true);
+			selectedCourseListData.get(selectedPosition).setbBookSell(true);	//최종등록 true로 변경
+			intent = new Intent(getApplicationContext(), TradeTabActivity.class);
 			intent.putExtra("selectedCourseListData", selectedCourseListData);
 			startActivity(intent);
 			finish();
+			Toast.makeText(getApplicationContext(), "구매 탭에 등록되었습니다.", Toast.LENGTH_SHORT).show();
 			break;
 
 		case R.id.btn_book_add_selling_picture:
@@ -108,7 +100,7 @@ public class AddSellingActivity extends ActionBarActivity implements
 			intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
 			intent.putExtra("crop", "true");
 			//intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
+			Log.i("ddd", "dddddd");
 			intent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri()); // 임시파일 생성
 			intent.putExtra("outputFormat", // 포맷방식
 					Bitmap.CompressFormat.JPEG.toString());
