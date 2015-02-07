@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.cbproject.caubook.R;
 import com.cbproject.caubook.SelectedCourseListItem;
+import com.cbproject.caubook.controller.BackPressCloseHandler;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,12 +27,16 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 	private CourseListAdapter listCourseAdapter;
 	private SelectedCourseListItem selectedCourseListItem;
 	private ArrayList<SelectedCourseListItem> selectedCourseListData;
+	private BackPressCloseHandler backPressCloseHandler;
+	private boolean FLAG;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.a_posess_register);
 	
+		backPressCloseHandler = new BackPressCloseHandler(this);
+		
 		Button btnBookRegister = (Button)findViewById(R.id.btn_book_register);
 		Button btnRegisterPass = (Button)findViewById(R.id.btn_book_register_pass);
 		
@@ -52,6 +57,23 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		listCourseAdapter.addItem(new CourseListItem("공업수학", "Engineering math", false));
 		listCourseAdapter.addItem(new CourseListItem("앱개발프로그래밍", "App android programming", false));
 		
+		//전에 체크한 상태로 수정페이지 보여주기
+		selectedCourseListData = (ArrayList<SelectedCourseListItem>)
+				getIntent().getSerializableExtra("selectedCourseListData");
+		
+		if(selectedCourseListData == null){
+			selectedCourseListData = new ArrayList<SelectedCourseListItem>();
+		}
+		
+		for(int i = 0 ; i < selectedCourseListData.size() ; i++){
+			for(int j = 0 ; j < listCourseAdapter.getCount() ; j++){
+				if(selectedCourseListData.get(i).getStrCourseTitle().equals
+								(listCourseAdapter.getCourseListData().get(j).getStrCourseTitle())){
+					listCourseAdapter.getCourseListData().get(j).setBookPossess(true);
+					break;
+				}
+			}
+		}
 		
 		listCourse.setAdapter(listCourseAdapter);
 		
@@ -59,18 +81,31 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
-				selectedCourseListData = new ArrayList<SelectedCourseListItem>();
-				
 				for(int i = 0 ; i < listCourseAdapter.getCount() ; i++){
-					if(listCourseAdapter.getCourseListData().get(i).getBookPossess()){//체크된 과목 있으면
-						selectedCourseListItem = new SelectedCourseListItem(); //판매객체 만들어서 과목명 추가
-						
-						selectedCourseListItem.setStrCourseTitle(
-								listCourseAdapter.getCourseListData().get(i).getStrCourseTitle());
-						
-						selectedCourseListData.add(selectedCourseListItem);//미완성 판매 리스트에 추가
+					if(listCourseAdapter.getCourseListData().get(i).getBookPossess()){//체크된 과목 있으면	
+						for(int j = 0 ; j < selectedCourseListData.size() ; j++){	//기존의 구매 탭에 있는 책 목록과 비교
+							if(listCourseAdapter.getCourseListData().get(i).getStrCourseTitle().equals
+									(selectedCourseListData.get(j).getStrCourseTitle())){
+								FLAG=true;
+								break;
+							}
+							else{
+								continue;
+							}
+						}
+						if(FLAG == false){	//체크된 과목중 구매 탭에  없는 것만 추가
+							selectedCourseListItem = new SelectedCourseListItem(); //판매객체 만들어서 과목명 추가
+							
+							selectedCourseListItem.setStrCourseTitle(
+									listCourseAdapter.getCourseListData().get(i).getStrCourseTitle());
+							
+							selectedCourseListItem.setbBookPossess(true);
+							selectedCourseListData.add(selectedCourseListItem);//미완성 구매탭 판매 리스트에 추가
+						}
 					}
+					FLAG=false;
 				}
+				
 				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
 				intent.putExtra("selectedCourseListData", selectedCourseListData);
 				startActivity(intent);
@@ -87,7 +122,7 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 				startActivity(intent);
 			}
 		});
-	}
+	}//onCreate
 	
 	// 리스트뷰 한개에 들어갈 내용을 갖는 클래스
 	private class CourseListItem {
@@ -198,6 +233,11 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		public ArrayList<CourseListItem> getCourseListData(){
 			return courseListData;
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		backPressCloseHandler.onBackPressed();
 	}
 	
 }

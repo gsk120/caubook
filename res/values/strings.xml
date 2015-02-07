@@ -26,9 +26,6 @@
 	<string name="text_book_add_selling_book_price">가 격</string>
 	<string name="text_book_add_selling_etc">기타</string>
 	<string name="text_book_add_selling_photo">사진첨부</string>
-	<string name="text_book_add_selling_course_search">검색</string>
-	<string name="text_book_add_selling_professor_search">검색</string>
-	<string name="text_book_add_selling_book_name_search">검색</string>
 	<string name="btn_book_add_selling">등록</string>
 	<string name="btn_book_add_selling_return">돌아가기</string>
 	<string name="btn_book_add_selling_photo">갤러리</string>

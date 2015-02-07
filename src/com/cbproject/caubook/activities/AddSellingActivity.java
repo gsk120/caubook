@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import com.cbproject.caubook.R;
 import com.cbproject.caubook.SelectedCourseListItem;
 
@@ -47,13 +46,14 @@ public class AddSellingActivity extends ActionBarActivity implements
 		setContentView(R.layout.a_add_selling);
 	
 		btnSelectedBookAddSelling = (Button)findViewById(R.id.btn_book_add_selling);
+		btnBookAddSellingReturn = (Button)findViewById(R.id.btn_book_add_selling_return);
 		editTextBookAddSellingCourseName = (EditText)findViewById(R.id.edit_text_book_add_selling_course_search);
 		
 		btnSelectedBookAddSelling.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				selectedCourseListData.get(selectedPosition).setbBookSell(true);
+				selectedCourseListData.get(selectedPosition).setbBookSell(true);	//최종등록 true로 변경
 				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
 				intent.putExtra("selectedCourseListData", selectedCourseListData);
 				startActivity(intent);
@@ -63,6 +63,18 @@ public class AddSellingActivity extends ActionBarActivity implements
 			}
 		});
 		
+		btnBookAddSellingReturn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
+				intent.putExtra("selectedCourseListData", selectedCourseListData);
+				startActivity(intent);
+				finish();
+			}
+		});
+		
+		//TradeTabActivity에서 넘어온 데이터 저장
 		selectedPosition = getIntent().getIntExtra("position", -1);
 		selectedCourseListData = (ArrayList<SelectedCourseListItem>) getIntent()
 				.getSerializableExtra("selectedCourseListData");

@@ -5,18 +5,24 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.cbproject.caubook.R;
+import com.cbproject.caubook.controller.BackPressCloseHandler;
 import com.cbproject.caubook.controller.LoginHandler;
 
 public class MainActivity extends ActionBarActivity {
+	
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.a_main);
+		
+		
 		
 		// 스플래시 화면이 보이도록 1초의 딜레이 추가
 		Handler hd = new Handler();
@@ -26,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
             	// 딜레이 종료 후 로그인 시도
             	checkIdentification();
             }
-        }, 1000);		
+        }, 1000); 
 	}
 	
 	// 약관동의. 자동로그인 시도 함수
@@ -61,6 +67,8 @@ public class MainActivity extends ActionBarActivity {
 		startActivity(intent);
 		finish();
 	}
+	
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
