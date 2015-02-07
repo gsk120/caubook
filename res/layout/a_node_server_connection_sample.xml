@@ -1,0 +1,77 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.unibookwebview2.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <WebView
+        android:id="@+id/webView1"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:layout_weight="2" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="5"
+                android:text="Portal ID" />
+
+            <EditText
+                android:id="@+id/portalID"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:layout_weight="2" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="5"
+                android:text="Portal PW" />
+
+            <EditText
+                android:id="@+id/portalPW"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:password="true"
+                android:layout_weight="5" />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/portalLogin"
+            android:text="LOGIN"
+            android:layout_weight="2" />
+        <TextView
+        android:id="@+id/subjectShowTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:scrollHorizontally="true" />
+    </LinearLayout>
+
+    
+
+</FrameLayout>
