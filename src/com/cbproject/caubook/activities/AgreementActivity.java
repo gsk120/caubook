@@ -49,7 +49,7 @@ public class AgreementActivity extends ActionBarActivity implements OnClickListe
 			// 동의 버튼 눌렀을 경우
 			if(!agreeUsage.isChecked() || !agreePerson.isChecked()){
 				// 약관에 동의하지 않은경우 경고문구 출력
-				Toast.makeText(getApplicationContext(), R.string.agree_error, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "약관에 동의하시기 바랍니다.", Toast.LENGTH_SHORT).show();
 				return;						
 			}
 			
@@ -68,7 +68,7 @@ public class AgreementActivity extends ActionBarActivity implements OnClickListe
 		case R.id.btn_agree_no:
 			// 동의하지 않기 누른 경우 다이얼로그 창 뜨면서 종료여부 묻기
 			new AlertDialog.Builder(this)
-			.setTitle(R.string.disagree_dialog)
+			.setTitle("이용약관 동의")
 			.setMessage("동의하지 않는 경우\nUniBook을 사용할 수 없습니다.")
 			.setPositiveButton("확인", new DialogInterface.OnClickListener() {
 				@Override
