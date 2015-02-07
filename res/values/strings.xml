@@ -35,5 +35,5 @@
     <string name="login_error_id_empty">아이디를 입력하세요.</string>
     <string name="login_error_pw_empty">비밀번호를 입력하세요.</string>
     <string name="btn_send_msg">전송</string>
-    <string name="fffff">이용약관 동의ㄴㄴㄴㄴㄴ</string>
+    <string name="text_book_search">책검색</string>
 </resources>
