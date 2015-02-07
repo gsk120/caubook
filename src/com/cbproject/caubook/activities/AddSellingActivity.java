@@ -4,14 +4,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import com.cbproject.caubook.R;
 import com.cbproject.caubook.SelectedCourseListItem;
+
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,6 +32,7 @@ public class AddSellingActivity extends ActionBarActivity implements
 	private static final int REQ_CODE_PICK_IMAGE = 2;
 
 	Button btnSelectedBookAddSelling;
+	Button btnBookAddSellingReturn;
 	Button btnSelectBookPicture;
 
 	String strSelectedCourseTitle;
@@ -128,8 +132,6 @@ public class AddSellingActivity extends ActionBarActivity implements
         }
 
         return f;
-		
-		editTextBookAddSellingCourseName.setText(selectedCourseListData.get(selectedPosition).getStrCourseTitle());
 	
 	}//onCreate
 	
