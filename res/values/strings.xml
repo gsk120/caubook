@@ -31,6 +31,7 @@
 	<string name="text_book_add_selling_book_name_search">검색</string>
 	<string name="btn_book_add_selling">등록</string>
 	<string name="btn_book_add_selling_return">돌아가기</string>
+	<string name="btn_book_add_selling_photo">갤러리</string>
 	
 	<string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
