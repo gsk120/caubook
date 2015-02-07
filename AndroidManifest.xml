@@ -7,6 +7,8 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="18" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -36,7 +38,7 @@
             android:name="com.cbproject.caubook.activities.TradeTabActivity">                  
         </activity>
         <activity android:name="com.cbproject.caubook.activities.ChattingActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustPan"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity android:name=".activities.LoginActivity"></activity>
     </application>
 

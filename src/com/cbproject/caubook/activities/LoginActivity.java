@@ -14,7 +14,7 @@ import com.cbproject.caubook.R;
 import com.cbproject.caubook.controller.BackPressCloseHandler;
 import com.cbproject.caubook.controller.LoginHandler;
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends ActionBarActivity implements OnClickListener{
 
 	private Button btnLogin;
 	private EditText inputID;
@@ -37,36 +37,38 @@ public class LoginActivity extends ActionBarActivity {
 		autoLogin = (CheckBox)findViewById(R.id.check_auto_login);
 		btnLogin = (Button)findViewById(R.id.btn_login);
 		
-		autoLogin.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		autoLogin.setOnClickListener(this);
+		btnLogin.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()) {
+		case R.id.btn_login:
+			String strId = inputID.getEditableText().toString();
+			String strPw = inputPW.getEditableText().toString();
+			LoginHandler hLogin = new LoginHandler(getApplicationContext(), strId, strPw);
+			if(hLogin.doLogin()) {
+				// 로그인 성공 -> 동의 액티비티로 전환 -> 현재 상태 프리퍼런스에 저장
 				SharedPreferences.Editor editor = pref.edit();
-				editor.putBoolean("auto_login", autoLogin.isChecked());
+				editor.putString("id", strId);
+				editor.putString("pw", strPw);
 				editor.commit();
+				
+				Intent intent = new Intent(getApplicationContext(), MyBookRegisterActivity.class);
+				startActivity(intent);
+				finish();
+				
+			} else {
+				//로그인 실패 				
 			}
-		});
-		
-		btnLogin.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String strId = inputID.getEditableText().toString();
-				String strPw = inputPW.getEditableText().toString();
-				LoginHandler hLogin = new LoginHandler(getApplicationContext(), strId, strPw);
-				if(hLogin.doLogin()) {
-					//로그인 성공 -> 동의 액티비티로 전환 -> 현재 상태 프리퍼런스에 저장
-					SharedPreferences.Editor editor = pref.edit();
-					editor.putString("id", strId);
-					editor.putString("pw", strPw);
-					editor.commit();
-					
-					Intent intent = new Intent(getApplicationContext(), AgreementActivity.class);
-					startActivity(intent);
-					finish();
-				} else {
-					//로그인 실패 				
-				}
-			}
-		});
+			break;
+		case R.id.check_auto_login:
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putBoolean("auto_login", autoLogin.isChecked());
+			editor.commit();
+			break;
+		}
 	}
 	
 	@Override

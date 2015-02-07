@@ -30,14 +30,23 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void run() {
             	// 딜레이 종료 후 로그인 시도
-            	CheckIdentification();
+            	checkIdentification();
             }
         }, 1000); 
 	}
 	
-	// 자동 로그인 혹은 로그인 시도 함수
-	private void CheckIdentification() {
+	// 약관동의. 자동로그인 시도 함수
+	private void checkIdentification() {
 		SharedPreferences pref = getSharedPreferences("savedInfo", MODE_PRIVATE);
+		
+		// 약관 동의 여부 확인 (약관 동의 x인 경우)
+		if(!pref.getBoolean("app_agree", false)) {
+			// 약관동의 차체가 안되었으므로 액티비티 전환후 리턴
+			Intent intent = new Intent(getApplicationContext(), AgreementActivity.class);
+			startActivity(intent);
+			finish();
+			return;
+		}
 		
 		// 자동 로그인 여부 확인
 		if(pref.getBoolean("auto_login", false)) {
@@ -45,22 +54,18 @@ public class MainActivity extends ActionBarActivity {
 			String strPw = pref.getString("pw", "");
 			LoginHandler hLogin = new LoginHandler(getApplicationContext(), strId, strPw);
 			if(hLogin.doLogin()) {
-				//자동 로그인 성공
-				Intent intent = new Intent(getApplicationContext(), AgreementActivity.class);
+				//자동 로그인 성공 -> 액티비티 전환 후 리턴
+				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
 				startActivity(intent);
 				finish();
-			} else {
-				//자동 로그인 실패
-				Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-				startActivity(intent);
-				finish();
+				return;
 			}
 		}
-		else {
-			Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-			startActivity(intent);
-			finish();
-		}
+		
+		// 약관 동의 o 자동로그인 x 인경우
+		Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+		startActivity(intent);
+		finish();
 	}
 	
 	
