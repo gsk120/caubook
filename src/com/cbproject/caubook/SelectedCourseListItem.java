@@ -11,6 +11,7 @@ public class SelectedCourseListItem implements Serializable{
 	private String strBookPrice;		//책가격
 	private String strEtc;				//기타
 	private ImageView imgBook;			//int로 id값 받을지 나중에 일단은 ImageView
+	private boolean bBookPossess;
 	private boolean bBookSell;			//미완성 책 목록 리스트에서 판매 등록 완료되면 true로 변경
 	
 	public String getStrCourseTitle() {
@@ -55,5 +56,10 @@ public class SelectedCourseListItem implements Serializable{
 	public void setbBookSell(boolean bBookSell) {
 		this.bBookSell = bBookSell;
 	}
-	
+	public boolean isbBookPossess() {
+		return bBookPossess;
+	}
+	public void setbBookPossess(boolean bBookPossess) {
+		this.bBookPossess = bBookPossess;
+	}
 }

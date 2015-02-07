@@ -33,7 +33,7 @@
             android:name="com.cbproject.caubook.activities.MyBookRegisterActivity" >
         </activity>
         <activity
-            android:name="com.cbproject.caubook.activities.TradeTabActivity">
+            android:name="com.cbproject.caubook.activities.TradeTabActivity">                  
         </activity>
         <activity android:name="com.cbproject.caubook.activities.ChattingActivity"></activity>
         <activity android:name=".activities.LoginActivity"></activity>

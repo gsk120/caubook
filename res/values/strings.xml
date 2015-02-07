@@ -26,14 +26,12 @@
 	<string name="text_book_add_selling_book_price">가 격</string>
 	<string name="text_book_add_selling_etc">기타</string>
 	<string name="text_book_add_selling_photo">사진첨부</string>
-	<string name="text_book_add_selling_course_search">검색</string>
-	<string name="text_book_add_selling_professor_search">검색</string>
-	<string name="text_book_add_selling_book_name_search">검색</string>
 	<string name="btn_book_add_selling">등록</string>
 	<string name="btn_book_add_selling_return">돌아가기</string>
-	
 	<string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
     <string name="login_error_id_empty">아이디를 입력하세요.</string>
     <string name="login_error_pw_empty">비밀번호를 입력하세요.</string>
+    
+    <string name="text_book_search">책 검색</string>
 </resources>
