@@ -28,6 +28,8 @@
 	<string name="text_book_add_selling_photo">사진첨부</string>
 	<string name="btn_book_add_selling">등록</string>
 	<string name="btn_book_add_selling_return">돌아가기</string>
+	<string name="btn_book_add_selling_photo">갤러리</string>
+	
 	<string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
     <string name="login_error_id_empty">아이디를 입력하세요.</string>
