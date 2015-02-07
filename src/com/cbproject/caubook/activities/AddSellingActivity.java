@@ -45,15 +45,24 @@ public class AddSellingActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.a_add_selling);
-
-		btnSelectedBookAddSelling = (Button) findViewById(R.id.btn_book_add_selling);
-		editTextBookAddSellingCourseName = (EditText) findViewById(R.id.edit_text_book_add_selling_course_search);
-
-		btnSelectBookPicture = (Button) findViewById(R.id.btn_book_add_selling_picture);
-
-		btnSelectedBookAddSelling.setOnClickListener(this);
-		btnSelectBookPicture.setOnClickListener(this);
-
+	
+		btnSelectedBookAddSelling = (Button)findViewById(R.id.btn_book_add_selling);
+		editTextBookAddSellingCourseName = (EditText)findViewById(R.id.edit_text_book_add_selling_course_search);
+		
+		btnSelectedBookAddSelling.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				selectedCourseListData.get(selectedPosition).setbBookSell(true);
+				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
+				intent.putExtra("selectedCourseListData", selectedCourseListData);
+				startActivity(intent);
+				finish();
+				
+				Toast.makeText(getApplicationContext(), "구매 탭에 등록되었습니다.", Toast.LENGTH_SHORT).show();
+			}
+		});
+		
 		selectedPosition = getIntent().getIntExtra("position", -1);
 		selectedCourseListData = (ArrayList<SelectedCourseListItem>) getIntent()
 				.getSerializableExtra("selectedCourseListData");
@@ -110,7 +119,7 @@ public class AddSellingActivity extends ActionBarActivity implements
 
         return f;
 		
-	}
+	}//onCreate
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);

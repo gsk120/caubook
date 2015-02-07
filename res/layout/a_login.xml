@@ -20,6 +20,11 @@
         	android:layout_centerVertical="true"
         	android:src="@drawable/caubook" />
         
+        <WebView 
+            android:id="@+id/web_login"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+        
     </RelativeLayout>
     
     <RelativeLayout 
