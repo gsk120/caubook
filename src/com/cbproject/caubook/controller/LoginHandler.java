@@ -11,9 +11,13 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import com.cbproject.caubook.R;
+import com.cbproject.caubook.activities.MyBookRegisterActivity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.sax.StartElementListener;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -57,6 +61,7 @@ public class LoginHandler {
 				// TODO Auto-generated method stub
 				cookies = CookieManager.getInstance().getCookie(url);
 				System.out.println(cookies);
+				Log.i("ddd", cookies);
 				CookieSyncManager localCookieSyncManager = CookieSyncManager.createInstance(webview.getContext());
 				localCookieSyncManager.startSync();
 				if(cookies.contains("JSESSION")){
@@ -83,6 +88,9 @@ public class LoginHandler {
 		protected void onPostExecute(String result) {
 			// TODO °á°ú ÀÛ¾÷ ¶ç¿ì±â ÀÏ´Ü ·Î±×Ä¹¿¡ ÂïÀ½.
 			Log.i("result", result);
+			Intent intent = new Intent(context, MyBookRegisterActivity.class);
+			((Activity)context).startActivity(intent);
+			((Activity)context).finish();
 		}
 		
 		private String requestInformation(String cookie) {
@@ -112,7 +120,7 @@ public class LoginHandler {
 				while((line = br.readLine()) != null){
 					lineResult += line;
 				}
-				System.out.println(lineResult);
+				//System.out.println(lineResult);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
