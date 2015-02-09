@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -61,7 +62,6 @@ public class LoginHandler {
 				// TODO Auto-generated method stub
 				cookies = CookieManager.getInstance().getCookie(url);
 				System.out.println(cookies);
-				Log.i("ddd", cookies);
 				CookieSyncManager localCookieSyncManager = CookieSyncManager.createInstance(webview.getContext());
 				localCookieSyncManager.startSync();
 				if(cookies.contains("JSESSION")){
@@ -109,7 +109,8 @@ public class LoginHandler {
 				conn.setDoOutput(true);
 				conn.setDoInput(true);
 				OutputStream os = conn.getOutputStream();
-				cookie = URLEncoder.encode(cookie);
+				cookie = URLEncoder.encode(cookie, "UTF-8");
+				Log.i("dddd", cookie);
 				String outString = "cookie="+cookie;
 				
 				os.write(outString.getBytes("UTF-8"));
@@ -125,8 +126,12 @@ public class LoginHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			URLDecoder urlDecoder = new URLDecoder();
-			lineResult = urlDecoder.decode(lineResult);
+			try {
+				lineResult = URLDecoder.decode(lineResult, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return lineResult;
 		}
 	}
