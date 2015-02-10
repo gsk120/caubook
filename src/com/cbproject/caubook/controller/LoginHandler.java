@@ -1,15 +1,28 @@
 package com.cbproject.caubook.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.cbproject.caubook.R;
 import com.cbproject.caubook.activities.MyBookRegisterActivity;
@@ -18,6 +31,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.text.Html;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -83,10 +97,42 @@ public class LoginHandler {
 			return requestInformation(params[0]);
 		}
 		
-		// doInBackground 실행 후 UI 스레드 작업
+		// 매개 변수로 강의리스트를 받아옴
 		protected void onPostExecute(String result) {
-			// TODO 결과 작업 띄우기 일단 로그캣에 찍음.
-			Log.i("result", result);
+			// html 형식의 결과를 xml형식으로 변환
+			String strFix = Html.fromHtml(result).toString();
+			Log.i("ddd", strFix);
+			
+			// XML 파싱
+//			DocumentBuilderFactory docBuildFact = DocumentBuilderFactory.newInstance();
+//			try {
+//				DocumentBuilder docBuild = docBuildFact.newDocumentBuilder();
+//				Document doc = docBuild.parse(new InputSource(new StringReader(strFix)));
+//				doc.getDocumentElement().normalize();
+//				
+//				NodeList lectureList = doc.getElementsByTagName("map");
+//				for(int i=0; i<lectureList.getLength(); i++) {
+//					Node lectureNode = lectureList.item(i);
+//					Element lecElement = (Element)lectureNode;
+//					
+//					NodeList grdList = lecElement.getElementsByTagName("avg_grd_in");
+//					Element grdElement = (Element)grdList.item(0);
+//					Node name = grdElement.getFirstChild();
+//					Log.i("test", name.getNodeValue());
+//				}
+//			} catch (ParserConfigurationException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (SAXException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+			
+			// TODO 로그인 성공했을 경우에만 책등록 액티비티로 전환 (일단은 무조건 전환)
 			Intent intent = new Intent(context, MyBookRegisterActivity.class);
 			((Activity)context).startActivity(intent);
 			((Activity)context).finish();
@@ -109,7 +155,7 @@ public class LoginHandler {
 				conn.setDoInput(true);
 				OutputStream os = conn.getOutputStream();
 				cookie = URLEncoder.encode(cookie, "UTF-8");
-				Log.i("dddd", cookie);
+				//Log.i("dddd", cookie);
 				String outString = "cookie="+cookie;
 				
 				os.write(outString.getBytes("UTF-8"));
