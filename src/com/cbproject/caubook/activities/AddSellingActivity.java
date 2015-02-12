@@ -74,6 +74,11 @@ public class AddSellingActivity extends ActionBarActivity implements
 
 		editTextBookAddSellingCourseName.setText(selectedCourseListData.get(
 				selectedPosition).getStrCourseTitle());
+		
+		//구매 탭에 최종 등록시 edittext 비활성화(샘플)
+		if(selectedCourseListData.get(selectedPosition).isbBookSell() == true){
+			editTextBookAddSellingCourseName.setFocusable(false);
+		}
 
 	}
 

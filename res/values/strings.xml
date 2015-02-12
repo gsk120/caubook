@@ -29,11 +29,21 @@
 	<string name="btn_book_add_selling">등록</string>
 	<string name="btn_book_add_selling_return">돌아가기</string>
 	<string name="btn_book_add_selling_photo">갤러리</string>
-	
+		
 	<string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
     <string name="login_error_id_empty">아이디를 입력하세요.</string>
     <string name="login_error_pw_empty">비밀번호를 입력하세요.</string>
     <string name="btn_send_msg">전송</string>
     <string name="text_book_search">책검색</string>
+    <string name="text_delete_book">DELETE</string>
+    <string name="text_show_book_info">책 상세 정보</string>
+    <string name="text_show_book_info_course_name">과목명</string>
+	<string name="text_show_book_info_professor_name">교수명</string>
+	<string name="text_show_book_info_book_name">책이름</string>
+	<string name="text_show_book_info_book_price">가 격</string>
+	<string name="text_show_book_info_etc">기타</string>
+    <string name="btn_show_book_info_question">문의</string>
+    <string name="btn_show_book_info_return">돌아가기</string>
+    <string name="text_show_book_info_photo">사진</string>
 </resources>
