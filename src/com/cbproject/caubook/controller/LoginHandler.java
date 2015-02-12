@@ -149,7 +149,7 @@ public class LoginHandler {
 			String line = "";
 			String lineResult = "";
 			try {
-				url = new URL("http://54.64.181.90:3000/requestInformation");
+				url = new URL("http://54.92.63.117:3000/requestInformation");
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
