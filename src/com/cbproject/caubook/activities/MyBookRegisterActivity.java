@@ -44,19 +44,27 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		// 임시로 리스트뷰 아무렇게 세팅해 둠.
 		listCourse = (ListView)findViewById(R.id.list_book_register);
 		listCourseAdapter = new CourseListAdapter(this);
-		listCourseAdapter.addItem(new CourseListItem("선형대수학", "선형대수학 5판", false));
-		listCourseAdapter.addItem(new CourseListItem("자료구조", "Data Structure", false));
-		listCourseAdapter.addItem(new CourseListItem("알고리즘", "Algorithm 3판", false));
-		listCourseAdapter.addItem(new CourseListItem("결혼과가족", "결혼과 가족", false));
-		listCourseAdapter.addItem(new CourseListItem("OOP", "객체지향 프로그래밍", false));
-		listCourseAdapter.addItem(new CourseListItem("운영체제", "Operating System", false));
-		listCourseAdapter.addItem(new CourseListItem("리눅스 시스템", "Linux programming", false));
-		listCourseAdapter.addItem(new CourseListItem("C프로그래밍", "C Programming", false));
-		listCourseAdapter.addItem(new CourseListItem("자바프로그래밍", "Java Programming", false));
-		listCourseAdapter.addItem(new CourseListItem("어셈블리", "Assembly", false));
-		listCourseAdapter.addItem(new CourseListItem("공업수학", "Engineering math", false));
-		listCourseAdapter.addItem(new CourseListItem("앱개발프로그래밍", "App android programming", false));
 		
+		ArrayList<SelectedCourseListItem> courseList = new ArrayList<SelectedCourseListItem>();
+		courseList = (ArrayList<SelectedCourseListItem>) getIntent().getSerializableExtra("courseList");
+		
+		for(int i=0; i<courseList.size(); i++) {
+			listCourseAdapter.addItem(new CourseListItem(courseList.get(i).getStrBookName(), "아직몰라", false));
+		}
+//		
+//		listCourseAdapter.addItem(new CourseListItem("선형대수학", "선형대수학 5판", false));
+//		listCourseAdapter.addItem(new CourseListItem("자료구조", "Data Structure", false));
+//		listCourseAdapter.addItem(new CourseListItem("알고리즘", "Algorithm 3판", false));
+//		listCourseAdapter.addItem(new CourseListItem("결혼과가족", "결혼과 가족", false));
+//		listCourseAdapter.addItem(new CourseListItem("OOP", "객체지향 프로그래밍", false));
+//		listCourseAdapter.addItem(new CourseListItem("운영체제", "Operating System", false));
+//		listCourseAdapter.addItem(new CourseListItem("리눅스 시스템", "Linux programming", false));
+//		listCourseAdapter.addItem(new CourseListItem("C프로그래밍", "C Programming", false));
+//		listCourseAdapter.addItem(new CourseListItem("자바프로그래밍", "Java Programming", false));
+//		listCourseAdapter.addItem(new CourseListItem("어셈블리", "Assembly", false));
+//		listCourseAdapter.addItem(new CourseListItem("공업수학", "Engineering math", false));
+//		listCourseAdapter.addItem(new CourseListItem("앱개발프로그래밍", "App android programming", false));
+//		
 		//전에 체크한 상태로 수정페이지 보여주기
 		selectedCourseListData = (ArrayList<SelectedCourseListItem>)
 				getIntent().getSerializableExtra("selectedCourseListData");
