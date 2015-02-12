@@ -83,24 +83,21 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				for(int i = 0 ; i < listCourseAdapter.getCount() ; i++){
 					if(listCourseAdapter.getCourseListData().get(i).getBookPossess()){//체크된 과목 있으면	
-						for(int j = 0 ; j < selectedCourseListData.size() ; j++){	//기존의 구매 탭에 있는 책 목록과 비교
+						for(int j = 0 ; j < selectedCourseListData.size() ; j++){	//기존의 판매 탭에 있는 책 목록과 비교
 							if(listCourseAdapter.getCourseListData().get(i).getStrCourseTitle().equals
 									(selectedCourseListData.get(j).getStrCourseTitle())){
 								FLAG=true;
 								break;
 							}
-							else{
-								continue;
-							}
 						}
-						if(FLAG == false){	//체크된 과목중 구매 탭에  없는 것만 추가
+						if(FLAG == false){	//체크된 과목중 판매 탭에  없는 것만 추가
 							selectedCourseListItem = new SelectedCourseListItem(); //판매객체 만들어서 과목명 추가
 							
 							selectedCourseListItem.setStrCourseTitle(
 									listCourseAdapter.getCourseListData().get(i).getStrCourseTitle());
 							
 							selectedCourseListItem.setbBookPossess(true);
-							selectedCourseListData.add(selectedCourseListItem);//미완성 구매탭 판매 리스트에 추가
+							selectedCourseListData.add(selectedCourseListItem);//미완성 판매탭 판매 리스트에 추가
 						}
 					}
 					FLAG=false;

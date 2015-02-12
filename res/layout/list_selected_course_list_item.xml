@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="5" >
+    android:weightSum="5"
+    android:background="?android:attr/activatedBackgroundIndicator" >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0px"
+        android:layout_height="match_parent"
         android:layout_weight="1" >
 
         <TextView
@@ -16,13 +17,14 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
-    </RelativeLayout>
 
+    </RelativeLayout>
+	
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="3" >
-
+        
         <ImageView
             android:id="@+id/img_selected_book"
             android:layout_width="match_parent"

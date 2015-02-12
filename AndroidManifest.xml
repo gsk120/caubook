@@ -39,7 +39,8 @@
         </activity>
         <activity android:name="com.cbproject.caubook.activities.ChattingActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
-        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.LoginActivity"></activity> 
+        <activity android:name=".activities.ShowBookInfoActivity"></activity>
     </application>
 
 </manifest>
