@@ -66,7 +66,6 @@ public class TradeTabActivity extends ActionBarActivity {
 			public void onDrawerOpened(View drawerView) {
 				super.onDrawerOpened(drawerView);
 			}
-			
 			@Override
 			public void onDrawerClosed(View drawerView) {
 				super.onDrawerClosed(drawerView);
@@ -85,8 +84,7 @@ public class TradeTabActivity extends ActionBarActivity {
 		makeTradeTab();
 		
 		//MyBookRegisterActivity에서 넘어와 체크한 과목 리스트로 받기
-		selectedCourseListData = (ArrayList<SelectedCourseListItem>)
-									getIntent().getSerializableExtra("selectedCourseListData");
+		selectedCourseListData = (ArrayList<SelectedCourseListItem>)getIntent().getSerializableExtra("selectedCourseListData");
 		
 		//자동 로그인시 바로 TradeTabActivity로 넘어가기 때문에 selectedCourseListData를 초기화 시켜놔도
 		//getSerializableExtra 에서 null이 발생할 수 있음
@@ -103,37 +101,41 @@ public class TradeTabActivity extends ActionBarActivity {
 		gridViewSellBookList.setMultiChoiceModeListener(new DeleteMultiChoiceModeListener());
 		
 		//판매탭 : 미완성 판매 목록 리스트 중에서 최종 판매 등록할 과목 선택
-		gridViewSellBookList.setOnItemClickListener(new OnItemClickListener() {
-			
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {			
-				Intent intent = new Intent(getApplicationContext(), AddSellingActivity.class);
-				intent.putExtra("selectedCourseListData", selectedCourseListData);
-				intent.putExtra("position", position);
-				startActivity(intent);
-				finish();
-			}
-		});
+		gridViewSellBookList.setOnItemClickListener(new SellTabOnItemClickListener());
 		
 		//구매탭 : 최종 구매 등록한 과목 리스트 보여주기
 		gridViewBuyBookList = (GridView)findViewById(R.id.gridview_buy);
 		addBuyCourseListData();
-		gridViewBuyBookList.setOnItemClickListener(new OnItemClickListener() {
-			
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Intent intent = new Intent(getApplicationContext(), ShowBookInfoActivity.class);
-				intent.putExtra("selectedCourseListData", selectedCourseListData);
-				intent.putExtra("buyCourseListData", buyCourseListData);
-				intent.putExtra("position", position);
-				startActivity(intent);
-				finish();
-			}
-		});
+		gridViewBuyBookList.setOnItemClickListener(new BuyTabOnItemClickListener());
+		
 	}//onCreate
 	
-	private class DrawerItemclickListener implements ListView.OnItemClickListener{
+	private class SellTabOnItemClickListener implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			Intent intent = new Intent(getApplicationContext(), AddSellingActivity.class);
+			intent.putExtra("selectedCourseListData", selectedCourseListData);
+			intent.putExtra("position", position);
+			startActivity(intent);
+			finish();		
+		}	
+	}
+	
+	private class BuyTabOnItemClickListener implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			Intent intent = new Intent(getApplicationContext(), ShowBookInfoActivity.class);
+			intent.putExtra("selectedCourseListData", selectedCourseListData);
+			intent.putExtra("buyCourseListData", buyCourseListData);
+			intent.putExtra("position", position);
+			startActivity(intent);
+			finish();
+		}	
+	}
+	
+	private class DrawerItemclickListener implements ListView.OnItemClickListener {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
@@ -163,7 +165,7 @@ public class TradeTabActivity extends ActionBarActivity {
 		}
 	}
 	
-	private class DeleteMultiChoiceModeListener implements MultiChoiceModeListener{
+	private class DeleteMultiChoiceModeListener implements MultiChoiceModeListener {
 
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
