@@ -41,7 +41,7 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		Button btnRegisterPass = (Button)findViewById(R.id.btn_book_register_pass);
 		
 		
-		// ÀÓ½Ã·Î ¸®½ºÆ®ºä ¾Æ¹«·¸°Ô ¼¼ÆÃÇØ µÒ.
+		// ì„ì‹œë¡œ ë¦¬ìŠ¤íŠ¸ë·° ì•„ë¬´ë ‡ê²Œ ì„¸íŒ…í•´ ë‘ .
 		listCourse = (ListView)findViewById(R.id.list_book_register);
 		listCourseAdapter = new CourseListAdapter(this);
 		
@@ -49,23 +49,23 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		courseList = (ArrayList<SelectedCourseListItem>) getIntent().getSerializableExtra("courseList");
 		
 		for(int i=0; i<courseList.size(); i++) {
-			listCourseAdapter.addItem(new CourseListItem(courseList.get(i).getStrBookName(), "¾ÆÁ÷¸ô¶ó", false));
+			listCourseAdapter.addItem(new CourseListItem(courseList.get(i).getStrBookName(), "ì•„ì§ëª°ë¼", false));
 		}
 //		
-//		listCourseAdapter.addItem(new CourseListItem("¼±Çü´ë¼öÇĞ", "¼±Çü´ë¼öÇĞ 5ÆÇ", false));
-//		listCourseAdapter.addItem(new CourseListItem("ÀÚ·á±¸Á¶", "Data Structure", false));
-//		listCourseAdapter.addItem(new CourseListItem("¾Ë°í¸®Áò", "Algorithm 3ÆÇ", false));
-//		listCourseAdapter.addItem(new CourseListItem("°áÈ¥°ú°¡Á·", "°áÈ¥°ú °¡Á·", false));
-//		listCourseAdapter.addItem(new CourseListItem("OOP", "°´Ã¼ÁöÇâ ÇÁ·Î±×·¡¹Ö", false));
-//		listCourseAdapter.addItem(new CourseListItem("¿î¿µÃ¼Á¦", "Operating System", false));
-//		listCourseAdapter.addItem(new CourseListItem("¸®´ª½º ½Ã½ºÅÛ", "Linux programming", false));
-//		listCourseAdapter.addItem(new CourseListItem("CÇÁ·Î±×·¡¹Ö", "C Programming", false));
-//		listCourseAdapter.addItem(new CourseListItem("ÀÚ¹ÙÇÁ·Î±×·¡¹Ö", "Java Programming", false));
-//		listCourseAdapter.addItem(new CourseListItem("¾î¼Àºí¸®", "Assembly", false));
-//		listCourseAdapter.addItem(new CourseListItem("°ø¾÷¼öÇĞ", "Engineering math", false));
-//		listCourseAdapter.addItem(new CourseListItem("¾Û°³¹ßÇÁ·Î±×·¡¹Ö", "App android programming", false));
+//		listCourseAdapter.addItem(new CourseListItem("ì„ í˜•ëŒ€ìˆ˜í•™", "ì„ í˜•ëŒ€ìˆ˜í•™ 5íŒ", false));
+//		listCourseAdapter.addItem(new CourseListItem("ìë£Œêµ¬ì¡°", "Data Structure", false));
+//		listCourseAdapter.addItem(new CourseListItem("ì•Œê³ ë¦¬ì¦˜", "Algorithm 3íŒ", false));
+//		listCourseAdapter.addItem(new CourseListItem("ê²°í˜¼ê³¼ê°€ì¡±", "ê²°í˜¼ê³¼ ê°€ì¡±", false));
+//		listCourseAdapter.addItem(new CourseListItem("OOP", "ê°ì²´ì§€í–¥ í”„ë¡œê·¸ë˜ë°", false));
+//		listCourseAdapter.addItem(new CourseListItem("ìš´ì˜ì²´ì œ", "Operating System", false));
+//		listCourseAdapter.addItem(new CourseListItem("ë¦¬ëˆ…ìŠ¤ ì‹œìŠ¤í…œ", "Linux programming", false));
+//		listCourseAdapter.addItem(new CourseListItem("Cí”„ë¡œê·¸ë˜ë°", "C Programming", false));
+//		listCourseAdapter.addItem(new CourseListItem("ìë°”í”„ë¡œê·¸ë˜ë°", "Java Programming", false));
+//		listCourseAdapter.addItem(new CourseListItem("ì–´ì…ˆë¸”ë¦¬", "Assembly", false));
+//		listCourseAdapter.addItem(new CourseListItem("ê³µì—…ìˆ˜í•™", "Engineering math", false));
+//		listCourseAdapter.addItem(new CourseListItem("ì•±ê°œë°œí”„ë¡œê·¸ë˜ë°", "App android programming", false));
 //		
-		//Àü¿¡ Ã¼Å©ÇÑ »óÅÂ·Î ¼öÁ¤ÆäÀÌÁö º¸¿©ÁÖ±â
+		//ì „ì— ì²´í¬í•œ ìƒíƒœë¡œ ìˆ˜ì •í˜ì´ì§€ ë³´ì—¬ì£¼ê¸°
 		selectedCourseListData = (ArrayList<SelectedCourseListItem>)
 				getIntent().getSerializableExtra("selectedCourseListData");
 		
@@ -90,22 +90,22 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) {
 				for(int i = 0 ; i < listCourseAdapter.getCount() ; i++){
-					if(listCourseAdapter.getCourseListData().get(i).getBookPossess()){//Ã¼Å©µÈ °ú¸ñ ÀÖÀ¸¸é	
-						for(int j = 0 ; j < selectedCourseListData.size() ; j++){	//±âÁ¸ÀÇ ÆÇ¸Å ÅÇ¿¡ ÀÖ´Â Ã¥ ¸ñ·Ï°ú ºñ±³
+					if(listCourseAdapter.getCourseListData().get(i).getBookPossess()){//ì²´í¬ëœ ê³¼ëª© ìˆìœ¼ë©´	
+						for(int j = 0 ; j < selectedCourseListData.size() ; j++){	//ê¸°ì¡´ì˜ íŒë§¤ íƒ­ì— ìˆëŠ” ì±… ëª©ë¡ê³¼ ë¹„êµ
 							if(listCourseAdapter.getCourseListData().get(i).getStrCourseTitle().equals
 									(selectedCourseListData.get(j).getStrCourseTitle())){
 								FLAG=true;
 								break;
 							}
 						}
-						if(FLAG == false){	//Ã¼Å©µÈ °ú¸ñÁß ÆÇ¸Å ÅÇ¿¡  ¾ø´Â °Í¸¸ Ãß°¡
-							selectedCourseListItem = new SelectedCourseListItem(); //ÆÇ¸Å°´Ã¼ ¸¸µé¾î¼­ °ú¸ñ¸í Ãß°¡
+						if(FLAG == false){	//ì²´í¬ëœ ê³¼ëª©ì¤‘ íŒë§¤ íƒ­ì—  ì—†ëŠ” ê²ƒë§Œ ì¶”ê°€
+							selectedCourseListItem = new SelectedCourseListItem(); //íŒë§¤ê°ì²´ ë§Œë“¤ì–´ì„œ ê³¼ëª©ëª… ì¶”ê°€
 							
 							selectedCourseListItem.setStrCourseTitle(
 									listCourseAdapter.getCourseListData().get(i).getStrCourseTitle());
 							
 							selectedCourseListItem.setbBookPossess(true);
-							selectedCourseListData.add(selectedCourseListItem);//¹Ì¿Ï¼º ÆÇ¸ÅÅÇ ÆÇ¸Å ¸®½ºÆ®¿¡ Ãß°¡
+							selectedCourseListData.add(selectedCourseListItem);//ë¯¸ì™„ì„± íŒë§¤íƒ­ íŒë§¤ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
 						}
 					}
 					FLAG=false;
@@ -121,7 +121,7 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		btnRegisterPass.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO °Ç³Ê¶Ù±â ¹öÆ°¿¡ Ã¤ÆÃÃ¢¿¬°áÇØµÒ. ³ªÁß¿¡´Â Áö¿ì°í ÆÇ¸Å Á¤º¸¿¡¼­ 1:1 ´ëÈ­¹öÆ°À¸·Î ¿Å°Ü¾ßÇÔ.
+				// TODO ê±´ë„ˆë›°ê¸° ë²„íŠ¼ì— ì±„íŒ…ì°½ì—°ê²°í•´ë‘ . ë‚˜ì¤‘ì—ëŠ” ì§€ìš°ê³  íŒë§¤ ì •ë³´ì—ì„œ 1:1 ëŒ€í™”ë²„íŠ¼ìœ¼ë¡œ ì˜®ê²¨ì•¼í•¨.
 				Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
 				intent.putExtra("userID", "hemanruru");
 				startActivity(intent);
@@ -129,7 +129,7 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		});
 	}//onCreate
 	
-	// ¸®½ºÆ®ºä ÇÑ°³¿¡ µé¾î°¥ ³»¿ëÀ» °®´Â Å¬·¡½º
+	// ë¦¬ìŠ¤íŠ¸ë·° í•œê°œì— ë“¤ì–´ê°ˆ ë‚´ìš©ì„ ê°–ëŠ” í´ë˜ìŠ¤
 	private class CourseListItem {
 		private String strCourseTitle;
 		private String strBookName;
@@ -147,7 +147,7 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		public void setBookPossess(boolean bBookPossess) { this.bBookPossess = bBookPossess;}
 	}
 	
-	// ¸®½ºÆ®ºä ÇÑ°³ÀÇ ºä¸¦ °ü¸®ÇÏ´Â Å¬·¡½º
+	// ë¦¬ìŠ¤íŠ¸ë·° í•œê°œì˜ ë·°ë¥¼ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤
 	private class CourseListViewHolder {
 		private TextView tvCourseTitle;
 		private TextView tvBookName;
@@ -162,7 +162,7 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		public void setChkBookExist(CheckBox check) { this.chkBookExist = check; }
 	}
 	
-	// ¸®½ºÆ®ºä¸¦ ÄÁÆ®·ÑÇÏ´Â Å¬·¡½º
+	// ë¦¬ìŠ¤íŠ¸ë·°ë¥¼ ì»¨íŠ¸ë¡¤í•˜ëŠ” í´ë˜ìŠ¤
 	private class CourseListAdapter extends BaseAdapter {
 
 		private ArrayList<CourseListItem> courseListData;
@@ -202,7 +202,7 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 				holder.setTextBookName((TextView)convertView.findViewById(R.id.text_bookregister_coursebook));
 				holder.setChkBookExist((CheckBox)convertView.findViewById(R.id.chk_bookregister_course));
 				
-				//½ºÅ©·Ñ ÇÒ¶§ Ã¼Å©°¡ µÚ¼¯ÀÌ´Â ¹®Á¦ ¹æÁö
+				//ìŠ¤í¬ë¡¤ í• ë•Œ ì²´í¬ê°€ ë’¤ì„ì´ëŠ” ë¬¸ì œ ë°©ì§€
 				holder.getChkCourse().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 					
 					@Override

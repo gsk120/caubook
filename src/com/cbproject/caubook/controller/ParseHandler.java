@@ -10,12 +10,12 @@ import com.cbproject.caubook.SelectedCourseListItem;
 
 public class ParseHandler extends DefaultHandler{
 	
-	private String position = "";		// ÇöÀç ÀĞ°í ÀÖ´Â ÅÂ±×ÀÇ À§Ä¡
+	private String position = "";		// í˜„ì¬ ì½ê³  ìˆëŠ” íƒœê·¸ì˜ ìœ„ì¹˜
 	private String value = "";
-	private SelectedCourseListItem courseItem = null;		//ÆÄ½ÌÇÑ ÇÏ³ªÀÇ ¾ÆÀÌÅÛÀ» ÀÓ½Ã ÀúÀåÇÏ´Â °´Ã¼
-	private ArrayList<SelectedCourseListItem> courseList;	//ÆÄ½ÌÇÑ ¸®½ºÆ®¸¦ ´ã°íÀÖ´Â °´Ã¼
+	private SelectedCourseListItem courseItem = null;		//íŒŒì‹±í•œ í•˜ë‚˜ì˜ ì•„ì´í…œì„ ì„ì‹œ ì €ì¥í•˜ëŠ” ê°ì²´
+	private ArrayList<SelectedCourseListItem> courseList;	//íŒŒì‹±í•œ ë¦¬ìŠ¤íŠ¸ë¥¼ ë‹´ê³ ìˆëŠ” ê°ì²´
 	
-	// ÆÄ½ÌÇÑ °á°ú ¸®½ºÆ® º¸³»´Â ÇÔ¼ö
+	// íŒŒì‹±í•œ ê²°ê³¼ ë¦¬ìŠ¤íŠ¸ ë³´ë‚´ëŠ” í•¨ìˆ˜
 	public ArrayList<SelectedCourseListItem> getParsedData() {
 		return this.courseList;
 	}

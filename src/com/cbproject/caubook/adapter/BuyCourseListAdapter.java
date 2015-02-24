@@ -60,7 +60,7 @@ public class BuyCourseListAdapter extends BaseAdapter{
 		SelectedCourseListItem data = buyCourseListData.get(position);
 		
 		holder.getTvSelectedBookTitle().setText(data.getStrCourseTitle());
-		holder.getTvSelectedBookPrice().setText("45000ø¯");
+		holder.getTvSelectedBookPrice().setText("45000Ïõê");
 		holder.getImgSelectedBook().setImageResource(R.drawable.caubook);
 		
 		return convertView;

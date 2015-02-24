@@ -48,19 +48,19 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch(v.getId()) {
 		case R.id.btn_login:
-			// ·Î±×ÀÎ ÁøÇà!
+			// ë¡œê·¸ì¸ ì§„í–‰!
 			String strId = inputID.getEditableText().toString();
 			String strPw = inputPW.getEditableText().toString();
 			LoginHandler hLogin = new LoginHandler(this, strId, strPw);
-			progressLoading.setVisibility(View.VISIBLE);	// ·Îµù
+			progressLoading.setVisibility(View.VISIBLE);	// ë¡œë”©
 			if(hLogin.doLogin()) {
-				// ·Î±×ÀÎ ¼º°ø -> ÇöÀç »óÅÂ ÇÁ¸®ÆÛ·±½º¿¡ ÀúÀå
+				// ë¡œê·¸ì¸ ì„±ê³µ -> í˜„ì¬ ìƒíƒœ í”„ë¦¬í¼ëŸ°ìŠ¤ì— ì €ì¥
 				SharedPreferences.Editor editor = pref.edit();
 				editor.putString("id", strId);
 				editor.putString("pw", strPw);
 				editor.commit();
 			} else {
-				//·Î±×ÀÎ ½ÇÆĞ			
+				//ë¡œê·¸ì¸ ì‹¤íŒ¨			
 			}
 			break;
 		case R.id.check_auto_login:

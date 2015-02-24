@@ -35,13 +35,13 @@ import android.os.Bundle;
 
 public class TradeTabActivity extends ActionBarActivity {
 	
-	//¿É¼Ç¸Ş´º(DrawerLayout) °ü·Ã
-	private String[] strOptionItems = {"·Î±× ¾Æ¿ô","µî·Ï ÃÊ±âÈ­","µî·Ï Ãß°¡","È¯°æ ¼³Á¤","µµ¿ò¸»","Á¾·á","°øÁö»çÇ×"};
+	//ì˜µì…˜ë©”ë‰´(DrawerLayout) ê´€ë ¨
+	private String[] strOptionItems = {"ë¡œê·¸ ì•„ì›ƒ","ë“±ë¡ ì´ˆê¸°í™”","ë“±ë¡ ì¶”ê°€","í™˜ê²½ ì„¤ì •","ë„ì›€ë§","ì¢…ë£Œ","ê³µì§€ì‚¬í•­"};
 	private ListView listOption;
 	private DrawerLayout drawerLayoutOptionDrawer;
 	private ActionBarDrawerToggle actionBarDrawerToggle;
 	
-	//°Å·¡ ÅÇ °ü·Ã
+	//ê±°ë˜ íƒ­ ê´€ë ¨
 	private GridView gridViewSellBookList;
 	private GridView gridViewBuyBookList;
 	private ArrayList<SelectedCourseListItem> selectedCourseListData;
@@ -59,7 +59,7 @@ public class TradeTabActivity extends ActionBarActivity {
 		
 		drawerLayoutOptionDrawer = (DrawerLayout)findViewById(R.id.drawerlayout_main_drawer);
 		
-		//¿É¼Ç¸Ş´º Åä±Û¹öÆ° ¸¸µé±â
+		//ì˜µì…˜ë©”ë‰´ í† ê¸€ë²„íŠ¼ ë§Œë“¤ê¸°
 		actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayoutOptionDrawer, 
 							R.drawable.ic_drawer, R.string.open_drawer, R.string.close_drawer){
 			@Override
@@ -75,19 +75,19 @@ public class TradeTabActivity extends ActionBarActivity {
 		drawerLayoutOptionDrawer.setDrawerListener(actionBarDrawerToggle);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		//¿É¼Ç¸Ş´º ¸¸µé±â
+		//ì˜µì…˜ë©”ë‰´ ë§Œë“¤ê¸°
 		listOption = (ListView)findViewById(R.id.book_register_list);
 		listOption.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,strOptionItems));
 		listOption.setOnItemClickListener(new DrawerItemclickListener());
 	
-		//±¸¸ÅÅÇ, ÆÇ¸ÅÅÇ ¸¸µé±â
+		//êµ¬ë§¤íƒ­, íŒë§¤íƒ­ ë§Œë“¤ê¸°
 		makeTradeTab();
 		
-		//MyBookRegisterActivity¿¡¼­ ³Ñ¾î¿Í Ã¼Å©ÇÑ °ú¸ñ ¸®½ºÆ®·Î ¹Ş±â
+		//MyBookRegisterActivityì—ì„œ ë„˜ì–´ì™€ ì²´í¬í•œ ê³¼ëª© ë¦¬ìŠ¤íŠ¸ë¡œ ë°›ê¸°
 		selectedCourseListData = (ArrayList<SelectedCourseListItem>)getIntent().getSerializableExtra("selectedCourseListData");
 		
-		//ÀÚµ¿ ·Î±×ÀÎ½Ã ¹Ù·Î TradeTabActivity·Î ³Ñ¾î°¡±â ¶§¹®¿¡ selectedCourseListData¸¦ ÃÊ±âÈ­ ½ÃÄÑ³öµµ
-		//getSerializableExtra ¿¡¼­ nullÀÌ ¹ß»ıÇÒ ¼ö ÀÖÀ½
+		//ìë™ ë¡œê·¸ì¸ì‹œ ë°”ë¡œ TradeTabActivityë¡œ ë„˜ì–´ê°€ê¸° ë•Œë¬¸ì— selectedCourseListDataë¥¼ ì´ˆê¸°í™” ì‹œì¼œë†”ë„
+		//getSerializableExtra ì—ì„œ nullì´ ë°œìƒí•  ìˆ˜ ìˆìŒ
 		if(selectedCourseListData == null){
 			selectedCourseListData = new ArrayList<SelectedCourseListItem>();
 		}
@@ -96,14 +96,14 @@ public class TradeTabActivity extends ActionBarActivity {
 		selectedCourseListAdapter = new SelectedCourseListAdapter(this,selectedCourseListData);	
 		gridViewSellBookList.setAdapter(selectedCourseListAdapter);
 
-		//ÆÇ¸ÅÅÇ ¸ñ·Ï »èÁ¦±â´É
+		//íŒë§¤íƒ­ ëª©ë¡ ì‚­ì œê¸°ëŠ¥
 		gridViewSellBookList.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
 		gridViewSellBookList.setMultiChoiceModeListener(new DeleteMultiChoiceModeListener());
 		
-		//ÆÇ¸ÅÅÇ : ¹Ì¿Ï¼º ÆÇ¸Å ¸ñ·Ï ¸®½ºÆ® Áß¿¡¼­ ÃÖÁ¾ ÆÇ¸Å µî·ÏÇÒ °ú¸ñ ¼±ÅÃ
+		//íŒë§¤íƒ­ : ë¯¸ì™„ì„± íŒë§¤ ëª©ë¡ ë¦¬ìŠ¤íŠ¸ ì¤‘ì—ì„œ ìµœì¢… íŒë§¤ ë“±ë¡í•  ê³¼ëª© ì„ íƒ
 		gridViewSellBookList.setOnItemClickListener(new SellTabOnItemClickListener());
 		
-		//±¸¸ÅÅÇ : ÃÖÁ¾ ±¸¸Å µî·ÏÇÑ °ú¸ñ ¸®½ºÆ® º¸¿©ÁÖ±â
+		//êµ¬ë§¤íƒ­ : ìµœì¢… êµ¬ë§¤ ë“±ë¡í•œ ê³¼ëª© ë¦¬ìŠ¤íŠ¸ ë³´ì—¬ì£¼ê¸°
 		gridViewBuyBookList = (GridView)findViewById(R.id.gridview_buy);
 		addBuyCourseListData();
 		gridViewBuyBookList.setOnItemClickListener(new BuyTabOnItemClickListener());
@@ -198,7 +198,7 @@ public class TradeTabActivity extends ActionBarActivity {
 						selectedCourseListAdapter.remove(selecteditem);
 					}
 				}
-				addBuyCourseListData();	//°Å·¡ ÅÇ ¾÷µ¥ÀÌÆ®
+				addBuyCourseListData();	//ê±°ë˜ íƒ­ ì—…ë°ì´íŠ¸
 				mode.finish();
 				return true;
 			default:
@@ -220,13 +220,13 @@ public class TradeTabActivity extends ActionBarActivity {
 		TabHost tabHost = (TabHost)findViewById(R.id.tabhost);
 		tabHost.setup();
 		
-		TabSpec tabSpecBuy = tabHost.newTabSpec("±¸¸Å");
-		tabSpecBuy.setIndicator("±¸¸Å");
+		TabSpec tabSpecBuy = tabHost.newTabSpec("êµ¬ë§¤");
+		tabSpecBuy.setIndicator("êµ¬ë§¤");
 		tabSpecBuy.setContent(R.id.gridview_buy);
 		tabHost.addTab(tabSpecBuy);
 		
-		TabSpec tabSpecSell = tabHost.newTabSpec("ÆÇ¸Å");
-		tabSpecSell.setIndicator("ÆÇ¸Å");
+		TabSpec tabSpecSell = tabHost.newTabSpec("íŒë§¤");
+		tabSpecSell.setIndicator("íŒë§¤");
 		tabSpecSell.setContent(R.id.gridview_sell);
 		tabHost.addTab(tabSpecSell);
 		tabHost.setCurrentTab(1);
@@ -265,16 +265,16 @@ public class TradeTabActivity extends ActionBarActivity {
 		inflater.inflate(R.menu.book_search, menu);
 		
 		SearchView searchView = (SearchView) menu.findItem(R.id.item_book_search).getActionView();
-		searchView.setQueryHint("Ã¥ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä");
+		searchView.setQueryHint("ì±… ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”");
 		searchView.setOnQueryTextListener(new OnQueryTextListener() {
 			
 			@Override
-			public boolean onQueryTextSubmit(String query) {//query·Î ¼±Çü´ë¼öÇĞ ÀÔ·ÂÇÏ¸é
-				//DB : select * from Å×ÀÌºí where Ã¥ÀÌ¸§=query; 
+			public boolean onQueryTextSubmit(String query) {//queryë¡œ ì„ í˜•ëŒ€ìˆ˜í•™ ì…ë ¥í•˜ë©´
+				//DB : select * from í…Œì´ë¸” where ì±…ì´ë¦„=query; 
 				return false;
 			}
 			
-			//Ã¥ °Ë»ö±â´É
+			//ì±… ê²€ìƒ‰ê¸°ëŠ¥
 			@Override
 			public boolean onQueryTextChange(String newText) {
 				ArrayList<SelectedCourseListItem> searchCourseListData = new ArrayList<SelectedCourseListItem>();

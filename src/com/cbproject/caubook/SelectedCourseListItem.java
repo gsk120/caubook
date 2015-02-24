@@ -6,14 +6,14 @@ import android.widget.ImageView;
 
 public class SelectedCourseListItem implements Serializable{
 	private static final long serialVersionUID = 1L;	// Serializable ID
-	private String strCourseTitle;		//°ú¸ñ¸í
-	private String strProfessorName;	//±³¼ö¸í
-	private String strBookName;			//Ã¥ÀÌ¸§
-	private String strBookPrice;		//Ã¥°¡°İ
-	private String strEtc;				//±âÅ¸
-	private ImageView imgBook;			//int·Î id°ª ¹ŞÀ»Áö ³ªÁß¿¡ ÀÏ´ÜÀº ImageView
+	private String strCourseTitle;		//ê³¼ëª©ëª…
+	private String strProfessorName;	//êµìˆ˜ëª…
+	private String strBookName;			//ì±…ì´ë¦„
+	private String strBookPrice;		//ì±…ê°€ê²©
+	private String strEtc;				//ê¸°íƒ€
+	private ImageView imgBook;			//intë¡œ idê°’ ë°›ì„ì§€ ë‚˜ì¤‘ì— ì¼ë‹¨ì€ ImageView
 	private boolean bBookPossess;
-	private boolean bBookSell;			//¹Ì¿Ï¼º Ã¥ ¸ñ·Ï ¸®½ºÆ®¿¡¼­ ÆÇ¸Å µî·Ï ¿Ï·áµÇ¸é true·Î º¯°æ
+	private boolean bBookSell;			//ë¯¸ì™„ì„± ì±… ëª©ë¡ ë¦¬ìŠ¤íŠ¸ì—ì„œ íŒë§¤ ë“±ë¡ ì™„ë£Œë˜ë©´ trueë¡œ ë³€ê²½
 	
 	public String getStrCourseTitle() {
 		return strCourseTitle;

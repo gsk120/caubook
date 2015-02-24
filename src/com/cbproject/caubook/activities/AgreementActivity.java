@@ -46,37 +46,37 @@ public class AgreementActivity extends ActionBarActivity implements OnClickListe
 		CheckBox agreePerson = (CheckBox)findViewById(R.id.check_person_agree);
 		switch(v.getId()) {
 		case R.id.btn_agree_yes:
-			// µ¿ÀÇ ¹öÆ° ´­·¶À» °æ¿ì
+			// ë™ì˜ ë²„íŠ¼ ëˆŒë €ì„ ê²½ìš°
 			if(!agreeUsage.isChecked() || !agreePerson.isChecked()){
-				// ¾à°ü¿¡ µ¿ÀÇÇÏÁö ¾ÊÀº°æ¿ì °æ°í¹®±¸ Ãâ·Â
-				Toast.makeText(getApplicationContext(), "¾à°ü¿¡ µ¿ÀÇÇÏ½Ã±â ¹Ù¶ø´Ï´Ù.", Toast.LENGTH_SHORT).show();
+				// ì•½ê´€ì— ë™ì˜í•˜ì§€ ì•Šì€ê²½ìš° ê²½ê³ ë¬¸êµ¬ ì¶œë ¥
+				Toast.makeText(getApplicationContext(), "ì•½ê´€ì— ë™ì˜í•˜ì‹œê¸° ë°”ëë‹ˆë‹¤.", Toast.LENGTH_SHORT).show();
 				return;						
 			}
 			
-			// µ¿ÀÇ°¡ ¿Ï·áµÇ¾ú´Ù°í preference¿¡ ÀúÀå.
+			// ë™ì˜ê°€ ì™„ë£Œë˜ì—ˆë‹¤ê³  preferenceì— ì €ì¥.
 			SharedPreferences pref = getSharedPreferences("savedInfo", MODE_PRIVATE);
 			SharedPreferences.Editor editor = pref.edit();
 			editor.putBoolean("app_agree", true);
 			editor.commit();
 			
-			// ´ÙÀ½ ¾×Æ¼ºñÆ¼·Î ÀüÈ¯
+			// ë‹¤ìŒ ì•¡í‹°ë¹„í‹°ë¡œ ì „í™˜
 			Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 			startActivity(intent);
 			finish();
 			break;
 			
 		case R.id.btn_agree_no:
-			// µ¿ÀÇÇÏÁö ¾Ê±â ´©¸¥ °æ¿ì ´ÙÀÌ¾ó·Î±× Ã¢ ¶ß¸é¼­ Á¾·á¿©ºÎ ¹¯±â
+			// ë™ì˜í•˜ì§€ ì•Šê¸° ëˆ„ë¥¸ ê²½ìš° ë‹¤ì´ì–¼ë¡œê·¸ ì°½ ëœ¨ë©´ì„œ ì¢…ë£Œì—¬ë¶€ ë¬»ê¸°
 			new AlertDialog.Builder(this)
-			.setTitle("ÀÌ¿ë¾à°ü µ¿ÀÇ")
-			.setMessage("µ¿ÀÇÇÏÁö ¾Ê´Â °æ¿ì\nUniBookÀ» »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.")
-			.setPositiveButton("È®ÀÎ", new DialogInterface.OnClickListener() {
+			.setTitle("ì´ìš©ì•½ê´€ ë™ì˜")
+			.setMessage("ë™ì˜í•˜ì§€ ì•ŠëŠ” ê²½ìš°\nUniBookì„ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.")
+			.setPositiveButton("í™•ì¸", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					finish();
 				}
 			})
-			.setNegativeButton("Ãë¼Ò", new DialogInterface.OnClickListener() {
+			.setNegativeButton("ì·¨ì†Œ", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					

@@ -29,7 +29,7 @@ public class BackPressCloseHandler {
  
     public void showGuide() {
         toast = Toast.makeText(context,
-                "\'µÚ·Î\'¹öÆ°À» ÇÑ¹ø ´õ ´©¸£½Ã¸é Á¾·áµË´Ï´Ù.", Toast.LENGTH_SHORT);
+                "\'ë’¤ë¡œ\'ë²„íŠ¼ì„ í•œë²ˆ ë” ëˆ„ë¥´ì‹œë©´ ì¢…ë£Œë©ë‹ˆë‹¤.", Toast.LENGTH_SHORT);
         toast.show();
     }
 }

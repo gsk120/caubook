@@ -24,37 +24,37 @@ public class MainActivity extends ActionBarActivity {
 		
 		
 		
-		// ½ºÇÃ·¡½Ã È­¸éÀÌ º¸ÀÌµµ·Ï 1ÃÊÀÇ µô·¹ÀÌ Ãß°¡
+		// ìŠ¤í”Œë˜ì‹œ í™”ë©´ì´ ë³´ì´ë„ë¡ 1ì´ˆì˜ ë”œë ˆì´ ì¶”ê°€
 		Handler hd = new Handler();
         hd.postDelayed(new Runnable() {
             @Override
             public void run() {
-            	// µô·¹ÀÌ Á¾·á ÈÄ ·Î±×ÀÎ ½Ãµµ
+            	// ë”œë ˆì´ ì¢…ë£Œ í›„ ë¡œê·¸ì¸ ì‹œë„
             	checkIdentification();
             }
         }, 1000); 
 	}
 	
-	// ¾à°üµ¿ÀÇ. ÀÚµ¿·Î±×ÀÎ ½Ãµµ ÇÔ¼ö
+	// ì•½ê´€ë™ì˜. ìë™ë¡œê·¸ì¸ ì‹œë„ í•¨ìˆ˜
 	private void checkIdentification() {
 		SharedPreferences pref = getSharedPreferences("savedInfo", MODE_PRIVATE);
 		
-		// ¾à°ü µ¿ÀÇ ¿©ºÎ È®ÀÎ (¾à°ü µ¿ÀÇ xÀÎ °æ¿ì)
+		// ì•½ê´€ ë™ì˜ ì—¬ë¶€ í™•ì¸ (ì•½ê´€ ë™ì˜ xì¸ ê²½ìš°)
 		if(!pref.getBoolean("app_agree", false)) {
-			// ¾à°üµ¿ÀÇ Â÷Ã¼°¡ ¾ÈµÇ¾úÀ¸¹Ç·Î ¾×Æ¼ºñÆ¼ ÀüÈ¯ÈÄ ¸®ÅÏ
+			// ì•½ê´€ë™ì˜ ì°¨ì²´ê°€ ì•ˆë˜ì—ˆìœ¼ë¯€ë¡œ ì•¡í‹°ë¹„í‹° ì „í™˜í›„ ë¦¬í„´
 			Intent intent = new Intent(getApplicationContext(), AgreementActivity.class);
 			startActivity(intent);
 			finish();
 			return;
 		}
 		
-		// ÀÚµ¿ ·Î±×ÀÎ ¿©ºÎ È®ÀÎ
+		// ìë™ ë¡œê·¸ì¸ ì—¬ë¶€ í™•ì¸
 		if(pref.getBoolean("auto_login", false)) {
 			String strId = pref.getString("id", "");
 			String strPw = pref.getString("pw", "");
 			LoginHandler hLogin = new LoginHandler(getApplicationContext(), strId, strPw);
 			if(hLogin.doLogin()) {
-				//ÀÚµ¿ ·Î±×ÀÎ ¼º°ø -> ¾×Æ¼ºñÆ¼ ÀüÈ¯ ÈÄ ¸®ÅÏ
+				//ìë™ ë¡œê·¸ì¸ ì„±ê³µ -> ì•¡í‹°ë¹„í‹° ì „í™˜ í›„ ë¦¬í„´
 				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
 				startActivity(intent);
 				finish();
@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
 			}
 		}
 		
-		// ¾à°ü µ¿ÀÇ o ÀÚµ¿·Î±×ÀÎ x ÀÎ°æ¿ì
+		// ì•½ê´€ ë™ì˜ o ìë™ë¡œê·¸ì¸ x ì¸ê²½ìš°
 		Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 		startActivity(intent);
 		finish();

@@ -32,7 +32,7 @@ public class ShowBookInfoActivity extends ActionBarActivity {
 		buyCourseListData = (ArrayList<SelectedCourseListItem>) getIntent()
 												.getSerializableExtra("buyCourseListData");
 		
-		//DB ¾÷¾î¼­ ÀÏ´Ü ÀÓ½Ã·Î ³Ñ°ÜÁÜ
+		//DB ì—…ì–´ì„œ ì¼ë‹¨ ì„ì‹œë¡œ ë„˜ê²¨ì¤Œ
 		selectedCourseListData = (ArrayList<SelectedCourseListItem>) getIntent()
 											.getSerializableExtra("selectedCourseListData");
 		
@@ -46,7 +46,7 @@ public class ShowBookInfoActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "¹®ÀÇÇÏ·¯ °¡±â", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "ë¬¸ì˜í•˜ëŸ¬ ê°€ê¸°", Toast.LENGTH_SHORT).show();
 				
 			}
 		});

@@ -16,7 +16,7 @@ public class ConversationTable extends DBManager{
 	
 	public static final String tableName = "conversaton";
 	
-	// ´ëÈ­ ³»¿ë Å×ÀÌºí ¿ø¼Ò Å¬·¡½º
+	// ëŒ€í™” ë‚´ìš© í…Œì´ë¸” ì›ì†Œ í´ë˜ìŠ¤
 	public static class ConversationData {
 		private int userID;
 		private int order;
@@ -39,17 +39,17 @@ public class ConversationTable extends DBManager{
 		public MessageTypeEnum getMessageType() { return this.msgType; }
 	}
 	
-	// ´ëÈ­³»¿ë Å×ÀÌºí °´Ã¼ »ı¼ºÀÚ
+	// ëŒ€í™”ë‚´ìš© í…Œì´ë¸” ê°ì²´ ìƒì„±ì
 	public ConversationTable(Context context) {
 		super(context);
 	}
 	
-	// select Äõ¸® ÇÔ¼ö
+	// select ì¿¼ë¦¬ í•¨ìˆ˜
 	public ConversationData selectQuery(int keyID, int keyOrder) {
 		dbReader = dbOpenner.getReadableDatabase();
 		Cursor cursor = dbReader.query(tableName, null, null, null, null, null, null);
 		while(cursor.moveToNext()) {
-			// ÇÕ¼ºÅ°°¡ ¿øÇÏ´Â °ªÇÏ°í °°Àº °æ¿ì select
+			// í•©ì„±í‚¤ê°€ ì›í•˜ëŠ” ê°’í•˜ê³  ê°™ì€ ê²½ìš° select
 			if(cursor.getInt(cursor.getColumnIndex("userID")) == keyID &&
 					cursor.getInt(cursor.getColumnIndex("orderNum")) == keyOrder) {
 				String strContent = cursor.getString(cursor.getColumnIndex("content"));
@@ -57,7 +57,7 @@ public class ConversationTable extends DBManager{
 				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String strType = cursor.getString(cursor.getColumnIndex("msgType"));
 				try {
-					// µ¥ÀÌÅÍ °´Ã¼ ¸¸µé¾î ¸®ÅÏ
+					// ë°ì´í„° ê°ì²´ ë§Œë“¤ì–´ ë¦¬í„´
 					return new ConversationData(keyID, keyOrder, strContent, sdFormat.parse(strTime), MessageTypeEnum.valueOf(strType));
 				} catch (ParseException e) {
 					Log.e("ParseError", "Conversation data parse error");
@@ -69,7 +69,7 @@ public class ConversationTable extends DBManager{
 		return null;
 	}
 	
-	// ÇØ´çÇÏ´Â userIDÀÇ ¸ğµç ´ëÈ­ ³»¿ëÀ» »Ì´Â ÇÔ¼ö
+	// í•´ë‹¹í•˜ëŠ” userIDì˜ ëª¨ë“  ëŒ€í™” ë‚´ìš©ì„ ë½‘ëŠ” í•¨ìˆ˜
 	public ArrayList<ConversationData> selectAllQuery(int userID) {
 		dbReader = dbOpenner.getReadableDatabase();
 		ArrayList<ConversationData> resultList = new ArrayList<ConversationTable.ConversationData>();
@@ -83,7 +83,7 @@ public class ConversationTable extends DBManager{
 				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String strType = cursor.getString(cursor.getColumnIndex("msgType"));
 				try {
-					// ¸®½ºÆ®¿¡ Ãß°¡
+					// ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
 					resultList.add(new ConversationData(keyID, keyOrder, strContent, sdFormat.parse(strTime), MessageTypeEnum.valueOf(strType)));
 				} catch (ParseException e) {
 					Log.e("ParseError", "Conversation data parse error");
@@ -94,10 +94,10 @@ public class ConversationTable extends DBManager{
 		return resultList;
 	}
 		
-	// insert Äõ¸® ÇÔ¼ö
+	// insert ì¿¼ë¦¬ í•¨ìˆ˜
 	public boolean insertQuery(ConversationData data) {
 		dbWriter = dbOpenner.getWritableDatabase();
-		// insert ÇÒ value ¸¸µé±â
+		// insert í•  value ë§Œë“¤ê¸°
 		ContentValues val = new ContentValues();
 		val.put("userID", data.getUserID());
 		val.put("orderNum", data.getOrder());
@@ -106,7 +106,7 @@ public class ConversationTable extends DBManager{
 		val.put("time", sdFormat.format(data.getTime()));
 		val.put("msgType", data.getMessageType().name());
 		
-		// µ¥ÀÌÅÍ º£ÀÌ½º insert Äõ¸® ½ÇÇà °á°ú È®ÀÎ
+		// ë°ì´í„° ë² ì´ìŠ¤ insert ì¿¼ë¦¬ ì‹¤í–‰ ê²°ê³¼ í™•ì¸
 		if (dbWriter.insert(tableName, null, val) != -1) {
 			return true;
 		}

@@ -7,7 +7,7 @@ public class RoomInfoTable extends DBManager{
 
 	public static final String tableName = "roominfo";
 	
-	// ¹æÁ¤º¸ Æ©ÇÃÇÏ³ªÀÇ Á¤º¸
+	// ë°©ì •ë³´ íŠœí”Œí•˜ë‚˜ì˜ ì •ë³´
 	public static class RoomData {
 		private int roomID;
 		private int firstUser;
@@ -24,21 +24,21 @@ public class RoomInfoTable extends DBManager{
 		public int getSecondUser() { return this.secondUser; }
 	}
 	
-	// ¹æÁ¤º¸ Å×ÀÌºí °´Ã¼ »ı¼ºÀÚ
+	// ë°©ì •ë³´ í…Œì´ë¸” ê°ì²´ ìƒì„±ì
 	public RoomInfoTable(Context context) {
 		super(context);
 	}
 
-	// insert Äõ¸® ÇÔ¼ö
+	// insert ì¿¼ë¦¬ í•¨ìˆ˜
 	public boolean insertQuery(RoomData data) {
 		dbWriter = dbOpenner.getWritableDatabase();
-		// insert ÇÒ value ¸¸µé±â
+		// insert í•  value ë§Œë“¤ê¸°
 		ContentValues val = new ContentValues();
 		val.put("room_id", data.getRoomID());
 		val.put("first_user", data.getFirstUser());
 		val.put("second_user", data.getSecondUser());
 		
-		// µ¥ÀÌÅÍ º£ÀÌ½º insert Äõ¸® ½ÇÇà °á°ú È®ÀÎ
+		// ë°ì´í„° ë² ì´ìŠ¤ insert ì¿¼ë¦¬ ì‹¤í–‰ ê²°ê³¼ í™•ì¸
 		if (dbWriter.insert(tableName, null, val) != -1) {
 			return true;
 		}

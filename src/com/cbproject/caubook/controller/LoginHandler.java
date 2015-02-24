@@ -53,10 +53,10 @@ public class LoginHandler {
 		this.userPw = _pw;
 	}
 	
-	// ·Î±×ÀÎÀ» ÇÏ°í ¼º°ø ¿©ºÎ¸¦ ¸®ÅÏÇÏ´Â ÇÔ¼ö
+	// ë¡œê·¸ì¸ì„ í•˜ê³  ì„±ê³µ ì—¬ë¶€ë¥¼ ë¦¬í„´í•˜ëŠ” í•¨ìˆ˜
 	public boolean doLogin() {
 		
-		// ¾ÆÀÌµğ³ª ºñ¹Ğ¹øÈ£°¡ ºñ¾îÀÖÀ¸¸é ·Î±×ÀÎ ºÒ°¡
+		// ì•„ì´ë””ë‚˜ ë¹„ë°€ë²ˆí˜¸ê°€ ë¹„ì–´ìˆìœ¼ë©´ ë¡œê·¸ì¸ ë¶ˆê°€
 		if(userId.equals("")) {
 			Toast.makeText(context, R.string.login_error_id_empty, Toast.LENGTH_SHORT).show();
 			return false;
@@ -66,7 +66,7 @@ public class LoginHandler {
 			return false;
 		}
 		
-		// À¥ºä·Î ·Î±×ÀÎ ¼¼¼Ç ¾ò¾î¿À±â
+		// ì›¹ë·°ë¡œ ë¡œê·¸ì¸ ì„¸ì…˜ ì–»ì–´ì˜¤ê¸°
 		webview = new WebView(context);
 		webview.getSettings().setJavaScriptEnabled(true);
 		webview.setWebViewClient(new WebViewClient() {
@@ -87,7 +87,7 @@ public class LoginHandler {
 		});
 		webview.loadUrl("http://sso.cau.ac.kr/WebSSO/AuthWeb/Logon.aspx?ssosite=cauin.cau.ac.kr&credType=BASIC&retURL=http://cautis.cau.ac.kr/TIS/comm/loginInfo/selectLoginInfo.do&userID=" + userId + "&password=" + userPw);
 		
-		// À¯È¿ÇÑ ¾ÆÀÌµğ ºñ¹Ğ¹øÈ£ÀÌ¸é ·Î±×ÀÎ ¼º°ø
+		// ìœ íš¨í•œ ì•„ì´ë”” ë¹„ë°€ë²ˆí˜¸ì´ë©´ ë¡œê·¸ì¸ ì„±ê³µ
 		return true;
 	}
 	
@@ -97,30 +97,30 @@ public class LoginHandler {
 			return requestInformation(params[0]);
 		}
 		
-		// ¸Å°³ º¯¼ö·Î °­ÀÇ¸®½ºÆ®¸¦ ¹Ş¾Æ¿È
+		// ë§¤ê°œ ë³€ìˆ˜ë¡œ ê°•ì˜ë¦¬ìŠ¤íŠ¸ë¥¼ ë°›ì•„ì˜´
 		protected void onPostExecute(String result) {
-			// html Çü½ÄÀÇ °á°ú¸¦ xmlÇü½ÄÀ¸·Î º¯È¯
+			// html í˜•ì‹ì˜ ê²°ê³¼ë¥¼ xmlí˜•ì‹ìœ¼ë¡œ ë³€í™˜
 			String strFix = Html.fromHtml(result).toString();
 			Log.i("ddd", strFix);
 			
 			ArrayList<SelectedCourseListItem> list = new ArrayList<SelectedCourseListItem>();
 			try {
-				// SAX ÆÄ¼­ ¹× xml reader »ı¼º
+				// SAX íŒŒì„œ ë° xml reader ìƒì„±
 				SAXParserFactory spf = SAXParserFactory.newInstance();
 				SAXParser sp = spf.newSAXParser();
 				XMLReader xr = sp.getXMLReader();
 				
-				// ÆÄ½ÌÇÏ±â À§ÇÑ ParseHandler »ı¼º
+				// íŒŒì‹±í•˜ê¸° ìœ„í•œ ParseHandler ìƒì„±
 				ParseHandler myHandler = new ParseHandler();
 				xr.setContentHandler(myHandler);
 
-				// xml ÆÄ½Ì ½ÃÀÛ
+				// xml íŒŒì‹± ì‹œì‘
 				xr.parse(new InputSource(new StringReader(strFix)));
  
-				// ÆÄ½ÌÇÑ °á°ú ¸®½ºÆ® ¹Ş¾Æ¿À±â
+				// íŒŒì‹±í•œ ê²°ê³¼ ë¦¬ìŠ¤íŠ¸ ë°›ì•„ì˜¤ê¸°
 				list = myHandler.getParsedData();
  
-				// ÆÄ½Ì °á°ú Ãâ·Â
+				// íŒŒì‹± ê²°ê³¼ ì¶œë ¥
 				for (Iterator<SelectedCourseListItem> iterator = list.iterator(); iterator.hasNext();) {
 					SelectedCourseListItem item = (SelectedCourseListItem) iterator.next();
 					Log.i("course", item.getStrBookName());
@@ -137,7 +137,7 @@ public class LoginHandler {
 				e.printStackTrace();
 			}
 			
-			// TODO ·Î±×ÀÎ ¼º°øÇßÀ» °æ¿ì¿¡¸¸ Ã¥µî·Ï ¾×Æ¼ºñÆ¼·Î ÀüÈ¯ (ÀÏ´ÜÀº ¹«Á¶°Ç ÀüÈ¯)
+			// TODO ë¡œê·¸ì¸ ì„±ê³µí–ˆì„ ê²½ìš°ì—ë§Œ ì±…ë“±ë¡ ì•¡í‹°ë¹„í‹°ë¡œ ì „í™˜ (ì¼ë‹¨ì€ ë¬´ì¡°ê±´ ì „í™˜)
 			Intent intent = new Intent(context, MyBookRegisterActivity.class);
 			intent.putExtra("courseList", list);
 			((Activity)context).startActivity(intent);

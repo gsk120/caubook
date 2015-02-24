@@ -67,7 +67,7 @@ public class AddSellingActivity extends ActionBarActivity implements
 			}
 		});
 		
-		//TradeTabActivity¿¡¼­ ³Ñ¾î¿Â µ¥ÀÌÅÍ ÀúÀå
+		//TradeTabActivityì—ì„œ ë„˜ì–´ì˜¨ ë°ì´í„° ì €ì¥
 		selectedPosition = getIntent().getIntExtra("position", -1);
 		selectedCourseListData = (ArrayList<SelectedCourseListItem>) getIntent()
 				.getSerializableExtra("selectedCourseListData");
@@ -75,7 +75,7 @@ public class AddSellingActivity extends ActionBarActivity implements
 		editTextBookAddSellingCourseName.setText(selectedCourseListData.get(
 				selectedPosition).getStrCourseTitle());
 		
-		//±¸¸Å ÅÇ¿¡ ÃÖÁ¾ µî·Ï½Ã edittext ºñÈ°¼ºÈ­(»ùÇÃ)
+		//êµ¬ë§¤ íƒ­ì— ìµœì¢… ë“±ë¡ì‹œ edittext ë¹„í™œì„±í™”(ìƒ˜í”Œ)
 		if(selectedCourseListData.get(selectedPosition).isbBookSell() == true){
 			editTextBookAddSellingCourseName.setFocusable(false);
 		}
@@ -92,12 +92,12 @@ public class AddSellingActivity extends ActionBarActivity implements
 		switch (v.getId()) {
 
 		case R.id.btn_book_add_selling:
-			selectedCourseListData.get(selectedPosition).setbBookSell(true);	//ÃÖÁ¾µî·Ï true·Î º¯°æ
+			selectedCourseListData.get(selectedPosition).setbBookSell(true);	//ìµœì¢…ë“±ë¡ trueë¡œ ë³€ê²½
 			intent = new Intent(getApplicationContext(), TradeTabActivity.class);
 			intent.putExtra("selectedCourseListData", selectedCourseListData);
 			startActivity(intent);
 			finish();
-			Toast.makeText(getApplicationContext(), "±¸¸Å ÅÇ¿¡ µî·ÏµÇ¾ú½À´Ï´Ù.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "êµ¬ë§¤ íƒ­ì— ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.", Toast.LENGTH_SHORT).show();
 			break;
 
 		case R.id.btn_book_add_selling_picture:
@@ -106,25 +106,25 @@ public class AddSellingActivity extends ActionBarActivity implements
 			intent.putExtra("crop", "true");
 			//intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 			Log.i("ddd", "dddddd");
-			intent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri()); // ÀÓ½ÃÆÄÀÏ »ı¼º
-			intent.putExtra("outputFormat", // Æ÷¸Ë¹æ½Ä
+			intent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri()); //ì„ì‹œíŒŒì¼ ìƒì„±
+			intent.putExtra("outputFormat", //í¬ë§·ë°©ì‹
 					Bitmap.CompressFormat.JPEG.toString());
 			startActivityForResult(intent, REQ_CODE_PICK_IMAGE);
 			break;
 		}
 	}
 
-	/** ÀÓ½Ã ÀúÀå ÆÄÀÏÀÇ °æ·Î¸¦ ¹İÈ¯ */
+	/** ì„ì‹œ ì €ì¥ íŒŒì¼ì˜ ê²½ë¡œë¥¼ ë°˜í™˜ */
 	private Uri getTempUri() {
 		return Uri.fromFile(getTempFile());
 	}
 
-	/** ¿ÜÀå¸Ş¸ğ¸®¿¡ ÀÓ½Ã ÀÌ¹ÌÁö ÆÄÀÏÀ» »ı¼ºÇÏ¿© ±× ÆÄÀÏÀÇ °æ·Î¸¦ ¹İÈ¯ */
+	/** ì™¸ì¥ë©”ëª¨ë¦¬ì— ì„ì‹œ ì´ë¯¸ì§€ íŒŒì¼ì„ ìƒì„±í•˜ì—¬ ê·¸ íŒŒì¼ì˜ ê²½ë¡œë¥¼ ë°˜í™˜ */
 	private File getTempFile() {
-		File f = new File(Environment.getExternalStorageDirectory(), // ¿ÜÀå¸Ş¸ğ¸® °æ·Î
+		File f = new File(Environment.getExternalStorageDirectory(), // ì™¸ì¥ë©”ëª¨ë¦¬ ê²½ë¡œ
                 TEMP_PHOTO_FILE);
         try {
-            f.createNewFile();      // ¿ÜÀå¸Ş¸ğ¸®¿¡ temp.jpg ÆÄÀÏ »ı¼º
+            f.createNewFile();      // ì™¸ì¥ë©”ëª¨ë¦¬ì— temp.jpg íŒŒì¼ ìƒì„±
         } catch (IOException e) {
         }
 
@@ -147,14 +147,14 @@ public class AddSellingActivity extends ActionBarActivity implements
                     String filePath = Environment.getExternalStorageDirectory()
                             + "/temp.jpg";
  
-                    System.out.println("path" + filePath); // logCatÀ¸·Î °æ·ÎÈ®ÀÎ.
+                    System.out.println("path" + filePath); // logCatìœ¼ë¡œ ê²½ë¡œí™•ì¸.
  
                     Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-                    // temp.jpgÆÄÀÏÀ» BitmapÀ¸·Î µğÄÚµùÇÑ´Ù.
+                    // temp.jpgíŒŒì¼ì„ Bitmapìœ¼ë¡œ ë””ì½”ë”©í•œë‹¤.
  
                     ImageView _image = (ImageView) findViewById(R.id.imageView_book_add_selling_picture);
                     _image.setImageBitmap(selectedImage); 
-                    // temp.jpgÆÄÀÏÀ» ÀÌ¹ÌÁöºä¿¡ ¾º¿î´Ù.
+                    // temp.jpgíŒŒì¼ì„ ì´ë¯¸ì§€ë·°ì— ì”Œìš´ë‹¤.
                 }
             }
             break;

@@ -26,10 +26,10 @@ public class AlertDialogHandler {
 	public AlertDialog AlertDialogLogout(){
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		
-		builder.setTitle("·Î±×¾Æ¿ô");
-		builder.setMessage("·Î±×¾Æ¿ô ÇÏ½Ã°Ú½À´Ï±î?");
+		builder.setTitle("ë¡œê·¸ì•„ì›ƒ");
+		builder.setMessage("ë¡œê·¸ì•„ì›ƒ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 		//builder.setIcon(R.drawable.ic_launcher);
-		builder.setPositiveButton("·Î±×¾Æ¿ô", new OnClickListener() {
+		builder.setPositiveButton("ë¡œê·¸ì•„ì›ƒ", new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface alertDialogLogout, int which) {
@@ -50,7 +50,7 @@ public class AlertDialogHandler {
 			}
 		});
 		
-		builder.setNegativeButton("¾Æ´Ï¿À", new OnClickListener() {
+		builder.setNegativeButton("ì•„ë‹ˆì˜¤", new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface alertDialogLogout, int which) {
@@ -68,10 +68,10 @@ public class AlertDialogHandler {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		
-		builder.setTitle("Ã¥ µî·Ï ¼öÁ¤");
-		builder.setMessage("¼öÁ¤ ÇÏ½Ã°Ú½À´Ï±î?");
+		builder.setTitle("ì±… ë“±ë¡ ìˆ˜ì •");
+		builder.setMessage("ìˆ˜ì • í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 		//builder.setIcon(R.drawable.ic_launcher);
-		builder.setPositiveButton("¿¹", new OnClickListener() {
+		builder.setPositiveButton("ì˜ˆ", new OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface alerDialogMyBookRegisterModify, int which) {
@@ -83,7 +83,7 @@ public class AlertDialogHandler {
 			
 		});
 		
-		builder.setNegativeButton("¾Æ´Ï¿À", new OnClickListener() {
+		builder.setNegativeButton("ì•„ë‹ˆì˜¤", new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface alerDialogMyBookRegisterModify, int which) {
@@ -99,10 +99,10 @@ public class AlertDialogHandler {
 	public AlertDialog AlertDialogMyBookRegisterInit(){
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		
-		builder.setTitle("Ã¥ µî·Ï ÃÊ±âÈ­");
-		builder.setMessage("ÃÊ±âÈ­ ÇÏ½Ã°Ú½À´Ï±î?");
+		builder.setTitle("ì±… ë“±ë¡ ì´ˆê¸°í™”");
+		builder.setMessage("ì´ˆê¸°í™” í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 		//builder.setIcon(R.drawable.ic_launcher);
-		builder.setPositiveButton("¿¹", new OnClickListener() {
+		builder.setPositiveButton("ì˜ˆ", new OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface alerDialogMyBookRegisterInit, int which) {
@@ -113,7 +113,7 @@ public class AlertDialogHandler {
 			
 		});
 		
-		builder.setNegativeButton("¾Æ´Ï¿À", new OnClickListener() {
+		builder.setNegativeButton("ì•„ë‹ˆì˜¤", new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface alerDialogMyBookRegisterInit, int which) {
@@ -129,10 +129,10 @@ public class AlertDialogHandler {
 	public AlertDialog AlertDialogExit(){
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		
-		builder.setTitle("Á¾·á");
-		builder.setMessage("Á¾·á ÇÏ½Ã°Ú½À´Ï±î?");
+		builder.setTitle("ì¢…ë£Œ");
+		builder.setMessage("ì¢…ë£Œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 		//builder.setIcon(R.drawable.ic_launcher);
-		builder.setPositiveButton("¿¹", new OnClickListener() {
+		builder.setPositiveButton("ì˜ˆ", new OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface alerDialogExit, int which) {
@@ -141,7 +141,7 @@ public class AlertDialogHandler {
 			
 		});
 		
-		builder.setNegativeButton("¾Æ´Ï¿À", new OnClickListener() {
+		builder.setNegativeButton("ì•„ë‹ˆì˜¤", new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface alerDialogExit, int which) {

@@ -21,12 +21,12 @@ public class UserTable extends DBManager {
 		public String getPortalID() { return this.portalID; }
 	}
 	
-	// »ç¿ëÀÚ Á¤º¸ Å×ÀÌºí »ı¼ºÀÚ
+	// ì‚¬ìš©ì ì •ë³´ í…Œì´ë¸” ìƒì„±ì
 	public UserTable(Context context) {
 		super(context);
 	}
 	
-	// select Äõ¸® ÇÔ¼ö
+	// select ì¿¼ë¦¬ í•¨ìˆ˜
 	public UserData selectQuery(int key) {
 		dbReader = dbOpenner.getReadableDatabase();
 		Cursor cursor = dbReader.query(tableName, null, null, null, null, null, null);
@@ -38,7 +38,7 @@ public class UserTable extends DBManager {
 		return null;
 	}
 	
-	// portal id°¡ ÀÖ´ÂÁö ¾ø´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+	// portal idê°€ ìˆëŠ”ì§€ ì—†ëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 	public int isExist(String portal) {
 		dbReader = dbOpenner.getReadableDatabase();
 		Cursor cursor = dbReader.query(tableName, null, null, null, null, null, null);
@@ -50,14 +50,14 @@ public class UserTable extends DBManager {
 		return -1;
 	}
 	
-	// insert Äõ¸® ÇÔ¼ö
+	// insert ì¿¼ë¦¬ í•¨ìˆ˜
 	public boolean insertQuery(UserData data) {
 		dbWriter = dbOpenner.getWritableDatabase();
-		// insert ÇÒ value ¸¸µé±â
+		// insert í•  value ë§Œë“¤ê¸°
 		ContentValues val = new ContentValues();
 		val.put("portalID", data.getPortalID());
 		
-		// µ¥ÀÌÅÍ º£ÀÌ½º insert Äõ¸® ½ÇÇà °á°ú È®ÀÎ
+		// ë°ì´í„° ë² ì´ìŠ¤ insert ì¿¼ë¦¬ ì‹¤í–‰ ê²°ê³¼ í™•ì¸
 		if (dbWriter.insert(tableName, null, val) != -1) {
 			return true;
 		}

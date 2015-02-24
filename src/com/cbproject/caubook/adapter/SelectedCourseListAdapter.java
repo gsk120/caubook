@@ -50,7 +50,7 @@ public class SelectedCourseListAdapter extends BaseAdapter{
 			return false; 
 	}
 	
-	/***************************ÆÇ¸ÅÅÇ »èÁ¦ °ü·Ã ÇÔ¼ö ½ÃÀÛ****************************/
+	/***************************íŒë§¤íƒ­ ì‚­ì œ ê´€ë ¨ í•¨ìˆ˜ ì‹œì‘****************************/
 	public void remove(SelectedCourseListItem object) {
 		selectedCourseListData.remove(object);
 		notifyDataSetChanged();	
@@ -80,7 +80,7 @@ public class SelectedCourseListAdapter extends BaseAdapter{
 	public SparseBooleanArray getSelectedIds() {
 		return mSelectedItemsIds;
 	}
-	/***************************ÆÇ¸ÅÅÇ »èÁ¦ °ü·Ã ÇÔ¼ö ³¡****************************/
+	/***************************íŒë§¤íƒ­ ì‚­ì œ ê´€ë ¨ í•¨ìˆ˜ ë****************************/
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -102,10 +102,10 @@ public class SelectedCourseListAdapter extends BaseAdapter{
 					
 		SelectedCourseListItem data = selectedCourseListData.get(position);
 		holder.getTvSelectedBookTitle().setText(data.getStrCourseTitle());
-		holder.getTvSelectedBookPrice().setText("45000¿ø");
+		holder.getTvSelectedBookPrice().setText("45000ì›");
 		holder.getImgSelectedBook().setImageResource(R.drawable.no_image);
 		
-		//ÃÖÁ¾ µî·Ï ÇÒ °æ¿ì È°¼ºÈ­ ½ÃÅ°±â
+		//ìµœì¢… ë“±ë¡ í•  ê²½ìš° í™œì„±í™” ì‹œí‚¤ê¸°
 		if(isActivate(position)){
 			holder.getTvSelectedBookTitle().setTextColor(Color.WHITE);
 			holder.getTvSelectedBookPrice().setTextColor(Color.WHITE);

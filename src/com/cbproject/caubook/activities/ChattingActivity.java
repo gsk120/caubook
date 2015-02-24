@@ -34,12 +34,10 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	private Button btnSend;
 	private EditText inputMessage;
 
-	// ��ȭ ���̺� �ռ�Ű�� ����
 	private int oppositeID;
 	private int chattingOrder;
-	
-	// ä�� ��� sqlite�� �����ϱ� ���� DB��� ������� ����
 	private ChatSocket chatSocket = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -82,7 +80,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 		}
 	}
 	
-	// ä�� ���� ������ Ŭ���� ����, �ۼ��� �ð�, �ۼ��� �޼��� Ÿ���� ����
+	// 채팅 메세지의 데이터 클래스
 	private class MessageData {
 		private String msgContent;
 		private Date msgTime;
@@ -107,7 +105,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 		public void setMessageType(MessageTypeEnum _type) { this.msgType = _type; }
 	}
 	
-	// �޼����� �� �� Ŭ����
+	// 채팅 메세지 뷰 클래스
 	private class MessageVeiwHolder {
 		private TextView tvContent;
 		private TextView tvTime;
@@ -119,7 +117,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 		public void setTimeView(TextView _time) { this.tvTime = _time; }
 	}
 	
-	// ä�ø���Ʈ�� ��Ʈ�� Ŭ����
+	// 채팅 리스트 어답터 클래스
 	private class MessageListAdpater extends BaseAdapter {
 
 		private Context context;
@@ -166,7 +164,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 				holder = (MessageVeiwHolder) convertView.getTag();
 			}
 
-			// �信 �����͸� �־��ִ� �κ� 
+			// 채팅의 전송시간 표시 
 			holder.getContentView().setText(data.getMessageContent());
 			SimpleDateFormat dateFormat = new SimpleDateFormat("a hh:mm");
 			holder.getTimeView().setText(dateFormat.format(data.getMessageTime()));
@@ -174,7 +172,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 			return convertView;
 		}
 		
-		// ����Ϳ� ������ ä���ִ� �Լ�
+		// 메세지 채팅 리스트에 추가 함수
 		public void addItem(MessageData addItem){
 			this.messageListData.add(addItem);
 		}

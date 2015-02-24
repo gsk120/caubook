@@ -6,16 +6,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBManager {
 
-	// µ¥ÀÌÅÍ º£ÀÌ½ºÀÇ ÀÌ¸§ ¹× ¹öÀü µîÀÇ ÇÙ½É Á¤º¸
+	// ë°ì´í„° ë² ì´ìŠ¤ì˜ ì´ë¦„ ë° ë²„ì „ ë“±ì˜ í•µì‹¬ ì •ë³´
 	public final String dbName = "unibook_db";
 	private final int dbVersion = 1;
 	
-	// SQLite µ¥ÀÌÅÍ º£ÀÌ½º ¿ÀÇÁ³Ê¿Í µğºñ ÀĞ±â ¹× ¾²±â Àü¿ë °´Ã¼ ¼±¾ğ
+	// SQLite ë°ì´í„° ë² ì´ìŠ¤ ì˜¤í”„ë„ˆì™€ ë””ë¹„ ì½ê¸° ë° ì“°ê¸° ì „ìš© ê°ì²´ ì„ ì–¸
 	protected DBOpenner dbOpenner; 
 	protected SQLiteDatabase dbReader;
 	protected SQLiteDatabase dbWriter;
 	
-	// µ¥ÀÌÅÍ º£ÀÌ½º ¿ÀÇÂ °ü¸® Å¬·¡½º => DBManager ¿ÜºÎ¿¡¼± °ü¸®ÇÒ ÇÊ¿ä°¡ ¾ø¾î ³»ºÎÅ¬·¡½º·Î ¼±¾ğ
+	// ë°ì´í„° ë² ì´ìŠ¤ ì˜¤í”ˆ ê´€ë¦¬ í´ë˜ìŠ¤ => DBManager ì™¸ë¶€ì—ì„  ê´€ë¦¬í•  í•„ìš”ê°€ ì—†ì–´ ë‚´ë¶€í´ë˜ìŠ¤ë¡œ ì„ ì–¸
 	class DBOpenner extends SQLiteOpenHelper {
 		public DBOpenner(Context context) {
 			super(context, dbName, null, dbVersion);
@@ -43,17 +43,17 @@ public class DBManager {
 			 db.execSQL("DROP TABLE IF EXISTS " + UserTable.tableName);
 			 db.execSQL("DROP TABLE IF EXISTS " + ConversationTable.tableName);
 			 
-	         // µ¥ÀÌÅÍº£ÀÌ½º Àç»ı¼º
+	         // ë°ì´í„°ë² ì´ìŠ¤ ì¬ìƒì„±
 	         onCreate(db);
 		}
 	}
 	
-	// DBManager »ı¼ºÀÚ
+	// DBManager ìƒì„±ì
 	public DBManager(Context context) {
 		this.dbOpenner = new DBOpenner(context);
 	}
 	
-	// µ¥ÀÌÅÍ º£ÀÌ½º Á¾·á ÇÔ¼ö
+	// ë°ì´í„° ë² ì´ìŠ¤ ì¢…ë£Œ í•¨ìˆ˜
 	public void Close() {
 		dbReader.close();
 		dbWriter.close();
