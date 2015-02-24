@@ -1,16 +1,17 @@
 package com.cbproject.caubook.activities;
 
+import io.socket.SocketIO;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.cbproject.caubook.ChatSocket;
+import com.cbproject.caubook.ChattingBean;
+import com.cbproject.caubook.Message;
 import com.cbproject.caubook.MessageTypeEnum;
 import com.cbproject.caubook.R;
-import com.cbproject.caubook.sqlite.ConversationTable;
-import com.cbproject.caubook.sqlite.ConversationTable.ConversationData;
-import com.cbproject.caubook.sqlite.UserTable;
-import com.cbproject.caubook.sqlite.UserTable.UserData;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -33,18 +34,19 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	private Button btnSend;
 	private EditText inputMessage;
 
-	// ´ëÈ­ Å×ÀÌºí ÇÕ¼ºÅ°¸¦ À§ÇØ
+	// ï¿½ï¿½È­ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½Õ¼ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private int oppositeID;
 	private int chattingOrder;
 	
-	// Ã¤ÆÃ ¸ñ·Ï sqlite¿¡ ÀúÀåÇÏ±â À§ÇØ DB°ü·Ã ¸â¹öº¯¼ö ¼±¾ð
-	private UserTable userTable;
-	private ConversationTable conversationTable;
-	
+	// Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ sqliteï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ DBï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	private ChatSocket chatSocket = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.a_chatting);
+	    
+	    //chattingBean init
+	    
 	    
 	    listChatting = (ListView)findViewById(R.id.list_chatting_log);
 	    listChattingAdapter = new MessageListAdpater(getApplicationContext());
@@ -57,33 +59,8 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	    
 	    String userID = getIntent().getStringExtra("userID");
 	    setTitle(userID);
-	    
-	    // µ¥ÀÌÅÍ º£ÀÌ½º °ü·Ã º¯¼ö ÃÊ±âÈ­
-	    userTable = new UserTable(this);
-	    conversationTable = new ConversationTable(this);
-	    
-	    // ´ëÈ­ Å×ÀÌºíÀÇ ÇÕ¼ºÅ°¸¦ À§ÇØ ´ëÈ­ »ó´ëÀÇ userTable ±âº»Å° ¹× ¼ø¼­ ÄÃ·³ 
-	    oppositeID = userTable.isExist(userID);
-	    chattingOrder = 0;
-	    if(oppositeID == -1) {
-	    	// ³ª¿Í ´ëÈ­ »ó´ë·Î »ó´ë ¾ÆÀÌµð°¡ ¾øÀ¸¸é »õ·Î Ãß°¡
-	    	UserData user = new UserData(0, userID);
-		    userTable.insertQuery(user);
-	    } else {
-	    	// ³ª¿Í ´ëÈ­ÇÑÀûÀÌ ÀÖÀ¸¸é Ã¤ÆÃ ¸®½ºÆ® ºÒ·¯¿À±â
-	    	// TODO selectAllQueryÇÔ¼ö¸¦ userID¿¡ ÇØ´çÇÏ´Â °Í¸¸ ¹Þ¾Æ¿À´Â ±â´ÉÀ¸·Î º¯°æ
-	    	ArrayList<ConversationData> conversationList = conversationTable.selectAllQuery(oppositeID);
-	    	Log.i("ddd", Integer.toString(conversationList.size()));
-	    	for(int i=0; i<conversationList.size(); i++) {
-	    		MessageData data = new MessageData(conversationList.get(i).getContent(), conversationList.get(i).getTime(), conversationList.get(i).getMessageType());
-	    		listChattingAdapter.addItem(data);
-	    		listChattingAdapter.notifyDataSetChanged();
-	    		// ÀÓ½Ã·Î ¼ø¼­ ¹Þ¾Æ¿À´Â ÄÚµå
-	    		if(chattingOrder < conversationList.get(i).getOrder()) {
-	    			chattingOrder = conversationList.get(i).getOrder();
-	    		}
-	    	}
-	    }
+	    chatSocket = ChattingBean.getSocket("hyunbinlee", userID);
+	    chatSocket.syncMsg(new Message("sync"));
 	}
 
 	@Override
@@ -99,14 +76,13 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 			sendData.setMessageType(MessageTypeEnum.SendMsg);
 			listChattingAdapter.addItem(sendData);
 			listChattingAdapter.notifyDataSetChanged();
+			chatSocket.sendMsg(new Message(strMessage));
 			inputMessage.setText(null);
-			ConversationData data = new ConversationData(oppositeID, ++chattingOrder, sendData.getMessageContent(), sendData.getMessageTime(), sendData.getMessageType());
-			conversationTable.insertQuery(data);
 			break;
 		}
 	}
 	
-	// Ã¤ÆÃ ³»¿ë µ¥ÀÌÅÍ Å¬·¡½º ³»¿ë, ¼Û¼ö½Å ½Ã°£, ¼Û¼ö½Å ¸Þ¼¼Áö Å¸ÀÔÀ» ÀúÀå
+	// Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½, ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private class MessageData {
 		private String msgContent;
 		private Date msgTime;
@@ -131,7 +107,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 		public void setMessageType(MessageTypeEnum _type) { this.msgType = _type; }
 	}
 	
-	// ¸Þ¼¼ÁöÀÇ ºä °ü¸® Å¬·¡½º
+	// ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 	private class MessageVeiwHolder {
 		private TextView tvContent;
 		private TextView tvTime;
@@ -143,7 +119,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 		public void setTimeView(TextView _time) { this.tvTime = _time; }
 	}
 	
-	// Ã¤ÆÃ¸®½ºÆ®ÀÇ ÄÁÆ®·Ñ Å¬·¡½º
+	// Ã¤ï¿½Ã¸ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 	private class MessageListAdpater extends BaseAdapter {
 
 		private Context context;
@@ -190,7 +166,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 				holder = (MessageVeiwHolder) convertView.getTag();
 			}
 
-			// ºä¿¡ µ¥ÀÌÅÍ¸¦ ³Ö¾îÁÖ´Â ºÎºÐ 
+			// ï¿½ä¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ö¾ï¿½ï¿½Ö´ï¿½ ï¿½Îºï¿½ 
 			holder.getContentView().setText(data.getMessageContent());
 			SimpleDateFormat dateFormat = new SimpleDateFormat("a hh:mm");
 			holder.getTimeView().setText(dateFormat.format(data.getMessageTime()));
@@ -198,7 +174,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 			return convertView;
 		}
 		
-		// ¾î´äÅÍ¿¡ µ¥ÀÌÅÍ Ã¤¿öÁÖ´Â ÇÔ¼ö
+		// ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
 		public void addItem(MessageData addItem){
 			this.messageListData.add(addItem);
 		}
