@@ -27,33 +27,39 @@ import com.cbproject.caubook.R;
 import com.cbproject.caubook.SelectedCourseListItem;
 import com.cbproject.caubook.activities.MyBookRegisterActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class LoginHandler {
 	private String userId;
 	private String userPw;
 	private Context context;
+	private ProgressBar progressLoading;
 	
 	private WebView webview = null;
 	private String cookies = "";
 	
-	public LoginHandler(Context _context, String _id, String _pw) {
+	public LoginHandler(Context _context, String _id, String _pw, ProgressBar _bar) {
 		this.context = _context;
 		this.userId = _id;
 		this.userPw = _pw;
+		this.progressLoading = _bar;
 	}
 	
 	// 로그인을 하고 성공 여부를 리턴하는 함수
+	@SuppressLint("SetJavaScriptEnabled")
 	public boolean doLogin() {
 		
 		// 아이디나 비밀번호가 비어있으면 로그인 불가
@@ -92,6 +98,7 @@ public class LoginHandler {
 	}
 	
 	private class CAULogin extends AsyncTask<String, Void, String> {
+		
 		@Override
 		protected String doInBackground(String... params) {
 			return requestInformation(params[0]);
@@ -99,9 +106,19 @@ public class LoginHandler {
 		
 		// 매개 변수로 강의리스트를 받아옴
 		protected void onPostExecute(String result) {
+			// 쿠키 제거를 위해 웹뷰 제거
+			CookieManager.getInstance().removeSessionCookie();
+			webview.destroy();
+			
 			// html 형식의 결과를 xml형식으로 변환
 			String strFix = Html.fromHtml(result).toString();
-			Log.i("ddd", strFix);
+			
+			// 로그인 실패
+			if(strFix.equals("fail")) {
+				Toast.makeText(context, R.string.login_error_wrong_info, Toast.LENGTH_SHORT).show();
+				progressLoading.setVisibility(View.INVISIBLE);
+				return;
+			}
 			
 			ArrayList<SelectedCourseListItem> list = new ArrayList<SelectedCourseListItem>();
 			try {
@@ -147,11 +164,10 @@ public class LoginHandler {
 		private String requestInformation(String cookie) {
 			URL url = null;
 			String line = "";
-			String lineResult = "";
+			String lineResult = " ";
 			try {
 				url = new URL("http://54.92.63.117:3000/requestInformation");
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
@@ -161,8 +177,8 @@ public class LoginHandler {
 				conn.setDoInput(true);
 				OutputStream os = conn.getOutputStream();
 				cookie = URLEncoder.encode(cookie, "UTF-8");
-				//Log.i("dddd", cookie);
 				String outString = "cookie="+cookie;
+				Log.i("cookie", cookie);
 				
 				os.write(outString.getBytes("UTF-8"));
 				os.flush();

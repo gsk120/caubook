@@ -51,7 +51,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener{
 			// 로그인 진행!
 			String strId = inputID.getEditableText().toString();
 			String strPw = inputPW.getEditableText().toString();
-			LoginHandler hLogin = new LoginHandler(this, strId, strPw);
+			LoginHandler hLogin = new LoginHandler(this, strId, strPw, progressLoading);
 			progressLoading.setVisibility(View.VISIBLE);	// 로딩
 			if(hLogin.doLogin()) {
 				// 로그인 성공 -> 현재 상태 프리퍼런스에 저장
@@ -60,7 +60,8 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener{
 				editor.putString("pw", strPw);
 				editor.commit();
 			} else {
-				//로그인 실패			
+				//로그인 실패	
+				progressLoading.setVisibility(View.INVISIBLE);
 			}
 			break;
 		case R.id.check_auto_login:

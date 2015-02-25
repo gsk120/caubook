@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 import com.cbproject.caubook.R;
 import com.cbproject.caubook.controller.BackPressCloseHandler;
@@ -15,14 +16,14 @@ import com.cbproject.caubook.controller.LoginHandler;
 
 public class MainActivity extends ActionBarActivity {
 	
-
+	private ProgressBar progressLoading;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.a_main);
 		
-		
+		progressLoading = (ProgressBar)findViewById(R.id.progress_loading);
 		
 		// 스플래시 화면이 보이도록 1초의 딜레이 추가
 		Handler hd = new Handler();
@@ -52,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
 		if(pref.getBoolean("auto_login", false)) {
 			String strId = pref.getString("id", "");
 			String strPw = pref.getString("pw", "");
-			LoginHandler hLogin = new LoginHandler(getApplicationContext(), strId, strPw);
+			LoginHandler hLogin = new LoginHandler(getApplicationContext(), strId, strPw, progressLoading);
 			if(hLogin.doLogin()) {
 				//자동 로그인 성공 -> 액티비티 전환 후 리턴
 				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);
