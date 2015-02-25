@@ -14,6 +14,7 @@ import com.cbproject.caubook.MessageTypeEnum;
 import com.cbproject.caubook.R;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -74,9 +75,20 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 			sendData.setMessageType(MessageTypeEnum.SendMsg);
 			listChattingAdapter.addItem(sendData);
 			listChattingAdapter.notifyDataSetChanged();
-			chatSocket.sendMsg(new Message(strMessage));
+			
+			new SendMessageThread().execute(strMessage);
+			
 			inputMessage.setText(null);
 			break;
+		}
+	}
+	
+	private class SendMessageThread extends AsyncTask<String, Void, String> {
+		@Override
+		protected String doInBackground(String... params) {
+			chatSocket.sendMsg(new Message(params[0]));
+			Log.i("ddd", "ddd");
+			return null;
 		}
 	}
 	
