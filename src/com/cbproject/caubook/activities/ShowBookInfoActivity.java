@@ -47,7 +47,6 @@ public class ShowBookInfoActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "문의하러 가기", Toast.LENGTH_SHORT).show();
 				// TODO 채팅방 연결
 				Intent intent = new Intent(ShowBookInfoActivity.this, ChattingActivity.class);
 				intent.putExtra("product", productInfo);
