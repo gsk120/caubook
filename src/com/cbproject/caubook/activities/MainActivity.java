@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
 		if(pref.getBoolean("auto_login", false)) {
 			String strId = pref.getString("id", "");
 			String strPw = pref.getString("pw", "");
-			LoginHandler hLogin = new LoginHandler(getApplicationContext(), strId, strPw, progressLoading);
+			LoginHandler hLogin = new LoginHandler(this, strId, strPw, progressLoading);
 			if(hLogin.doLogin()) {
 				//자동 로그인 성공 -> 액티비티 전환 후 리턴
 				Intent intent = new Intent(getApplicationContext(), TradeTabActivity.class);

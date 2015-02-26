@@ -31,6 +31,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.text.Html;
 import android.util.Log;
@@ -70,6 +71,12 @@ public class LoginHandler {
 		if(userPw.equals("")) {
 			Toast.makeText(context, R.string.login_error_pw_empty, Toast.LENGTH_SHORT).show();
 			return false;
+		}
+		
+		// TODO 임시 코드 자동로그인인 경우 강의리스트 받기 x
+		SharedPreferences pref = context.getSharedPreferences("savedInfo", Context.MODE_PRIVATE);
+		if(pref.getBoolean("auto_login", false)) {
+			return true;
 		}
 		
 		// 웹뷰로 로그인 세션 얻어오기
