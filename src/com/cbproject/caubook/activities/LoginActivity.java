@@ -63,7 +63,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener{
 				editor.putString("pw", strPw);
 				editor.commit();
 				
-				//·Î±×ÀÎ ¼º°ø ÈÄ GCMµî·ÏID ¼­¹ö¿¡ ÀúÀå
+				// GCM ë“±ë¡ì•„ì´ë”” ì–»ê¸° 
 				GCMHandler GCMRegId = new GCMHandler(this,strId);
 				GCMRegId.registerGcm();
 				
