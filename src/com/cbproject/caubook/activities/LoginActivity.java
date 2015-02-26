@@ -3,6 +3,7 @@ package com.cbproject.caubook.activities;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -12,7 +13,9 @@ import android.widget.ProgressBar;
 
 import com.cbproject.caubook.R;
 import com.cbproject.caubook.controller.BackPressCloseHandler;
+import com.cbproject.caubook.controller.GCMHandler;
 import com.cbproject.caubook.controller.LoginHandler;
+import com.google.android.gcm.GCMRegistrar;
 
 public class LoginActivity extends ActionBarActivity implements OnClickListener{
 
@@ -59,6 +62,11 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener{
 				editor.putString("id", strId);
 				editor.putString("pw", strPw);
 				editor.commit();
+				
+				//로그인 성공 후 GCM등록ID 서버에 저장
+				GCMHandler GCMRegId = new GCMHandler(this,strId);
+				GCMRegId.registerGcm();
+				
 			} else {
 				//로그인 실패			
 			}
