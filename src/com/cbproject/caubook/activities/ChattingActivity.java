@@ -12,6 +12,7 @@ import com.cbproject.caubook.ChattingBean;
 import com.cbproject.caubook.Message;
 import com.cbproject.caubook.MessageTypeEnum;
 import com.cbproject.caubook.R;
+import com.cbproject.caubook.sqlite.ProductTable.ProductData;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -43,10 +44,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.a_chatting);
-	    
-	    //chattingBean init
-	    
-	    
+	    	    
 	    listChatting = (ListView)findViewById(R.id.list_chatting_log);
 	    listChattingAdapter = new MessageListAdpater(getApplicationContext());
 	    listChatting.setAdapter(listChattingAdapter);
@@ -56,9 +54,10 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	    
 	    inputMessage = (EditText)findViewById(R.id.edit_chatting_input);
 	    
-	    String userID = getIntent().getStringExtra("userID");
-	    setTitle(userID);
-	    chatSocket = ChattingBean.getSocket("hyunbinlee", userID);
+	    ProductData productInfo = (ProductData) getIntent().getSerializableExtra("product");
+	    // TODO 나중에 DB에서 seller 값을 키로 판매자 아이디를 받아와야함
+	    setTitle(Integer.toString(productInfo.getSeller()));
+	    chatSocket = ChattingBean.getSocket("hyunbinlee", Integer.toString(productInfo.getSeller()));	// 임시로 userInfo 테이블의 기본키 (인트) 넘김
 	    chatSocket.syncMsg(new Message("sync"));
 	}
 

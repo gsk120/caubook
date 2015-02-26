@@ -50,7 +50,7 @@ public class GCMHandler {
 		
 		@Override
 		protected void onPostExecute(String result) {
-			Log.d("onPostExecute", "¼­¹ö¿¡ µî·ÏID ÀúÀå¿Ï·á");
+			Log.d("onPostExecute", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ID ï¿½ï¿½ï¿½ï¿½Ï·ï¿½");
 			super.onPostExecute(result);
 		}
 		

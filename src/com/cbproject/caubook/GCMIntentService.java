@@ -53,13 +53,13 @@ public class GCMIntentService extends GCMBaseIntentService{
 
 	@Override
 	protected void onRegistered(Context context, String reg_id) {
-		Log.e("е╟╦╕ ╣Н╥огу╢о╢ы.(GCM INTENTSERVICE)", reg_id);
+		Log.e("М┌╓К╔╪ К⌠╠К║²М∙╘К▀┬К▀╓.(GCM INTENTSERVICE)", reg_id);
 
 	}
 
 	@Override
 	protected void onUnregistered(Context arg0, String arg1) {
-		Log.e("е╟╦╕ а╕╟егу╢о╢ы.(GCM INTENTSERVICE)","а╕╟е╣г╬З╫ю╢о╢ы.");
+		Log.e("М┌╓К╔╪ Л═°Й╠╟М∙╘К▀┬К▀╓.(GCM INTENTSERVICE)","Л═°Й╠╟К░≤Л≈┬Л┼╣К▀┬К▀╓.");
 
 	}
 
