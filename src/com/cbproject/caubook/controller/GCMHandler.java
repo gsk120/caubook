@@ -54,7 +54,7 @@ public class GCMHandler {
 		
 		@Override
 		protected void onPostExecute(String result) {
-			Log.d("onPostExecute", "������ ���ID ����Ϸ�");
+			Log.d("onPostExecute", "db register complete");
 			super.onPostExecute(result);
 		}
 		
