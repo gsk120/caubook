@@ -7,6 +7,7 @@ import android.widget.ImageView;
 public class SelectedCourseListItem implements Serializable{
 	private static final long serialVersionUID = 1L;	// Serializable ID
 	private String strCourseTitle;		//과목명
+	private int courseCode;
 	private String strProfessorName;	//교수명
 	private String strBookName;			//책이름
 	private String strBookPrice;		//책가격
@@ -17,6 +18,9 @@ public class SelectedCourseListItem implements Serializable{
 	
 	public String getStrCourseTitle() {
 		return strCourseTitle;
+	}
+	public int getCourseCode() {
+		return this.courseCode;
 	}
 	public void setStrCourseTitle(String strCourseTitle) {
 		this.strCourseTitle = strCourseTitle;
@@ -38,6 +42,9 @@ public class SelectedCourseListItem implements Serializable{
 	}
 	public void setStrBookPrice(String strBookPrice) {
 		this.strBookPrice = strBookPrice;
+	}
+	public void setCourseCode (int _code) {
+		this.courseCode = _code;
 	}
 	public String getStrEtc() {
 		return strEtc;
