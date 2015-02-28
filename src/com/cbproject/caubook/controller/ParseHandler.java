@@ -39,6 +39,10 @@ public class ParseHandler extends DefaultHandler{
             position = "kor_nm";
             value = atts.getValue("value");
             courseItem.setStrBookName(value);
+        } else if (qName.equals("sbjt_no")) {
+        	position = "sbjt_no";
+        	value = atts.getValue("value");
+        	courseItem.setCourseCode(Integer.parseInt(value));
         }
     }
  

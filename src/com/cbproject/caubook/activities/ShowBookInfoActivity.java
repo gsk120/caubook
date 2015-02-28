@@ -98,12 +98,14 @@ public class ShowBookInfoActivity extends ActionBarActivity {
 				Log.e("chat_room_result", "신규");
 				Intent intent = new Intent(ShowBookInfoActivity.this, ChattingActivity.class);
 				intent.putExtra("product", productInfo);
+				intent.putExtra("roomNo", 2);	//임시 방번호
 				startActivity(intent);
 			} else {
 				// 기존 채팅방 존재 => TODO 이경우 기존 chatLog를 불러와아함.
 				Log.e("chat_room_result", "기존");
 				Intent intent = new Intent(ShowBookInfoActivity.this, ChattingActivity.class);
 				intent.putExtra("product", productInfo);
+				intent.putExtra("roomNo", 2);	//임시 방번호
 				startActivity(intent);
 			}
 		}

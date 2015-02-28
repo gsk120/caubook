@@ -2,10 +2,25 @@ package com.cbproject.caubook.activities;
 
 import io.socket.SocketIO;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.cbproject.caubook.ChatSocket;
 import com.cbproject.caubook.ChattingBean;
@@ -18,6 +33,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,40 +71,117 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	    inputMessage = (EditText)findViewById(R.id.edit_chatting_input);
 	    
 	    ProductData productInfo = (ProductData) getIntent().getSerializableExtra("product");
+	    
 	    // TODO 나중에 DB에서 seller 값을 키로 판매자 아이디를 받아와야함
 	    setTitle(Integer.toString(productInfo.getSeller()));
-	    chatSocket = ChattingBean.getSocket("hyunbinlee", Integer.toString(productInfo.getSeller()));	// 임시로 userInfo 테이블의 기본키 (인트) 넘김
-	    chatSocket.syncMsg(new Message("sync"));
+	    
+	    int roomNum = getIntent().getIntExtra("roomNo", 0);
+	    Calendar cal = Calendar.getInstance();
+	    SimpleDateFormat dataFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	    String time = dataFormat.format(cal.getTime());
+	    
+	    new SyncMessage().execute(Integer.toString(roomNum), time);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()) {
 		case R.id.btn_chatting_send:
-			String strMessage = inputMessage.getEditableText().toString();
-			if(strMessage.equals("")) {
-				break;
-			}
-			Calendar calendar = Calendar.getInstance();
-			MessageData sendData = new MessageData(strMessage, calendar.getTime());
-			sendData.setMessageType(MessageTypeEnum.SendMsg);
-			listChattingAdapter.addItem(sendData);
-			listChattingAdapter.notifyDataSetChanged();
-			
-			new SendMessageThread().execute(strMessage);
-			
-			inputMessage.setText(null);
+//			String strMessage = inputMessage.getEditableText().toString();
+//			if(strMessage.equals("")) {
+//				break;
+//			}
+//			Calendar calendar = Calendar.getInstance();
+//			
+//			
+//			new SendMessage().execute(strMessage);
+//			
+//			inputMessage.setText(null);
 			break;
 		}
 	}
 	
-	private class SendMessageThread extends AsyncTask<String, Void, String> {
+	private class SendMessage extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... params) {
-			chatSocket.sendMsg(new Message(params[0]));
-			Log.i("ddd", "ddd");
+			//chatSocket.sendMsg(new Message(params[0]));
 			return null;
 		}
+	}
+	
+	private class SyncMessage extends AsyncTask<String, Void, String> {
+
+		@Override
+		protected String doInBackground(String... params) {
+			return requestSyncMessage(Integer.parseInt(params[0]), params[1]);
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			
+			String msg = "";
+			Date date = null;
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			
+			result = Html.fromHtml(result).toString();
+			Log.e("sync_result", result);
+			try {
+				JSONArray jArr = new JSONArray(result);
+				for (int i = 0; i < jArr.length(); i++) {
+					JSONObject json = jArr.getJSONObject(i);
+					
+					msg = json.getString("content");
+					date = dateFormat.parse(json.getString("timestamp"));
+					
+					MessageData sendData = new MessageData(msg, date, MessageTypeEnum.ReceiveMsg);
+					listChattingAdapter.addItem(sendData);
+				}
+				listChattingAdapter.notifyDataSetChanged();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		private String requestSyncMessage(int roomNo, String time) {
+			URL url = null;
+			String line = "";
+			String lineResult = " ";
+			try {
+				url = new URL("http://54.92.63.117:3000/syncMsg");
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+			try {
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("POST");
+				conn.setDoOutput(true);
+				conn.setDoInput(true);
+				OutputStream os = conn.getOutputStream();
+				time = URLEncoder.encode(time, "UTF-8");
+				String outString = "roomNo=" + roomNo + "&time=" + time;
+				
+				os.write(outString.getBytes("UTF-8"));
+				os.flush();
+				os.close();
+				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				
+				while((line = br.readLine()) != null){
+					lineResult += line;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				lineResult = URLDecoder.decode(lineResult, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			return lineResult;
+		}
+		
 	}
 	
 	// 채팅 메세지의 데이터 클래스

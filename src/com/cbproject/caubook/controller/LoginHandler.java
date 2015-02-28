@@ -147,7 +147,7 @@ public class LoginHandler {
 				// 파싱 결과 출력
 				for (Iterator<SelectedCourseListItem> iterator = list.iterator(); iterator.hasNext();) {
 					SelectedCourseListItem item = (SelectedCourseListItem) iterator.next();
-					Log.i("course", item.getStrBookName());
+					Log.i("course", Integer.toString(item.getCourseCode()));
 				}
             
             } catch (IOException e) {
