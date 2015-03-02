@@ -14,6 +14,7 @@ import java.net.URLEncoder;
 import com.google.android.gcm.GCMRegistrar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -39,6 +40,10 @@ public class GCMHandler {
 		}
 		
 		GCMSendRegId gcmSendRegId = new GCMSendRegId();
+		SharedPreferences pref = context.getSharedPreferences("savedInfo", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putString("gcmRegID", regId);
+		editor.commit();
 		gcmSendRegId.execute(portalId,regId);
 		
 	}

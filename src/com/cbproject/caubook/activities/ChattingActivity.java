@@ -30,6 +30,7 @@ import com.cbproject.caubook.R;
 import com.cbproject.caubook.sqlite.ProductTable.ProductData;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -52,9 +53,14 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	private Button btnSend;
 	private EditText inputMessage;
 
-	private int oppositeID;
+	private int sellID;
 	private int chattingOrder;
-	private ChatSocket chatSocket = null;
+	
+	private int roomNum;
+	private String lastTime;
+	
+	// 현재 시간 계산을 위한 변수
+	private SimpleDateFormat dateFormat;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,10 +81,15 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	    // TODO 나중에 DB에서 seller 값을 키로 판매자 아이디를 받아와야함
 	    setTitle(Integer.toString(productInfo.getSeller()));
 	    
-	    int roomNum = getIntent().getIntExtra("roomNo", 0);
-	    Calendar cal = Calendar.getInstance();
-	    SimpleDateFormat dataFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-	    String time = dataFormat.format(cal.getTime());
+	    // 방번호 인텐트로 받기
+	    roomNum = getIntent().getIntExtra("roomNo", 0);
+	    
+	    // 날짜 받아오기 변수
+	    Calendar calendar = Calendar.getInstance();
+	    dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	    
+	    // 채팅방에 접속한 현재 시간 => TODO 나중에는 sqlite의 가장 마지막 시간으로 대체
+	    String time = dateFormat.format(calendar.getTime());
 	    
 	    new SyncMessage().execute(Integer.toString(roomNum), time);
 	}
@@ -87,25 +98,99 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	public void onClick(View v) {
 		switch(v.getId()) {
 		case R.id.btn_chatting_send:
-//			String strMessage = inputMessage.getEditableText().toString();
-//			if(strMessage.equals("")) {
-//				break;
-//			}
-//			Calendar calendar = Calendar.getInstance();
-//			
-//			
-//			new SendMessage().execute(strMessage);
-//			
-//			inputMessage.setText(null);
+			String strMessage = inputMessage.getEditableText().toString();
+			if(strMessage.equals("")) {
+				break;
+			}
+			
+			// TODO 나중에는 자신의 userID를 sqlite든 sharedPreference든 저장하고 있는것을 사용
+			int myID = 1;
+			
+			// TODO 나중에는 상대방의 gcmID를 sqlite든 sharedPreference든 저장하고 있는것을 사용
+			SharedPreferences pref = getSharedPreferences("savedInfo", MODE_PRIVATE);
+			String gcm = pref.getString("gcmRegID", "");
+			
+			Calendar calendar = Calendar.getInstance();
+			lastTime = dateFormat.format(calendar.getTime());
+			
+			new SendMessage().execute(Integer.toString(roomNum), lastTime, strMessage, Integer.toString(myID), gcm);
+			
+			inputMessage.setText(null);
 			break;
 		}
 	}
 	
 	private class SendMessage extends AsyncTask<String, Void, String> {
+		private String msgContent = "";
+		private Date msgTime = null;
+		
 		@Override
 		protected String doInBackground(String... params) {
-			//chatSocket.sendMsg(new Message(params[0]));
-			return null;
+			return requestSendMessage(Integer.parseInt(params[0]), params[1], params[2], Integer.parseInt(params[3]), params[4]);
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			result = Html.fromHtml(result).toString().trim();
+			
+			if(result.equals("1")) {
+				// 메세지 전송 성공
+				Log.e("send_result", "success");
+				listChattingAdapter.addItem(new MessageData(msgContent, msgTime, MessageTypeEnum.SendMsg));
+				listChatting.setAdapter(listChattingAdapter);
+			} else {
+				// 메세지 전송 실패
+				Log.e("send_result", "fail");
+			}
+		}
+		
+		private String requestSendMessage(int roomNo, String time, String content, int sender, String gcmRegID) {
+			URL url = null;
+			String line = "";
+			String lineResult = "";
+			
+			// 리스트 뷰에 띄우기 위해 메세지 내용과 전송 시간 저장
+			msgContent = content;
+			try {
+				msgTime = dateFormat.parse(time);
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+			
+			try {
+				url = new URL("http://54.92.63.117:3000/sendMsg");
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+			try {
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("POST");
+				conn.setDoOutput(true);
+				conn.setDoInput(true);
+				OutputStream os = conn.getOutputStream();
+
+				time = URLEncoder.encode(time, "UTF-8");
+				content = URLEncoder.encode(content, "EUC-KR");
+				gcmRegID = URLEncoder.encode(gcmRegID, "UTF-8");
+				String outString = "roomNo=" + roomNo + "&time=" + time + "&content=" + content + "&sender=" + sender + "&gcmRegID=" + gcmRegID;
+				Log.e("msg", content);
+				os.write(outString.getBytes("UTF-8"));
+				os.flush();
+				os.close();
+				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				
+				while((line = br.readLine()) != null){
+					lineResult += line;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				lineResult = URLDecoder.decode(lineResult, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			return lineResult;
 		}
 	}
 	
@@ -118,10 +203,9 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 		
 		@Override
 		protected void onPostExecute(String result) {
-			
 			String msg = "";
 			Date date = null;
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			int sender = 0;
 			
 			result = Html.fromHtml(result).toString();
 			Log.e("sync_result", result);
@@ -132,11 +216,21 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 					
 					msg = json.getString("content");
 					date = dateFormat.parse(json.getString("timestamp"));
+					sender = json.getInt("sender");
+					Log.e("sender", Integer.toString(sender));
+					// TODO 나중에는 자신의 userID를 sqlite든 sharedPreference든 저장하고 있는것을 사용
+					int myID = 1;
 					
-					MessageData sendData = new MessageData(msg, date, MessageTypeEnum.ReceiveMsg);
+					MessageData sendData;
+					if(sender == myID) {
+						sendData = new MessageData(msg, date, MessageTypeEnum.SendMsg);
+					} else {
+						sendData = new MessageData(msg, date, MessageTypeEnum.ReceiveMsg);
+					}
+					
 					listChattingAdapter.addItem(sendData);
 				}
-				listChattingAdapter.notifyDataSetChanged();
+				listChatting.setAdapter(listChattingAdapter);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			} catch (ParseException e) {
@@ -148,7 +242,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 		private String requestSyncMessage(int roomNo, String time) {
 			URL url = null;
 			String line = "";
-			String lineResult = " ";
+			String lineResult = "";
 			try {
 				url = new URL("http://54.92.63.117:3000/syncMsg");
 			} catch (MalformedURLException e) {
@@ -161,7 +255,7 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 				conn.setDoInput(true);
 				OutputStream os = conn.getOutputStream();
 				time = URLEncoder.encode(time, "UTF-8");
-				String outString = "roomNo=" + roomNo + "&time=" + time;
+				String outString = "roomNo=" + roomNo;// + "&time=" + time;
 				
 				os.write(outString.getBytes("UTF-8"));
 				os.flush();
@@ -253,25 +347,27 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 			MessageVeiwHolder holder;
 			MessageData data = messageListData.get(position);
 			
-			if(convertView == null){
+//			if(convertView == null){
 				holder = new MessageVeiwHolder();
 				LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				
-				convertView = (data.getMessageType() == MessageTypeEnum.SendMsg)
-						? inflater.inflate(R.layout.list_chatting_send, null)
-						: inflater.inflate(R.layout.list_chatting_receive, null);
+				if(data.getMessageType() == MessageTypeEnum.SendMsg) {
+					convertView = inflater.inflate(R.layout.list_chatting_send, null); 
+				} else {
+					convertView = inflater.inflate(R.layout.list_chatting_receive, null); 
+				}
 						
 				holder.setContentView((TextView)convertView.findViewById(R.id.text_chatting_msg));
 				holder.setTimeView((TextView)convertView.findViewById(R.id.text_chatting_date));
-				convertView.setTag(holder);	
-			}else{
-				holder = (MessageVeiwHolder) convertView.getTag();
-			}
+//				convertView.setTag(holder);	
+//			}else{
+//				holder = (MessageVeiwHolder) convertView.getTag();
+//			}
 
 			// 채팅의 전송시간 표시 
 			holder.getContentView().setText(data.getMessageContent());
-			SimpleDateFormat dateFormat = new SimpleDateFormat("a hh:mm");
-			holder.getTimeView().setText(dateFormat.format(data.getMessageTime()));
+			SimpleDateFormat format = new SimpleDateFormat("a hh:mm");
+			holder.getTimeView().setText(format.format(data.getMessageTime()));
 			
 			return convertView;
 		}
