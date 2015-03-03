@@ -49,7 +49,7 @@ public class MyBookRegisterActivity extends ActionBarActivity {
 		courseList = (ArrayList<SelectedCourseListItem>) getIntent().getSerializableExtra("courseList");
 		
 		for(int i=0; i<courseList.size(); i++) {
-			listCourseAdapter.addItem(new CourseListItem(courseList.get(i).getStrBookName(), "아직몰라", false));
+			listCourseAdapter.addItem(new CourseListItem(courseList.get(i).getStrCourseTitle(), "아직몰라", false));
 		}
 //		
 //		listCourseAdapter.addItem(new CourseListItem("선형대수학", "선형대수학 5판", false));

@@ -11,9 +11,12 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+import com.cbproject.caubook.activities.MyBookRegisterActivity;
 import com.google.android.gcm.GCMRegistrar;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -21,10 +24,13 @@ import android.util.Log;
 public class GCMHandler {
 	private Context context;
 	private String portalId;
+	private String studentId;
 	
-	public GCMHandler(Context _context,String _portalId) {
+	
+	public GCMHandler(Context _context,String _portalId, String _stuNo) {
 		context = _context;
 		portalId = _portalId;
+		studentId = _stuNo;
 	}
 
 	public void registerGcm() {
@@ -44,7 +50,7 @@ public class GCMHandler {
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putString("gcmRegID", regId);
 		editor.commit();
-		gcmSendRegId.execute(portalId,regId);
+		gcmSendRegId.execute(portalId, studentId, regId);
 		
 	}
 	
@@ -59,7 +65,7 @@ public class GCMHandler {
 		
 		@Override
 		protected void onPostExecute(String result) {
-			Log.d("onPostExecute", "db register complete");
+			Log.d("onPostExecute", "db register complete");			
 			super.onPostExecute(result);
 		}
 		
@@ -81,9 +87,9 @@ public class GCMHandler {
 				OutputStream os = conn.getOutputStream();
 				
 				id[0] = URLEncoder.encode(id[0], "UTF-8");
-				id[1] = URLEncoder.encode(id[1],"UTF-8");
+				id[2] = URLEncoder.encode(id[2],"UTF-8");
 				
-				String outString = "portalID=" + id[0] + "&" + "studentID=20091533" + "&" + "gcmRegID=" + id[1] + "&" + "kakaoID=abc@naver.com";
+				String outString = "portalID=" + id[0] + "&" + "studentID=" + id[1] + "&" + "gcmRegID=" + id[2] + "&" + "kakaoID=abc@naver.com";
 				
 				os.write(outString.getBytes("UTF-8"));
 				os.flush();

@@ -76,7 +76,7 @@ public class ShowBookInfoActivity extends ActionBarActivity {
 		});
 		
 		// TODO 상품 정보 임시 구성 -> 나중엔 인텐트로 TradeTabActivity로 부터 넘어오도록 구성
-		productInfo = new ProductData(2, 13, 111111, "test course", 20000, true, false, "");
+		productInfo = new ProductData(2, 13, "111111", "test course", "20000", "0", "0", "");
 		
 	}
 	
@@ -93,21 +93,20 @@ public class ShowBookInfoActivity extends ActionBarActivity {
 			// result 값에 따라 새로운 방인지, 기존의 방인지 확인 후 대응
 			result = Html.fromHtml(result).toString().trim();
 			Log.e("결과", result);
+			
+			Intent intent = new Intent(ShowBookInfoActivity.this, ChattingActivity.class);
+			intent.putExtra("product", productInfo);
+			intent.putExtra("roomNo", 2);	//임시 방번호
 			if(result.equals("1")) {
 				// 신규 채팅방 개설 성공
 				Log.e("chat_room_result", "신규");
-				Intent intent = new Intent(ShowBookInfoActivity.this, ChattingActivity.class);
-				intent.putExtra("product", productInfo);
-				intent.putExtra("roomNo", 2);	//임시 방번호
-				startActivity(intent);
+				intent.putExtra("newRoom", true);
 			} else {
 				// 기존 채팅방 존재 => TODO 이경우 기존 chatLog를 불러와아함.
 				Log.e("chat_room_result", "기존");
-				Intent intent = new Intent(ShowBookInfoActivity.this, ChattingActivity.class);
-				intent.putExtra("product", productInfo);
-				intent.putExtra("roomNo", 2);	//임시 방번호
-				startActivity(intent);
+				intent.putExtra("newRoom", false);
 			}
+			startActivity(intent);
 		}
 		
 		// doInBackground에서 실제로 작동하는 함수

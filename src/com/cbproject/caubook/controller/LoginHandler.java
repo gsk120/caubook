@@ -13,12 +13,14 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -85,7 +87,6 @@ public class LoginHandler {
 		webview.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url) {
-				// TODO Auto-generated method stub
 				cookies = CookieManager.getInstance().getCookie(url);
 				System.out.println(cookies);
 				CookieSyncManager localCookieSyncManager = CookieSyncManager.createInstance(webview.getContext());
@@ -119,6 +120,7 @@ public class LoginHandler {
 			
 			// html 형식의 결과를 xml형식으로 변환
 			String strFix = Html.fromHtml(result).toString();
+			String stuNo = "";
 			
 			// 로그인 실패
 			if(strFix.equals("fail")) {
@@ -143,12 +145,19 @@ public class LoginHandler {
  
 				// 파싱한 결과 리스트 받아오기
 				list = myHandler.getParsedData();
+				stuNo = myHandler.getStudentNo();
+				Log.e("stuNo", stuNo);
  
 				// 파싱 결과 출력
+				SelectedCourseListItem[] itemArr = new SelectedCourseListItem[list.size()];
+				int index = 0;
 				for (Iterator<SelectedCourseListItem> iterator = list.iterator(); iterator.hasNext();) {
 					SelectedCourseListItem item = (SelectedCourseListItem) iterator.next();
-					Log.i("course", Integer.toString(item.getCourseCode()));
+					itemArr[index++] = item;
+					Log.i("course", item.getCourseCode());
 				}
+				
+				new RegistCourses().execute(itemArr);
             
             } catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -161,6 +170,10 @@ public class LoginHandler {
 				e.printStackTrace();
 			}
 			
+			// GCM 등록아이디 얻기 
+			GCMHandler GCMRegId = new GCMHandler(context, userId, stuNo);
+			GCMRegId.registerGcm();
+			
 			// TODO 로그인 성공했을 경우에만 책등록 액티비티로 전환 (일단은 무조건 전환)
 			Intent intent = new Intent(context, MyBookRegisterActivity.class);
 			intent.putExtra("courseList", list);
@@ -171,7 +184,7 @@ public class LoginHandler {
 		private String requestInformation(String cookie) {
 			URL url = null;
 			String line = "";
-			String lineResult = " ";
+			String lineResult = "";
 			try {
 				url = new URL("http://54.92.63.117:3000/requestInformation");
 			} catch (MalformedURLException e) {
@@ -195,15 +208,75 @@ public class LoginHandler {
 				while((line = br.readLine()) != null){
 					lineResult += line;
 				}
-				//System.out.println(lineResult);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
 				lineResult = URLDecoder.decode(lineResult, "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return lineResult;
+		}
+	}
+	
+	private class RegistCourses extends AsyncTask<SelectedCourseListItem, Void, String> {
+
+		@Override
+		protected String doInBackground(SelectedCourseListItem... params) {
+			JSONArray jarr = new JSONArray();
+			for (int i=0; i<params.length; i++) {
+				JSONObject jObject = new JSONObject();
+				try {
+					jObject.put("code", params[i].getCourseCode());
+					jObject.put("name", params[i].getStrCourseTitle());
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				jarr.put(jObject);
+			}
+			
+			JSONObject jResult = new JSONObject();
+			try {
+				jResult.put("result", jarr);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return requestRegistCourse(jResult.toString());
+		}
+			
+		private String requestRegistCourse(String param) {
+			URL url = null;
+			String line = "";
+			String lineResult = " ";
+			try {
+				url = new URL("http://54.92.63.117:3000/registCourses");
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+			try {
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("POST");
+				conn.setDoOutput(true);
+				conn.setDoInput(true);
+				OutputStream os = conn.getOutputStream();
+				String outString = "result=" + param;
+				Log.i("course_json", outString);
+				
+				os.write(outString.getBytes("UTF-8"));
+				os.flush();
+				os.close();
+				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				
+				while((line = br.readLine()) != null){
+					lineResult += line;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				lineResult = URLDecoder.decode(lineResult, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 			return lineResult;

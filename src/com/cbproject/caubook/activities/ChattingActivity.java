@@ -91,7 +91,10 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 	    // 채팅방에 접속한 현재 시간 => TODO 나중에는 sqlite의 가장 마지막 시간으로 대체
 	    String time = dateFormat.format(calendar.getTime());
 	    
-	    new SyncMessage().execute(Integer.toString(roomNum), time);
+	    // 기존 방인 경우 메세지 동기화 하기 => 이와 관련된 작업은 여기서 하도록
+	    if(!getIntent().getBooleanExtra("newRoom", false)) {
+	    	new SyncMessage().execute(Integer.toString(roomNum), time);
+	    }
 	}
 
 	@Override
@@ -170,7 +173,6 @@ public class ChattingActivity extends ActionBarActivity implements OnClickListen
 				OutputStream os = conn.getOutputStream();
 
 				time = URLEncoder.encode(time, "UTF-8");
-				content = URLEncoder.encode(content, "EUC-KR");
 				gcmRegID = URLEncoder.encode(gcmRegID, "UTF-8");
 				String outString = "roomNo=" + roomNo + "&time=" + time + "&content=" + content + "&sender=" + sender + "&gcmRegID=" + gcmRegID;
 				Log.e("msg", content);

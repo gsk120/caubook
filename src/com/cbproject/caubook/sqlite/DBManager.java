@@ -24,24 +24,76 @@ public class DBManager {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			
-			String createUserTable = "CREATE TABLE " + UserTable.tableName + "("
-					+ "userID INTEGER PRIMARY KEY AUTOINCREMENT, "
-					+ "portalID INTEGER"+ ")";
-			String createConversationTable = "CREATE TABLE " + ConversationTable.tableName + "("
-					+ "userID INTEGER, "
-					+ "orderNum INTEGER, "
+			String createUserInfo = "CREATE TABLE " + UserInfoTable.tableName + "("
+					+ "userNo INTEGER NOT NULL, "
+					+ "portalID VARCHAR(30) NOT NULL, "
+					+ "studentID VARCHAR(15) NOT NULL, "
+					+ "gcmRegID TEXT, "
+					+ "kakaoID TEXT, "
+					+ "PRIMARY KEY(userNo)"+ ")";
+			
+			String createCourseInfo = "CREATE TABLE " + CourseInfoTable.tableName + "("
+					+ "code VARCHAR(10) NOT NULL, "
+					+ "name TEXT, "
+					+ "PRIMARY KEY(code)" +")";
+			
+			String createChatLog = "CREATE TABLE " + ChatLogTable.tableName + "("
+					+ "roomNo INTEGER NOT NULL, "
+					+ "timestamp VARCHAR(64) NOT NULL, "
 					+ "content TEXT, "
-					+ "time TEXT, "
-					+ "msgType TEXT, "
-					+ "PRIMARY KEY(userID, orderNum)" + ")";
-			db.execSQL(createUserTable);
-			db.execSQL(createConversationTable);
+					+ "sender INTEGER NOT NULL, "
+					+ "PRIMARY KEY(roonNo, timestamp)" + ")";
+			
+			String createChatRoom = "CREATE TABLE " + ChatRoomTable.tableName + "("
+					+ "roomNo INTEGER NOT NULL, "
+					+ "productNo INTEGER NOT NULL, "
+					+ "customer INTEGER NOT NULL, "
+					+ "PRIMARY KEY(roomNo)" + ")";
+			
+			String createProduct = "CREATE TABLE " + ProductTable.tableName + "("
+					+ "productNo INTEGER NOT NULL, "
+					+ "seller INTEGER NOT NULL, "
+					+ "course VARCHAR(10), "
+					+ "professor VARCHAR(20), "
+					+ "bookName TEXT, "
+					+ "price VARCHAR(10), "
+					+ "etc TEXT, "
+					+ "register VARCHAR(10), "
+					+ "sellResult VARCHAR(10), "
+					+ "picture TEXT,"
+					+ "PRIMARY KEY(productNo)" + ")";
+			
+			String createProductComplete = "CREATE TABLE " + ProductCompleteTable.tableName + "("
+					+ "productNo INTEGER NOT NULL, "
+					+ "buyer INTEGER NOT NULL, "
+					+ "PRIMARY KEY(productNo, buyer)" + ")";
+			
+			String createQuestion = "CREATE TABLE " + QuestionTable.tableName + "("
+					+ "productNo INTEGER NOT NULL, "
+					+ "timestamp VARCHAR(64) NOT NULL, "
+					+ "content TEXT NOT NULL, "
+					+ "writer INTEGER NOT NULL, "
+					+ "type VARCHAR(10) NOT NULL, "
+					+ "PRIMARY KEY(productNo, timestamp)" + ")";
+			
+			db.execSQL(createUserInfo);
+			db.execSQL(createCourseInfo);
+			db.execSQL(createChatLog);
+			db.execSQL(createChatRoom);
+			db.execSQL(createProduct);
+			db.execSQL(createProductComplete);
+			db.execSQL(createQuestion);
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			 db.execSQL("DROP TABLE IF EXISTS " + UserTable.tableName);
-			 db.execSQL("DROP TABLE IF EXISTS " + ConversationTable.tableName);
+			 db.execSQL("DROP TABLE IF EXISTS " + UserInfoTable.tableName);
+			 db.execSQL("DROP TABLE IF EXISTS " + ChatLogTable.tableName);
+			 db.execSQL("DROP TABLE IF EXISTS " + ChatRoomTable.tableName);
+			 db.execSQL("DROP TABLE IF EXISTS " + CourseInfoTable.tableName);
+			 db.execSQL("DROP TABLE IF EXISTS " + ProductTable.tableName);
+			 db.execSQL("DROP TABLE IF EXISTS " + ProductCompleteTable.tableName);
+			 db.execSQL("DROP TABLE IF EXISTS " + QuestionTable.tableName);
 			 
 	         // 데이터베이스 재생성
 	         onCreate(db);
